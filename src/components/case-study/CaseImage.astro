@@ -1,0 +1,35 @@
+---
+// The image inside a CaseFigure box: a responsive picture, or inline SVG for vector mock-ups.
+// SVG colours use the site tokens, so the mock-ups follow dark mode.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src?: ImageMetadata;
+  svg?: string;
+  alt: string;
+  width: number;
+  eager?: boolean;
+}
+
+const { src, svg, alt, width, eager = false } = Astro.props;
+---
+
+{
+  svg ? (
+    <div class="case-figure__image case-figure__svg" role="img" aria-label={alt} set:html={svg} />
+  ) : (
+    src && (
+      <Picture
+        class="case-figure__image"
+        src={src}
+        alt={alt}
+        formats={['avif', 'webp']}
+        widths={[width, width * 2]}
+        sizes={`min(${width}px, calc(100vw - 72px))`}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchpriority={eager ? 'high' : undefined}
+      />
+    )
+  )
+}

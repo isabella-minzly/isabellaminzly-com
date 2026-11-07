@@ -1,0 +1,23 @@
+<svg width="553" height="346" viewBox="0 0 553 346" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M389 0.5H547C550.038 0.5 552.5 2.96243 552.5 6V340C552.5 343.038 550.038 345.5 547 345.5H389C385.962 345.5 383.5 343.038 383.5 340V6C383.5 2.96243 385.962 0.5 389 0.5Z" fill="var(--tiles_background)" stroke="var(--tiles_border)"/>
+<path d="M6 0.5H166C169.038 0.5 171.5 2.96243 171.5 6V269C171.5 272.038 169.038 274.5 166 274.5H6C2.96243 274.5 0.5 272.038 0.5 269V6C0.5 2.96243 2.96243 0.5 6 0.5Z" fill="var(--tiles_background)" stroke="var(--tiles_border)"/>
+<path d="M202 0.5H362C365.038 0.5 367.5 2.96243 367.5 6V309C367.5 312.038 365.038 314.5 362 314.5H202C198.962 314.5 196.5 312.038 196.5 309V6C196.5 2.96243 198.962 0.5 202 0.5Z" fill="var(--tiles_background)" stroke="var(--tiles_border)"/>
+<path d="M385 204.5H550" stroke="var(--tiles_border)"/>
+<path d="M2 164.5H169" stroke="var(--tiles_border)"/>
+<path d="M198 188.5H366" stroke="var(--tiles_border)"/>
+<path d="M385 332.5H551" stroke="var(--tiles_border)"/>
+<path d="M2 260.5H170" stroke="var(--tiles_border)"/>
+<path d="M198 300.5H366" stroke="var(--tiles_border)"/>
+<path d="M385 140.5L550 140.5" stroke="var(--tiles_border)"/>
+<path d="M2 116.5L169 116.5" stroke="var(--tiles_border)"/>
+<path d="M198 132.5L366 132.5" stroke="var(--tiles_border)"/>
+<path d="M385 268.5L551 268.5" stroke="var(--tiles_border)"/>
+<path d="M2 212.5L170 212.5" stroke="var(--tiles_border)"/>
+<path d="M198 244.5L366 244.5" stroke="var(--tiles_border)"/>
+<path d="M385 84.5H551" stroke="var(--tiles_border)"/>
+<path d="M2 68.5H170" stroke="var(--tiles_border)"/>
+<path d="M2 14.5H170" stroke="var(--tiles_border)"/>
+<path d="M198 76.5H366" stroke="var(--tiles_border)"/>
+<path d="M198 16.5H366" stroke="var(--tiles_border)"/>
+<path d="M385 15.5H551" stroke="var(--tiles_border)"/>
+</svg>
