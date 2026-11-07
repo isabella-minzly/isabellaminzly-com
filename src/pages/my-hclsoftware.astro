@@ -9,6 +9,7 @@ import Link from '../components/Link.astro';
 import CaseFigure from '../components/case-study/CaseFigure.astro';
 import Kpis from '../components/case-study/Kpis.astro';
 import { url } from '../utils/url';
+import '../styles/case-study.css';
 import hero from '../assets/my-hclsoftware/hero.png';
 import journeyMap from '../assets/my-hclsoftware/customer-journey-map.png';
 import downloads from '../assets/my-hclsoftware/marketplace-software-downloads.png';
@@ -243,47 +244,7 @@ const goals = [
 </BaseLayout>
 
 <style>
-  .case-study {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space_32);
-  }
-
-  .hero,
-  .section {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space_16);
-  }
-
-  /* The page title sits on the right from 760, as in the 1680, 1280 and 1024 frames */
-  .hero__title {
-    padding-block-start: var(--space_24);
-  }
-
-  @media (width >= 47.5em) {
-    .hero__title {
-      padding-inline-end: var(--space_16);
-      text-align: end;
-    }
-  }
-
-  .section--padded {
-    padding-block: var(--space_16);
-  }
-
-  /* Paragraphs: 730 wide at most, 16 apart */
-  .text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space_16);
-    max-inline-size: 45.625rem;
-  }
-
-  .narrow {
-    max-inline-size: 45rem; /* 720 */
-  }
-
+  /* Shared layout is in src/styles/case-study.css; this is what only this page needs */
   .overview {
     display: flex;
     flex-direction: column;
@@ -299,12 +260,6 @@ const goals = [
     background: var(--contrast_background);
     border: var(--border_s) solid var(--tiles_border);
     border-radius: var(--radius_xl);
-  }
-
-  .row {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space_16);
   }
 
   .pair {
@@ -334,7 +289,7 @@ const goals = [
     }
   }
 
-  /* 1680 layout: text and figures side by side, Marketplace images below the first paragraph */
+  /* 1680 layout: Marketplace images below the first paragraph, text beside figures */
   @container main (width >= 77rem) {
     .marketplace h2 {
       order: -2;
@@ -344,8 +299,7 @@ const goals = [
       order: -1;
     }
 
-    .overview,
-    .row {
+    .overview {
       flex-direction: row;
       align-items: flex-start;
       gap: var(--space_24);
@@ -359,23 +313,6 @@ const goals = [
       order: 0;
       flex: 1;
       max-inline-size: none;
-    }
-
-    .row :global(.case-figure) {
-      flex: none;
-    }
-
-    .row--text-first .row__text {
-      order: -1;
-    }
-
-    .row__text {
-      flex: 0 1 45.625rem;
-    }
-
-    .row__text--wide {
-      flex: 1;
-      max-inline-size: 41.875rem; /* 670 */
     }
 
     .wrap {

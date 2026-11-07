@@ -24,7 +24,7 @@ export const navigation: NavItem[] = [
       { label: 'Mandala: The name', href: '/mandala/name/', ready: false },
     ],
   },
-  { label: 'Training and speaking: Accessibility for Inclusion', href: '/accessibility-for-inclusion/', ready: false },
+  { label: 'Training and speaking: Accessibility for Inclusion', href: '/accessibility-for-inclusion/', ready: true },
   { label: 'Individual contribution and leadership', href: '/leadership/', ready: false },
   { label: 'Design for fitness and training', href: '/fitness-and-training/', ready: false },
   {

@@ -1,0 +1,369 @@
+---
+// Training and speaking: Accessibility for Inclusion, built from the Figma frames
+// "Accessibility for inclusion" (1680), "/ 1280", "/ 1024" and "/ Mobile 320".
+// Shared case study layout: src/styles/case-study.css.
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Link from '../components/Link.astro';
+import CaseFigure from '../components/case-study/CaseFigure.astro';
+import Kpis from '../components/case-study/Kpis.astro';
+import { url } from '../utils/url';
+import '../styles/case-study.css';
+import collage from '../assets/accessibility-for-inclusion/hero-collage.png';
+import cover from '../assets/accessibility-for-inclusion/training-series-cover.png';
+import bancaDItalia from '../assets/accessibility-for-inclusion/banca-d-italia.png';
+import orientationCorrect from '../assets/accessibility-for-inclusion/orientation-correct.png';
+import orientationIncorrect from '../assets/accessibility-for-inclusion/orientation-incorrect.png';
+
+const results = [
+  { figure: '700+', description: 'people trained, from designers and developers to product owners and leadership.' },
+  { figure: '25+', description: 'teams across HCLSoftware.' },
+  { figure: '12 sessions / 18 hours', description: 'of live, interactive training.' },
+  { figure: 'WCAG 2.2', description: 'the latest version, which future-proofs the training.' },
+  { figure: 'Every year', description: 'a live Global Accessibility Awareness Day online live event.' },
+  { figure: 'Since 2022', description: 'open to any team that needs it.' },
+];
+
+const examples = [
+  {
+    src: orientationCorrect,
+    alt: 'Correct: a tablet shows a photo of a cat in portrait and, turned to landscape, shows the photo upright, with a rotate control.',
+    caption: 'A user can move a device to change the view of an interactive photo. A control is also available to do the same.',
+  },
+  {
+    src: orientationIncorrect,
+    alt: 'Incorrect: turned to landscape, the tablet shows the photo of the cat on its side.',
+    caption: 'The user moves the device to change the view, but the view does not change.',
+  },
+];
+
+const quotes = [
+  {
+    text: "This series happens to be one of the best I have ever attended. [...] Thank you for the immense effort you put into making this so engaging and for helping us understand the 'why' behind inclusive design.",
+    by: 'Athira Sivakumar, Manager, Digital Solutions',
+  },
+  {
+    text: 'The first session will make people want to come back to attend the rest of the course. Even those with expertise in this area asked questions and grew their knowledge significantly.',
+    by: 'Simon Hewitt, Associate Director, Digital Solutions',
+  },
+  {
+    text: 'The format included videos, real-life stories from speakers/designers, and engaging exercises during the sessions. This approach not only helped people understand the concepts but also apply them immediately.',
+    by: 'Bharat Bhargava, Associate General Manager, PM, HCL IO',
+  },
+  {
+    text: "Your deep knowledge of accessibility was evident throughout, and the way you translated that expertise into sessions was great. We'll reach out again as we continue to build on the foundations and practices you shared with us.",
+    by: 'Asim Kumar Sah, Associate Director, HCL IO',
+  },
+  {
+    text: 'Isabella is a delight to work with and brings true passion to everything she does. She takes a challenging and broad topic like accessibility and, through engaging sessions and real-life examples, effectively communicates its importance.',
+    by: 'Christopher Broadwater, Release Manager, Unica',
+  },
+  {
+    text: "All of the session recordings should be kept as jewel assets, I believe it's golden.",
+    by: 'Massimiliano Celli, Associate Vice President, BigFix',
+  },
+  {
+    text: 'Your training sessions were amongst the best I have attended.',
+    by: 'Kathleen Brady Jackson, Product Manager, AppScan',
+  },
+  {
+    text: 'I wish we had Isabella in the system 6 years before when I attempted an accessibility test for the first time, finding it way difficult to understand/interpret each of the guidelines.',
+    by: 'Aishwarya Srinivasan, Manager, Central Engineering',
+  },
+];
+---
+
+<BaseLayout
+  title="Training and speaking: Accessibility for Inclusion"
+  description="How the Accessibility for Inclusion programme has taught WCAG 2.2 to more than 700 people across HCLSoftware since 2022, starting with the person and letting the guidelines follow."
+>
+  <article class="case-study">
+    <div class="hero">
+      <h1 class="hero__title">Training and speaking: Accessibility for Inclusion</h1>
+      <CaseFigure src={collage} alt="A collage of portraits of people of many ages, backgrounds and abilities." width={1262} bleed eager />
+    </div>
+
+    <Kpis label="Results" items={results} />
+
+    <div class="section">
+      <div class="row row--text-first">
+        <CaseFigure
+          src={cover}
+          alt="Title slide of the HCLSoftware training series Accessibility for inclusion, for the session Colour and contrast."
+          width={536}
+          boxWidth={570}
+        />
+        <div class="row__text row__text--wide text">
+          <p>I did not build a compliance programme. I built the thing that makes compliance a side effect of people understanding why any of this matters.</p>
+          <p>
+            Since 2022, more than 700 people across HCLSoftware have taken it, from designers, developers and testers to product managers, product owners and
+            leaders who signed up without anyone asking them to. One manager called the opening session "one of the best kickoff sessions of a training series I
+            ever attended", and put it down to something simple: "the best education someone can offer is when it's about something they truly love." And one
+            engineering manager wrote that she wished she had had it six years earlier, when she first tried to make sense of the guidelines on her own.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" aria-labelledby="started">
+      <h2 id="started">Where it started</h2>
+      <div class="row row--text-first">
+        <CaseFigure src={bancaDItalia} alt="The façade of the Bank of Italy building in Rome, with its name carved in the stone." width={536} boxWidth={570} />
+        <div class="row__text row__text--wide text">
+          <p>
+            Before any of this, there was a screen reader, a blind user, and a project for the Bank of Italy. It was 2009, I was fresh out of my Master's, and the
+            brief was two intranet sites built to AAA, the strictest level WCAG offers, tested on Internet Explorer 5.5, 6 and 7 and on Mozilla. I read it with the
+            confidence only a brand-new graduate can have and thought: how hard can it be?
+          </p>
+          <p>Very hard, as it turned out.</p>
+          <p>
+            What I had not accounted for was that WCAG does not explain how to build anything: it tells you what must be true when you are finished, in language
+            dense enough to put people off before they have understood a single guideline. Reading every guideline from beginning to end turned out to be harder
+            than the engineering underneath it, and IE6 made sure the engineering was no walk in the park either.
+          </p>
+          <p>
+            Then came the moment that mattered more than any guideline I had memorised. I sat in on a usability test with a blind user navigating our site with a
+            screen reader, moving through it with a speed and fluency that impressed me. What stayed with me, though, was the realisation that everything I had
+            spent months reading about was not an abstract legal requirement. It was a human being, with a real way of interacting with the world, that the product
+            either met or did not. From that day, legal compliance became a welcome side effect of building for the person in front of me.
+          </p>
+          <p>
+            That is the conviction the whole programme is built on, and I built it so that nobody else has to arrive at it the hard way, alone, the way I did.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="built">
+      <h2 id="built">How the programme is built</h2>
+      <p class="text">
+        Every session opens with a person, not a guideline. Before I explain a single technique, the room sees how someone with a specific disability uses the
+        product we are about to change, because a rule only becomes memorable once you have watched what it protects. WCAG comes second, always, framed as the
+        means to something rather than the thing itself.
+      </p>
+      <h3 class="text">Guidelines explained, not read out</h3>
+      <figure class="guideline" aria-labelledby="guideline-name">
+        <div class="guideline__card">
+          <div class="guideline__header text-body_bold">
+            <p id="guideline-name">1.3.4 Orientation</p>
+            <p>WCAG 2.2 - Level AA</p>
+          </div>
+          <p>Rotating a device from portrait to landscape mode does not stop everything being perfectly readable, understandable and usable.</p>
+        </div>
+        <ul class="guideline__examples" role="list">
+          {
+            examples.map((example) => (
+              <li class="example">
+                <Picture
+                  class="example__image"
+                  src={example.src}
+                  alt={example.alt}
+                  formats={['avif', 'webp']}
+                  widths={[553, 1106]}
+                  sizes="min(553px, calc(100vw - 72px))"
+                />
+                <p>{example.caption}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </figure>
+      <div class="text">
+        <p>
+          The twelve sessions cover the full breadth of what WCAG asks of a product team: an introductory bootcamp on disabilities and assistive technologies,
+          colour and contrast, how to issue a VPAT, alt text, zoom and responsive behaviour, headings and page structure, keyboard navigation, two sessions on
+          components and interactive states, audio, video and motion, WAI-ARIA, and a closing session on personas and design-to-development handoff.
+        </p>
+        <p>
+          The pacing is deliberate. Sessions run two to four weeks apart, timed against each team's own accessibility roadmap, so that what people learn in one
+          session gets used on their own product before the next one arrives. Learning that never touches real work fades, while learning applied within the
+          fortnight sticks and compounds. Every session also includes a substantial interactive part, never to test anyone, but because long technical training is
+          where attention goes to die unless the room is doing rather than listening, and because the harder questions only surface once someone has tried something
+          themselves.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="evolving">
+      <h2 id="evolving">Still evolving, every year</h2>
+      <div class="text">
+        <p>
+          Every year since the programme began, I have marked Global Accessibility Awareness Day with a session built as a celebration rather than another lesson.
+          This year it was an interactive quiz, built using AI, that people joined live from their own laptops. Three teams competed for it, each bringing together
+          people from several different products, and it was close enough that the result came down to a single point, and one participant wrote to me afterwards
+          to say that the one question he had got wrong was exactly the one that would have handed his team the win.
+        </p>
+        <p>
+          That is the clearest evidence I have that when accessibility is taught with as much care for making it engaging as for making it correct, people do not
+          just tolerate it, they compete over it.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="commercially">
+      <h2 id="commercially">Why this matters commercially</h2>
+      <div class="text">
+        <p>
+          Accessibility is no longer a nice-to-have in enterprise sales. Buyers in the United States and Europe, public-sector institutions above all, ask for
+          evidence of conformance before they buy, and laws such as Section 508 and the European Accessibility Act set WCAG Level AA as the bar. The programme
+          teaches WCAG 2.2, the latest version, which future-proofs the training as requirements move forward, and it includes practical guidance on issuing a
+          VPAT, so teams can judge their own products and document the result accurately.
+        </p>
+        <p>
+          It also scales in a way an external audit does not. The sessions are recorded, and senior leaders describe the recordings as a library for future hires,
+          so the knowledge stays in the company long after each group has moved on.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="people">
+      <h2 id="people">What changes in people</h2>
+      <p class="text">
+        The evidence I trust most is what colleagues tell me they do differently: designers, developers and testers describe thinking about accessibility while
+        they build and test, rather than afterwards. A team that understands why a rule exists writes fewer lines of code that break it, and that understanding is
+        what more than 700 people now carry back to their own products. It reaches well beyond the people who build, too: product managers, product owners and
+        leaders joined because they were interested, and many of the warmest words about the programme, including several below, come from them.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="said">
+      <h2 id="said">What people have said</h2>
+      <p class="text">
+        These are a small selection of the feedback I have received since the programme began in 2022. Reading it thrills me more than any figure on this page,
+        because it is the clearest proof I have of the programme’s quality. It makes everything worthwhile: the hours of building the course, the fear of public
+        speaking that I had to get past at the very beginning, and the continuous learning that keeps the training current.
+      </p>
+      <ul class="quotes" role="list">
+        {
+          quotes.map((quote) => (
+            <li class="quote">
+              <span class="quote__mark text-quote-mark-s" aria-hidden="true">“</span>
+              <figure class="quote__text">
+                <blockquote class="text-quote_s">
+                  <p>{quote.text}</p>
+                </blockquote>
+                <figcaption class="text-quote-attribution">{quote.by}</figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="speaking">
+      <h2 id="speaking">Speaking</h2>
+      <p class="text">
+        I speak about accessibility at conferences and events, and I teach it there the way I teach it here: starting with the person, and letting the guidelines
+        follow.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="stands">
+      <h2 id="stands">Where it stands</h2>
+      <p class="text">
+        More than 700 people later, the programme still rests on what I learned watching that usability test in 2009: start with the person, and the guidelines will
+        follow.
+      </p>
+    </section>
+
+    <section class="section section--padded" aria-labelledby="applied">
+      <h2 id="applied">Accessibility applied</h2>
+      <ul class="link-list" role="list">
+        <li><Link href={url('/my-hclsoftware/')}>My HCLSoftware: the case study</Link></li>
+        <li><Link href={url('/bigfix/')}>BigFix: the case study</Link></li>
+        <li><Link href={url('/mandala/accessible-by-design/')}>Mandala: Accessible by design</Link></li>
+      </ul>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Figma "Guideline example": a WCAG success criterion with a correct and an incorrect example */
+  .guideline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+    padding: var(--space_16);
+    background: var(--contrast_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  .guideline__card,
+  .example {
+    display: flex;
+    flex-direction: column;
+    background: var(--tiles_background);
+    border: var(--border_s) solid var(--tiles_border);
+  }
+
+  .guideline__card {
+    gap: var(--space_8);
+    padding: var(--space_16);
+    border-radius: var(--radius_l);
+  }
+
+  .guideline__header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: var(--space_16);
+    row-gap: var(--space_4);
+  }
+
+  .guideline__examples {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space_16);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .example {
+    gap: var(--space_16);
+    padding: var(--space_16);
+    border-radius: var(--radius_xl);
+  }
+
+  .example :global(.example__image) {
+    inline-size: 100%;
+  }
+
+  @container main (width >= 47.5rem) {
+    .guideline {
+      padding: var(--space_32);
+    }
+
+    .guideline__examples {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space_24);
+    }
+  }
+
+  .quotes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_32);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .quote {
+    display: flex;
+    gap: var(--space_16);
+  }
+
+  .quote__mark {
+    flex: none;
+    color: var(--accent_default);
+  }
+
+  .quote__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+    max-inline-size: 45.625rem;
+  }
+</style>
