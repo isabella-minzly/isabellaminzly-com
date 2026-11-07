@@ -1,5 +1,7 @@
 ---
-// Figma component "Footer": copyright, LinkedIn and accessibility statement links, frog.
+// Figma component set "Footer", one variant per breakpoint:
+// 320 to 599 (stacked, links stacked), 600 to 759 (stacked, links in a row),
+// 760 to 1279 (one row), 1280 and up (copyright lined up with the main content).
 import Link from './Link.astro';
 import Frog from './Frog.astro';
 import { footerLinks } from '../data/navigation';
@@ -26,37 +28,84 @@ const year = new Date().getFullYear();
 
   .footer__bar {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    column-gap: var(--space_32);
-    row-gap: var(--space_8);
-    min-block-size: 5rem;
-    padding: var(--space_10) var(--space_24) var(--space_10) var(--space_16);
-    padding-inline-end: 96px; /* keeps text clear of the frog */
+    flex-direction: column;
     background: var(--contrast_background);
   }
 
+  .footer__copyright,
   .footer__links {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space_8) var(--space_24);
+    align-items: center;
+    justify-content: center;
+    min-block-size: 5rem;
+    padding: var(--space_10) var(--space_24);
+    text-align: center;
+  }
+
+  /* Room for the small frog on both sides, so the centred line stays centred */
+  .footer__copyright {
+    padding-inline: var(--space_64);
+    border-block-end: var(--border_s) solid var(--tiles_border);
+  }
+
+  .footer__links {
+    flex-direction: column;
+    gap: var(--space_8);
     margin: 0;
-    padding: 0;
     list-style: none;
   }
 
+  /* Small frog inside the bar on narrow screens, clear of the centred text */
   .footer__frog {
     position: absolute;
-    inset-block-start: calc(var(--space_24) * -1);
+    inset-block-start: 13px;
     inset-inline-end: var(--space_16);
+    inline-size: 40px;
+    block-size: 68px;
   }
 
-  /* Desktop: copyright lines up with the main column (400 in Figma: sidebar plus its gap),
-     so it stays aligned when the reader enlarges text. Links follow 24 + 24 later. */
-  @media (width >= 64em) {
+  /* 600 to 759: links side by side */
+  @media (width >= 37.5em) {
+    .footer__links {
+      flex-direction: row;
+    }
+  }
+
+  /* 760 and up: one row, full-size frog sitting on the bar */
+  @media (width >= 47.5em) {
     .footer__bar {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .footer__copyright,
+    .footer__links {
+      justify-content: flex-start;
+      text-align: start;
+      border: 0;
+    }
+
+    .footer__copyright {
+      padding-inline: var(--space_24);
+    }
+
+    .footer__links {
+      gap: var(--space_24);
+      padding-inline: var(--space_24) 96px; /* keeps the links clear of the frog */
+    }
+
+    .footer__frog {
+      inset-block-start: calc(var(--space_24) * -1);
+      inline-size: 63px;
+      block-size: 106px;
+    }
+  }
+
+  /* 1280 and up: copyright lines up with the main content (400 in Figma: sidebar plus its gap),
+     and stays aligned when the reader enlarges text */
+  @media (width >= 80em) {
+    .footer__copyright {
       padding-inline-start: calc(var(--sidebar-width) + var(--space_24));
-      column-gap: calc(var(--space_24) * 2);
     }
   }
 </style>

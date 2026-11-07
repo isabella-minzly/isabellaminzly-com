@@ -1,0 +1,254 @@
+---
+// Figma "Hero section" with "Section: Highlights" below it.
+// Layout follows the space in Main: text, photo and stats in three columns (1680), text and photo
+// with the stats in a row below (1280, 1024), everything stacked with the photo first (320).
+import { Picture } from 'astro:assets';
+import Button from '../Button.astro';
+import { hero, stats, highlights } from '../../data/home';
+import portrait from '../../assets/landing/isabella.png';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__text">
+    <p class="hero__greeting text-heading">{hero.greeting}</p>
+    <h1 class="hero__headline" id="hero-title">
+      <span class="hero__line hero__line--1">{hero.headline[0]}</span>
+      <span class="hero__line hero__line--2">{hero.headline[1]}</span>
+      <span class="hero__line hero__line--3">{hero.headline[2]}</span>
+    </h1>
+    <p class="hero__intro text-section-heading">{hero.intro}</p>
+    <div class="hero__cta">
+      <Button href={hero.cta.href}>{hero.cta.label}<span class="visually-hidden">{hero.cta.hiddenSuffix}</span></Button>
+    </div>
+  </div>
+  <Picture
+    class="hero__photo"
+    src={portrait}
+    formats={['avif', 'webp']}
+    widths={[300, 380, 600, 760]}
+    sizes="(width >= 47.5em) 380px, calc(100vw - 72px)"
+    alt="Portrait of Isabella Minzly"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <ul class="hero__stats" role="list">
+    {
+      stats.map((stat) => (
+        <li class="stat">
+          <span class="stat__number text-heading">{stat.number}</span>
+          <span class="stat__label text-quote-attribution">{stat.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<section class="highlights" aria-label="Highlights">
+  <ul class="highlights__list" role="list">
+    {
+      highlights.map((item) => (
+        <li class="highlight">
+          <p class="highlight__title text-label">{item.title}</p>
+          <p class="highlight__text text-quote-attribution">{item.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .hero,
+  .highlights {
+    background: var(--contrast_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  /* ---- Hero: stacked (phones) ---- */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'photo' 'text' 'stats';
+    gap: var(--space_24);
+    padding: var(--space_16);
+  }
+
+  .hero__text {
+    grid-area: text;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+
+  .hero__headline {
+    display: flex;
+    flex-direction: column;
+    font: inherit;
+  }
+
+  /* Hardcoded on purpose, as local values (backlog item 11): the three lines mix families */
+  .hero__line {
+    display: block;
+    font-family: var(--font-instrument-sans);
+    font-stretch: 75%;
+    font-weight: 700;
+  }
+
+  .hero__line--1 {
+    font-size: 2.25rem;
+    line-height: 3rem;
+  }
+
+  .hero__line--2 {
+    font-family: var(--font-instrument-serif);
+    font-stretch: normal;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 3.5rem;
+    line-height: 4rem;
+  }
+
+  .hero__line--3 {
+    font-size: 1.75rem;
+    line-height: 2.5rem;
+  }
+
+  .hero__cta {
+    padding-block-start: var(--space_8);
+  }
+
+  .hero :global(.hero__photo) {
+    grid-area: photo;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 380 / 500;
+    object-fit: cover;
+    /* U-shape crop from Figma: square top, semicircle at the bottom */
+    border-radius: 0 0 50% 50% / 0 0 38% 38%;
+  }
+
+  .hero__stats {
+    grid-area: stats;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space_24) var(--space_16);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- Highlights tile ---- */
+  .highlights {
+    margin-block-start: var(--space_24);
+    padding: var(--space_16);
+  }
+
+  .highlights__list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space_16);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .highlight {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+  }
+
+  .highlight__title {
+    font-weight: var(--label-font-weight);
+  }
+
+  /* ---- 760 and up: desktop headline sizes and 32 padding ---- */
+  @media (width >= 47.5em) {
+    .hero {
+      row-gap: var(--space_32);
+      column-gap: var(--space_32);
+      padding: 0 var(--space_32) var(--space_32);
+    }
+
+    .hero__text {
+      padding-block-start: var(--space_32);
+    }
+
+    .hero__line--1 {
+      font-size: 3rem;
+      line-height: 4.75rem;
+    }
+
+    .hero__line--2 {
+      font-size: 4.5rem;
+      line-height: 4.75rem;
+    }
+
+    .hero__line--3 {
+      font-size: 2.25rem;
+      line-height: 4.75rem;
+    }
+
+    .highlights {
+      padding: var(--space_32);
+    }
+  }
+
+  /* ---- Text and photo side by side, stats and highlights on a shared four-column grid ---- */
+  @container main (width >= 50rem) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr) min(380px, 42%);
+      grid-template-areas: 'text photo' 'stats stats';
+      align-items: start;
+    }
+
+    .hero__stats,
+    .highlights__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space_24);
+    }
+
+    .highlight {
+      grid-column: span 2;
+    }
+  }
+
+  /* ---- 1680: text, photo and stats in three columns, four highlights in a row ---- */
+  @container main (width >= 77rem) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr) 380px minmax(0, 1fr);
+      grid-template-areas: 'text photo stats';
+    }
+
+    .hero__stats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      align-self: stretch;
+      text-align: end;
+    }
+
+    .stat {
+      align-items: flex-end;
+    }
+
+    .highlight {
+      grid-column: span 1;
+    }
+  }
+
+  /* With the sidebar the hero touches the top of the page, as in Figma */
+  @media (width >= 80em) {
+    .hero {
+      border-block-start: 0;
+      border-start-start-radius: 0;
+      border-start-end-radius: 0;
+    }
+  }
+</style>

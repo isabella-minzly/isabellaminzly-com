@@ -10,7 +10,7 @@ for (const path of pages) {
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'])
       .analyze();
-    expect(results.violations.map((v) => `${v.id}: ${v.nodes.length} element(s), ${v.help}`)).toEqual([]);
+    expect(results.violations.map((v) => `${v.id}: ${v.help} at ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`)).toEqual([]);
   });
 
   test(`no horizontal scroll: ${path}`, async ({ page }) => {
@@ -20,24 +20,47 @@ for (const path of pages) {
   });
 }
 
-test('mobile menu opens, names itself and closes with Escape', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'mobile', 'Menu button only exists below 1024');
+test('menu overlay opens as a dialog, keeps focus inside and closes with Escape', async ({ page }, testInfo) => {
+  test.skip((page.viewportSize()?.width ?? 0) >= 1280, 'The menu button exists below 1280');
   await page.goto('/');
-  const toggle = page.getByRole('button', { name: 'Menu' });
-  await expect(page.getByRole('navigation', { name: 'Main' })).toBeHidden();
-  await toggle.click();
-  await expect(page.getByRole('button', { name: 'Close menu' })).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.getByRole('navigation', { name: 'Main' })).toBeVisible();
+  const open = page.getByRole('button', { name: 'Menu' });
+  await open.click();
+  const dialog = page.getByRole('dialog', { name: 'Menu' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('aria-current', 'page');
+  // Focus stays in the dialog while it is open
+  for (let i = 0; i < 25; i++) await page.keyboard.press('Tab');
+  expect(await dialog.evaluate((d) => d.contains(document.activeElement))).toBe(true);
   await page.keyboard.press('Escape');
-  await expect(page.getByRole('button', { name: 'Menu' })).toBeFocused();
-  await expect(page.getByRole('navigation', { name: 'Main' })).toBeHidden();
+  await expect(dialog).toBeHidden();
+  await expect(open).toBeFocused();
+});
+
+test('testimonial slider moves with the arrows and marks the ends', async ({ page }) => {
+  // Reduced motion makes the scroll instant, and checks that preference is respected
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const prev = page.getByRole('button', { name: 'Previous testimonials' });
+  const next = page.getByRole('button', { name: 'Next testimonials' });
+  await expect(prev).toHaveAttribute('aria-disabled', 'true');
+  await expect(next).toHaveAttribute('aria-disabled', 'false');
+  await next.click();
+  await expect(prev).toHaveAttribute('aria-disabled', 'false');
+  for (let i = 0; i < 15; i++) {
+    if ((await next.getAttribute('aria-disabled')) === 'true') break;
+    await next.click();
+    await page.waitForTimeout(250);
+  }
+  await expect(next).toHaveAttribute('aria-disabled', 'true');
+  await expect(page.getByText('Marte Berentine Fredriksen')).toBeInViewport();
 });
 
 test('current page is marked in the navigation', async ({ page }) => {
   await page.goto('/bigfix/');
   const nav = page.getByRole('navigation', { name: 'Main' });
   if (await nav.isHidden()) await page.getByRole('button', { name: 'Menu' }).click();
-  await expect(nav.getByRole('link', { name: 'BigFix: the case study' })).toHaveAttribute('aria-current', 'page');
+  const visibleNav = page.getByRole('navigation', { name: 'Main' }).filter({ visible: true });
+  await expect(visibleNav.getByRole('link', { name: 'BigFix: the case study' })).toHaveAttribute('aria-current', 'page');
 });
 
 test('skip link moves focus to the main content', async ({ page }) => {

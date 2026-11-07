@@ -9,7 +9,7 @@ export interface NavItem {
 }
 
 export const navigation: NavItem[] = [
-  { label: 'Home', href: '/', ready: false },
+  { label: 'Home', href: '/', ready: true },
   { label: 'My HCLSoftware: the case study', href: '/my-hclsoftware/', ready: false },
   { label: 'BigFix: the case study', href: '/bigfix/', ready: false },
   {
@@ -17,7 +17,7 @@ export const navigation: NavItem[] = [
     href: '/mandala/',
     ready: false,
     children: [
-      { label: 'Case study: Human-governed, AI-powered', href: '/mandala/human-governed-ai-powered/', ready: false },
+      { label: 'Case study: Human-governed, AI\u2011powered', href: '/mandala/human-governed-ai-powered/', ready: false },
       { label: 'Accessible by design', href: '/mandala/accessible-by-design/', ready: false },
       { label: 'The colour story', href: '/mandala/colour/', ready: false },
       { label: 'Typography, a study on internationalisation', href: '/mandala/typography/', ready: false },

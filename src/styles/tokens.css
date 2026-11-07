@@ -164,8 +164,18 @@
   --brand-bar-width: 4px;
 }
 
-/* Typography mobile collection: used below the 1024 breakpoint */
-@media (width < 64em) {
+/*
+ * Breakpoints, from the Figma collection "Breakpoints". CSS cannot use custom properties in
+ * media queries, so they are written in em (16px = 1em) where used:
+ *   breakpoint_min       320   smallest supported width
+ *   breakpoint_footer_s  600   37.5em  footer links side by side
+ *   breakpoint_footer_m  760   47.5em  footer on one row, desktop text styles, wider page padding
+ *   breakpoint_sidebar  1280   80em    sidebar instead of the header and menu overlay
+ *   page_max_width      1680   page stops growing, stays left-anchored
+ */
+
+/* Typography mobile collection: used below 760, as in the Mobile 320 frames */
+@media (width < 47.5em) {
   :root {
     --heading-font-size: 1.75rem;
     --heading-line-height: 2.5rem;

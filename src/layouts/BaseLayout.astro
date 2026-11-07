@@ -1,6 +1,7 @@
 ---
-// Page shell from the Figma pages: green brand bar, sidebar (Logo and NavigationMenu),
-// main content and Footer. Below 1024 the sidebar becomes a header with a menu button.
+// Page shell from the Figma pages: green brand bar, sidebar (Logo and NavigationMenu) from 1280,
+// main content and Footer. Below 1280 a header with a menu button opens the navigation in an
+// overlay (frames "Landing page / 1024 / Menu open" and "Landing page / Mobile 320 / Menu open").
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import NavigationMenu from '../components/NavigationMenu.astro';
@@ -40,12 +41,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <a class="skip-link" href="#main">Skip to main content</a>
     <div class="page">
       <div class="page__content">
+        <header class="site-header">
+          <Logo />
+          <IconButton class="menu-open" icon="menu" label="Menu" aria-haspopup="dialog" aria-controls="menu-dialog" />
+        </header>
         <header class="sidebar">
-          <div class="sidebar__top">
-            <Logo />
-            <IconButton class="menu-toggle" icon="menu" label="Menu" aria-expanded="false" aria-controls="site-nav" />
-          </div>
-          <nav class="sidebar__nav" id="site-nav" aria-label="Main">
+          <div class="sidebar__logo"><Logo /></div>
+          <nav class="sidebar__nav" aria-label="Main">
             <NavigationMenu currentPath={Astro.url.pathname} />
           </nav>
         </header>
@@ -56,28 +58,34 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <Footer />
     </div>
 
+    <dialog class="menu-dialog" id="menu-dialog" aria-label="Menu">
+      <div class="menu-dialog__header">
+        <Logo />
+        <IconButton class="menu-close" icon="close" label="Close menu" />
+      </div>
+      <nav aria-label="Main">
+        <NavigationMenu currentPath={Astro.url.pathname} />
+      </nav>
+    </dialog>
+
     <script>
-      // Mobile menu: opens inline below the header. The button name and icon follow its state.
-      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
-      const nav = document.getElementById('site-nav');
-      if (toggle && nav) {
-        const menuPath = toggle.querySelector('path');
-        const icons = {
-          menu: 'M5 10H35V13.33H5V10ZM5 18.33H35V21.67H5V18.33ZM5 26.67H35V30H5V26.67Z',
-          close: 'M31.6581 10.6801L29.3081 8.33008L19.9981 17.6501L10.6781 8.33008L8.32812 10.6801L17.6481 20.0001L8.32812 29.3101L10.6781 31.6601L19.9981 22.3501L29.3081 31.6601L31.6581 29.3101L22.3481 20.0001L31.6581 10.6801Z',
-        };
-        const setOpen = (open: boolean) => {
-          toggle.setAttribute('aria-expanded', String(open));
-          toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
-          menuPath?.setAttribute('d', open ? icons.close : icons.menu);
-          nav.classList.toggle('is-open', open);
-        };
-        toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-            setOpen(false);
-            toggle.focus();
-          }
+      // Menu overlay below 1280: a modal dialog, so focus stays inside and Escape closes it.
+      const dialog = document.querySelector<HTMLDialogElement>('#menu-dialog');
+      const openButton = document.querySelector<HTMLButtonElement>('.menu-open');
+      const closeButton = document.querySelector<HTMLButtonElement>('.menu-close');
+      if (dialog && openButton && closeButton) {
+        openButton.addEventListener('click', () => dialog.showModal());
+        closeButton.addEventListener('click', () => dialog.close());
+        dialog.addEventListener('close', () => openButton.focus());
+        // A click outside the panel lands on the backdrop, which belongs to the dialog element
+        dialog.addEventListener('click', (event) => {
+          const r = dialog.getBoundingClientRect();
+          const outside = event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom;
+          if (event.target === dialog && outside) dialog.close();
+        });
+        // Growing past 1280 shows the sidebar, so the overlay is no longer needed
+        matchMedia('(width >= 80em)').addEventListener('change', (event) => {
+          if (event.matches && dialog.open) dialog.close();
         });
       }
     </script>
@@ -125,60 +133,75 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     background: var(--decorative_brand);
   }
 
+  /* Sections lay themselves out by the space in Main, not the window width */
+  .main {
+    container: main / inline-size;
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
   .main:focus {
     outline: none;
   }
 
-  /* Mobile and tablet: header with menu button, content below */
+  /* Below 1280: header with the menu button, content full width */
   .page__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
     padding: 0 var(--space_16) var(--space_32);
   }
 
-  .sidebar__top {
+  @media (width >= 47.5em) {
+    .page__content {
+      padding-inline: var(--space_32);
+    }
+  }
+
+  .site-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space_16);
   }
 
-  :global(.js) .sidebar__nav {
+  .sidebar {
     display: none;
   }
 
-  :global(.js) .sidebar__nav.is-open {
+  /* Without JavaScript the menu button cannot open the overlay, so the menu is listed instead */
+  html:not(.js) .menu-open {
+    display: none;
+  }
+
+  html:not(.js) .sidebar {
     display: block;
   }
 
-  .sidebar__nav :global(.nav-menu) {
-    max-inline-size: none;
-  }
-
-  .main {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space_32);
-    padding-block-start: var(--space_16);
-  }
-
-  /* No JavaScript: the menu stays visible, so the button would do nothing */
-  html:not(.js) .menu-toggle {
+  html:not(.js) .sidebar__logo {
     display: none;
   }
 
-  /* Desktop: fixed sidebar, fluid content, left-anchored up to 1680.
+  /* From 1280: fixed sidebar, fluid content, left-anchored up to 1680.
      As in Figma, the brand bar overlaps the sidebar instead of pushing it. */
-  @media (width >= 64em) {
+  @media (width >= 80em) {
     .page {
       padding-inline-start: 0;
     }
 
     .page__content {
-      display: flex;
+      flex-direction: row;
       gap: var(--space_24);
       padding: 0 0 var(--space_24);
     }
 
-    .sidebar {
+    .site-header {
+      display: none;
+    }
+
+    .sidebar,
+    html:not(.js) .sidebar {
       flex: none;
       display: flex;
       flex-direction: column;
@@ -186,25 +209,63 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       inline-size: var(--sidebar-width);
     }
 
-    .menu-toggle {
-      display: none;
-    }
-
-    :global(.js) .sidebar__nav,
-    .sidebar__nav {
+    html:not(.js) .sidebar__logo {
       display: block;
-      padding-inline-start: var(--space_4);
     }
 
-    .sidebar__nav :global(.nav-menu) {
-      max-inline-size: 22.5rem;
+    .sidebar__nav {
+      padding-inline-start: var(--space_4);
     }
 
     .main {
       flex: 1;
-      min-inline-size: 0;
-      padding-block-start: 0;
       padding-inline-end: var(--space_16);
     }
+  }
+
+  /* Menu overlay: a panel as wide as the sidebar, full width on small phones */
+  .menu-dialog {
+    position: fixed;
+    inset: 0 auto 0 0;
+    inline-size: min(var(--sidebar-width), 100%);
+    max-inline-size: none;
+    block-size: 100dvh;
+    max-block-size: none;
+    margin: 0;
+    padding: 0 var(--space_16) var(--space_32) calc(var(--brand-bar-width) + var(--space_16));
+    overflow-y: auto;
+    border: 0;
+    border-inline-end: var(--border_s) solid var(--tiles_border);
+    background: var(--main_background);
+    color: var(--text_default);
+  }
+
+  .menu-dialog::before {
+    content: '';
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--brand-bar-width);
+    background: var(--decorative_brand);
+  }
+
+  .menu-dialog::backdrop {
+    background: rgb(42 37 32 / 0.4); /* text_default at 40% */
+  }
+
+  .menu-dialog__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space_16);
+    margin-block-end: var(--space_12);
+  }
+
+  .menu-dialog :global(.nav-menu) {
+    max-inline-size: none;
+  }
+
+  :global(html:has(.menu-dialog[open])) {
+    overflow: hidden;
   }
 </style>

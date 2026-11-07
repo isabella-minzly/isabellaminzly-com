@@ -1,0 +1,136 @@
+---
+// Figma "Section: Case studies": two columns of cards at 1680, one column below.
+// Cards in the same row share one height (backlog item 9).
+import { Image } from 'astro:assets';
+import Link from '../Link.astro';
+import { caseStudies } from '../../data/home';
+import mandalaLogo from '../../assets/landing/mandala.svg?raw';
+---
+
+<section class="case-studies" aria-labelledby="case-studies-title">
+  <h2 id="case-studies-title">{caseStudies.heading}</h2>
+  <p class="case-studies__intro">{caseStudies.intro}</p>
+  <ul class="case-studies__grid" role="list">
+    {
+      caseStudies.cards.map((card) => (
+        <li class="card">
+          <div class="card__content">
+            <div class="card__thumbnail">
+              {card.image === 'mandala' ? (
+                <span class="card__logo" aria-hidden="true" set:html={mandalaLogo} />
+              ) : (
+                <Image class="card__image" src={card.image.src} alt={card.image.alt} widths={[206, 412, 618]} sizes="206px" style={'maxWidth' in card.image ? `max-inline-size: ${card.image.maxWidth}px` : undefined} />
+              )}
+            </div>
+            <div class="card__text">
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+              <div>
+                <Link href={card.href}>{card.link}</Link>
+              </div>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .case-studies {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    padding-block: var(--space_32);
+  }
+
+  .case-studies__intro {
+    max-inline-size: 40rem; /* 640: keeps lines readable */
+  }
+
+  .case-studies__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space_24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    container: card / inline-size;
+    padding: var(--space_16);
+    background: var(--tiles_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  /* Phones: image above the text */
+  .card__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    block-size: 100%;
+  }
+
+  .card__thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 180px;
+    padding: var(--space_16);
+    background: var(--contrast_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  .card__thumbnail :global(.card__image) {
+    inline-size: auto;
+    max-inline-size: 206px;
+    max-block-size: 136px;
+    object-fit: contain;
+  }
+
+  .card__logo {
+    display: block;
+    inline-size: 206px;
+    max-inline-size: 100%;
+    color: var(--text_default);
+  }
+
+  .card__logo :global(svg) {
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .card__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+
+  /* Wide enough cards: image on the left, as in the 1680, 1280 and 1024 frames */
+  @container card (width >= 30rem) {
+    .card__content {
+      flex-direction: row;
+    }
+
+    .card__thumbnail {
+      flex: none;
+      inline-size: 238px;
+      min-block-size: 0;
+    }
+
+    .card__text {
+      flex: 1;
+      min-inline-size: 0;
+    }
+  }
+
+  @container main (width >= 77rem) {
+    .case-studies__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--space_16);
+    }
+  }
+</style>
