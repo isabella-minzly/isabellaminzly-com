@@ -1,6 +1,7 @@
 ---
 // Content for pages that are not ready yet. Copy is a draft for Isabella's approval.
 import Link from './Link.astro';
+import { url } from '../utils/url';
 
 interface Props {
   title: string;
@@ -15,7 +16,7 @@ const { title } = Astro.props;
     This page is still being written. I am choosing the images and checking every detail, and I would rather show it
     to you finished than half done. Please come back soon to read it.
   </p>
-  <p><Link href="/">Go to the home page</Link></p>
+  <p><Link href={url('/')}>Go to the home page</Link></p>
 </section>
 
 <style>

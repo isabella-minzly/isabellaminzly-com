@@ -4,6 +4,7 @@
 import { Image } from 'astro:assets';
 import Link from '../Link.astro';
 import { caseStudies } from '../../data/home';
+import { url } from '../../utils/url';
 import mandalaLogo from '../../assets/landing/mandala.svg?raw';
 ---
 
@@ -26,7 +27,7 @@ import mandalaLogo from '../../assets/landing/mandala.svg?raw';
               <h3>{card.title}</h3>
               <p>{card.text}</p>
               <div>
-                <Link href={card.href}>{card.link}</Link>
+                <Link href={url(card.href)}>{card.link}</Link>
               </div>
             </div>
           </div>

@@ -2,28 +2,28 @@
 // Figma components "NavigationMenu" and "Navigation" (Top and Sub levels).
 // The current page is marked with aria-current and the Active style (left bar, not colour alone).
 import { navigation, type NavItem } from '../data/navigation';
+import { url, pagePath } from '../utils/url';
 
 interface Props {
   currentPath: string;
 }
 
 const { currentPath } = Astro.props;
-const normalise = (path: string) => (path.endsWith('/') ? path : `${path}/`);
-const isCurrent = (item: NavItem) => normalise(currentPath) === item.href;
+const isCurrent = (item: NavItem) => pagePath(currentPath) === item.href;
 ---
 
 <ul class="nav-menu" role="list">
   {
     navigation.map((item) => (
       <li>
-        <a class="nav-item text-navigation" href={item.href} aria-current={isCurrent(item) ? 'page' : undefined}>
+        <a class="nav-item text-navigation" href={url(item.href)} aria-current={isCurrent(item) ? 'page' : undefined}>
           {item.label}
         </a>
         {item.children && (
           <ul class="nav-menu__sub" role="list">
             {item.children.map((child) => (
               <li>
-                <a class="nav-item nav-item--sub text-navigation" href={child.href} aria-current={isCurrent(child) ? 'page' : undefined}>
+                <a class="nav-item nav-item--sub text-navigation" href={url(child.href)} aria-current={isCurrent(child) ? 'page' : undefined}>
                   {child.label}
                 </a>
               </li>

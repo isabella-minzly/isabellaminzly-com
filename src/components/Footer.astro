@@ -5,6 +5,7 @@
 import Link from './Link.astro';
 import Frog from './Frog.astro';
 import { footerLinks } from '../data/navigation';
+import { url } from '../utils/url';
 
 const year = new Date().getFullYear();
 ---
@@ -14,7 +15,7 @@ const year = new Date().getFullYear();
     <p class="footer__copyright text-footer">© {year} Isabella Minzly. All rights reserved.</p>
     <ul class="footer__links" role="list">
       <li><Link href={footerLinks.linkedIn}>LinkedIn</Link></li>
-      <li><Link href={footerLinks.accessibilityStatement}>Accessibility statement</Link></li>
+      <li><Link href={url(footerLinks.accessibilityStatement)}>Accessibility statement</Link></li>
     </ul>
   </div>
   <Frog class="footer__frog" />
