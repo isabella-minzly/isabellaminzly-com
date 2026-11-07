@@ -81,11 +81,15 @@ const textStyles = [
     <div class="row">
       <Button>Button label</Button>
       <Button href="#ds-buttons">Button as a link</Button>
+      <Button disabledReason="Tooltip text explains why an element is disabled.">Disabled button</Button>
+    </div>
+    <div class="row row--end">
+      <Button disabledReason="Tooltip text explains why an element is disabled.">Disabled button</Button>
     </div>
     <div class="row">
       <IconButton icon="chevron_back" label="Previous testimonials" />
       <IconButton icon="chevron_forward" label="Next testimonials" />
-      <IconButton icon="chevron_forward" label="Next testimonials (disabled example)" disabled />
+      <IconButton icon="chevron_forward" label="Next testimonials (disabled example)" disabledReason="Tooltip text explains why an element is disabled." />
     </div>
   </section>
 
@@ -160,6 +164,11 @@ const textStyles = [
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space_16);
+  }
+
+  /* Shows the tooltip lining up with the right edge (Bottom right) */
+  .row--end {
+    justify-content: flex-end;
   }
 
   .icons {
