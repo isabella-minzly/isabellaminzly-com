@@ -1,30 +1,376 @@
 ---
-// Content for pages that are not ready yet. Copy is a draft for Isabella's approval.
-import Link from './Link.astro';
+// Figma frames "Under construction v2" (1680), "/ 1280", "/ 1024" and "/ Mobile 320".
+// The same placeholder for every page that is not built yet; the page name is in the <title>.
+import Button from './Button.astro';
 import { url } from '../utils/url';
+import { footerLinks } from '../data/navigation';
+import jump from '../assets/under-construction/jump.svg?raw';
+import read from '../assets/under-construction/read.svg?raw';
+import about from '../assets/under-construction/about.svg?raw';
+import contact from '../assets/under-construction/contact.svg?raw';
+import hop from '../assets/under-construction/hop.svg?raw';
 
-interface Props {
-  title: string;
-}
+const steps = [
+  { label: 'Research and plan', status: 'Done', state: 'done' },
+  { label: 'Structure and design', status: 'Done', state: 'done' },
+  { label: 'Building and refining', status: 'In progress', state: 'progress' },
+  { label: 'Launching soon', status: 'Stay tuned', state: 'soon' },
+] as const;
 
-const { title } = Astro.props;
+const highlights = [
+  { image: read, title: 'Read the case studies', text: 'Explore the projects that are ready.', href: url('/#case-studies-title') },
+  { image: about, title: 'Learn about me', text: 'Discover my story, values and skills.' },
+  { image: contact, title: 'Get in touch', text: 'Talk to me about ideas, collaboration or a coffee.', href: footerLinks.linkedIn, hiddenSuffix: ' on LinkedIn' },
+  { image: hop, title: 'Hop back', text: 'Check back soon for updates.' },
+];
 ---
 
-<section class="under-construction">
-  <h1>{title}</h1>
-  <p>
-    This page is still being written. I am choosing the images and checking every detail, and I would rather show it
-    to you finished than half done. Please come back soon to read it.
-  </p>
-  <p><Link href={url('/')}>Go to the home page</Link></p>
-</section>
+<div class="under-construction">
+  <section class="hero" aria-labelledby="uc-title">
+    <div class="hero__text">
+      <h1 class="hero__title" id="uc-title">Something good is taking <em>shape.</em></h1>
+      <p class="text-section-heading">
+        This page of my portfolio is under construction. I am working on the finishing touches and it will be ready soon. In the meantime, please explore the
+        rest of my work.
+      </p>
+      <div class="hero__actions">
+        <Button href={url('/')}>Back to home</Button>
+        <Button href={footerLinks.linkedIn} variant="outlined">Say hello<span class="visually-hidden"> on LinkedIn</span></Button>
+      </div>
+    </div>
+    <div class="hero__progress">
+      <span class="hero__illustration" aria-hidden="true" set:html={jump} />
+      <ol class="steps" aria-label="Progress" role="list">
+        {
+          steps.map((step) => (
+            <li class:list={['step', `step--${step.state}`]}>
+              <svg class="step__marker" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+                <circle cx="22" cy="22" r={step.state === 'done' ? 22 : 21} />
+                {step.state === 'done' && <path d="M13 22L19 28L31 16" />}
+                {step.state === 'progress' && <path d="M14 22H30" />}
+              </svg>
+              <span class="step__label">{step.label}</span>
+              <span class="step__status text-quote-attribution">{step.status}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <figure class="quote">
+    <span class="quote__mark text-quote-mark-s" aria-hidden="true">“</span>
+    <blockquote class="quote__text">
+      <p>I build systems that scale, not single solutions. This page is no different: it is being built with the same care.</p>
+    </blockquote>
+  </figure>
+
+  <section class="wait" aria-labelledby="uc-wait">
+    <h2 id="uc-wait">While you wait, you can</h2>
+    <ul class="highlights" role="list">
+      {
+        highlights.map((item) => (
+          <li class="highlight">
+            <span class="highlight__image" aria-hidden="true" set:html={item.image} />
+            {item.href ? (
+              <a class="highlight__title highlight__link text-label" href={item.href}>
+                {item.title}
+                {item.hiddenSuffix && <span class="visually-hidden">{item.hiddenSuffix}</span>}
+              </a>
+            ) : (
+              <p class="highlight__title text-label">{item.title}</p>
+            )}
+            <p class="text-quote-attribution">{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</div>
 
 <style>
   .under-construction {
     display: flex;
     flex-direction: column;
-    gap: var(--space_16);
-    max-inline-size: 45.625rem; /* 730, body paragraph width */
+    gap: var(--space_32);
+  }
+
+  /* Hero: text, then the illustration and the progress steps. Side by side in the 1680 layout. */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_24);
+    padding: 0 0 var(--space_16);
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_24);
+    max-inline-size: 35rem; /* 560 */
     padding-block-start: var(--space_24);
+  }
+
+  /* Hardcoded on purpose, like the Landing hero headline: 72/80, 56/64 on phones */
+  .hero__title {
+    font-family: var(--heading-font-family);
+    font-weight: 400;
+    font-size: 3.5rem;
+    line-height: 4rem;
+  }
+
+  .hero__title em {
+    color: var(--accent_default);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space_24);
+    padding-block-start: var(--space_8);
+  }
+
+  .hero__progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space_32);
+  }
+
+  .hero__illustration {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: 608px;
+  }
+
+  .hero__illustration :global(svg) {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    overflow: visible;
+  }
+
+  /* Progress steps: two by two on phones, four in a row when there is room */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--space_24);
+    inline-size: 100%;
+    max-inline-size: 608px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space_8);
+    padding-inline: var(--space_8);
+    text-align: center;
+  }
+
+  .step__marker {
+    flex: none;
+  }
+
+  .step--done circle {
+    fill: var(--accent_default);
+  }
+
+  .step--done path {
+    fill: none;
+    stroke: var(--text_label);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .step--progress circle,
+  .step--soon circle {
+    fill: var(--main_background);
+    stroke-width: 2;
+  }
+
+  .step--progress circle {
+    stroke: var(--accent_default);
+  }
+
+  .step--progress path {
+    stroke: var(--accent_default);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+
+  .step--soon circle {
+    stroke: var(--tiles_border);
+  }
+
+  .step--progress .step__status {
+    color: var(--accent_default);
+  }
+
+  /* Quote: 24/32, 20/28 on phones */
+  .quote {
+    display: flex;
+    gap: var(--space_16);
+    padding-block-start: var(--space_16);
+  }
+
+  .quote__mark {
+    flex: none;
+    color: var(--accent_default);
+  }
+
+  .quote__text {
+    max-inline-size: 41rem; /* 657 */
+    font-family: var(--quote_s-font-family);
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .wait {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_24);
+    padding: var(--space_16);
+    background: var(--contrast_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  /* Highlights: one column with dividers between them on phones, four equal columns when there is room */
+  .highlights {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: calc(2 * var(--space_16) + var(--border_s));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .highlight {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+  }
+
+  .highlight + .highlight::before {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(-1 * var(--space_16) - var(--border_s));
+    inset-inline: 0;
+    block-size: var(--border_s);
+    background: var(--tiles_border);
+  }
+
+  .highlight__image {
+    display: block;
+    inline-size: 80px;
+    block-size: 80px;
+    margin-block-end: var(--space_8);
+  }
+
+  .highlight__image :global(svg) {
+    display: block;
+  }
+
+  .highlight__title {
+    align-self: flex-start;
+    color: var(--text_default);
+  }
+
+  /* The title is the link; it is underlined so it does not rely on colour, and the whole highlight is clickable */
+  .highlight__link {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .highlight__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .highlight:has(.highlight__link):hover .highlight__link {
+    color: var(--accent_hover);
+  }
+
+  .highlight__link:focus-visible {
+    outline: none;
+  }
+
+  .highlight:has(.highlight__link:focus-visible) {
+    outline: var(--border_focus) solid var(--accent_default);
+    outline-offset: var(--space_4);
+    border-radius: var(--radius_s);
+  }
+
+  @media (width >= 47.5em) {
+    .hero {
+      gap: var(--space_32);
+      padding: 0 var(--space_32) var(--space_32);
+    }
+
+    .hero__text {
+      padding-block-start: var(--space_64);
+    }
+
+    .hero__title {
+      font-size: 4.5rem;
+      line-height: 5rem;
+    }
+
+    .steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .quote {
+      padding-inline: var(--space_32);
+    }
+
+    .quote__text {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+
+    .wait {
+      padding: var(--space_32);
+    }
+  }
+
+  @container main (width >= 50rem) {
+    .highlights {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: calc(2 * var(--space_32) + var(--border_s));
+    }
+
+    .highlight + .highlight::before {
+      inset-block: 0;
+      inset-inline-start: calc(-1 * var(--space_32) - var(--border_s));
+      inset-inline-end: auto;
+      inline-size: var(--border_s);
+      block-size: auto;
+    }
+  }
+
+  @container main (width >= 77rem) {
+    .hero {
+      flex-direction: row;
+    }
+
+    .hero__text {
+      flex: none;
+      inline-size: 35rem;
+    }
+
+    .hero__progress {
+      flex: 1;
+      min-inline-size: 0;
+    }
   }
 </style>

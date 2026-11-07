@@ -21,7 +21,7 @@ export const navigation: NavItem[] = [
       { label: 'Accessible by design', href: '/mandala/accessible-by-design/', ready: false },
       { label: 'The colour story', href: '/mandala/colour/', ready: false },
       { label: 'Typography, a study on internationalisation', href: '/mandala/typography/', ready: false },
-      { label: 'Mandala: The name', href: '/mandala/name/', ready: false },
+      { label: 'Mandala: The story behind the name', href: '/mandala/name/', ready: false },
     ],
   },
   { label: 'Training and speaking: Accessibility for Inclusion', href: '/accessibility-for-inclusion/', ready: true },
