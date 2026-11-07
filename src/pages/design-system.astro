@@ -120,7 +120,7 @@ const textStyles = [
 
   .swatches {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
     gap: var(--space_16);
     margin: 0;
     padding: 0;
@@ -131,9 +131,15 @@ const textStyles = [
     display: flex;
     align-items: center;
     gap: var(--space_12);
+    min-inline-size: 0;
+  }
+
+  .swatch code {
+    overflow-wrap: anywhere;
   }
 
   .swatch__chip {
+    flex: none;
     inline-size: var(--space_64);
     block-size: var(--space_64);
     border: var(--border_s) solid var(--tiles_border);
