@@ -1,4 +1,4 @@
-/* Layout shared by the case study pages (My HCLSoftware, Accessibility for Inclusion, ...).
+/* Layout shared by the case study pages (My HCLSoftware, BigFix, Accessibility for Inclusion, ...).
    Rows sit side by side only in the 1680 layout (main 77rem and wider) and stack below it,
    figure first, as in the 1280, 1024 and Mobile 320 frames. */
 
@@ -47,6 +47,21 @@
   display: flex;
   flex-direction: column;
   gap: var(--space_16);
+}
+
+/* Figma "Image pair": two figures side by side when main has room, stacked on phones */
+.case-study .image-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space_16);
+}
+
+@container main (width >= 37.5rem) {
+  .case-study .image-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space_32);
+  }
 }
 
 /* Lists of links, such as "Accessibility applied" */

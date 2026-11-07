@@ -1,0 +1,300 @@
+---
+// BigFix case study, built from the Figma frames "BigFix" (1680), "BigFix / 1280",
+// "BigFix / 1024" and "BigFix / Mobile 320". Follows the My HCLSoftware template.
+// Image pairs sit side by side down to 1024 and stack on phones.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Link from '../components/Link.astro';
+import CaseFigure from '../components/case-study/CaseFigure.astro';
+import Kpis from '../components/case-study/Kpis.astro';
+import { url } from '../utils/url';
+import '../styles/case-study.css';
+import hero from '../assets/bigfix/hero.png';
+import before from '../assets/bigfix/before.png';
+import now from '../assets/bigfix/now.png';
+import stackedChart from '../assets/bigfix/stacked-chart.svg?raw';
+import chartDataTable from '../assets/bigfix/chart-data-table.svg?raw';
+import bluePalette from '../assets/bigfix/blue-palette.svg?raw';
+import colourBlindnessTests from '../assets/bigfix/colour-blindness-tests.svg?raw';
+import navigation from '../assets/bigfix/navigation.svg?raw';
+import tableDensities from '../assets/bigfix/table-densities.svg?raw';
+import handoffLabel from '../assets/bigfix/handoff-alternative-label.svg?raw';
+import handoffHeading from '../assets/bigfix/handoff-heading.svg?raw';
+
+const results = [
+  { figure: '100+', description: 'screens delivered.' },
+  { figure: '6+ products', description: 'unified, and counting: on-prem, SaaS, IVR, DEX, MCM and SSA.' },
+  { figure: '10 designers', description: 'led across Italy and India.' },
+  { figure: '1 architecture', description: 'from grids to charts.' },
+  { figure: '20+', description: 'layout patterns guarantee consistency.' },
+  { figure: 'Accessible', description: 'by design.' },
+];
+---
+
+<BaseLayout
+  title="BigFix case study"
+  description="How I lead the BigFix UI: one accessible architecture for 6+ products, a chart system built around colour blindness, and a handoff framework the team has made its own."
+>
+  <article class="case-study">
+    <div class="hero">
+      <h1 class="hero__title">BigFix case study</h1>
+      <CaseFigure
+        src={hero}
+        alt="The BigFix Fixlet Explorer overview on a laptop, with quick links and two charts."
+        width={716}
+        minHeight={465}
+        eager
+      />
+    </div>
+
+    <Kpis label="Results" items={results} />
+
+    <div class="summary">
+      <div class="text">
+        <p>
+          Some of the people who use BigFix love it enough to have its logo tattooed on their skin. That is the trust I was asked to carry into a new interface
+          when Aaron Bauer, who owns the project to rebuild the BigFix UI, asked for me by name, because he wanted to be sure it succeeded. The brief was to bring
+          every BigFix product into one coherent, accessible, modern and attractive interface, one that finally looked as good as the product was trusted to be,
+          without giving that fiercely loyal base any reason to feel the product had stopped being theirs.
+        </p>
+      </div>
+
+      <section class="section" aria-labelledby="role">
+        <h2 id="role">My role, created for me</h2>
+        <div class="text">
+          <p>
+            I own the UI of BigFix. I am the final decision-maker on how every screen looks and behaves, in a role that did not exist until it was created for me,
+            and together with Aaron and the UX lead I steer the whole effort, working with stakeholders and leadership across the United States, India and Italy
+            through several meetings every week.
+          </p>
+          <p>
+            I started from the grids and built upwards: the patterns every page is made of, the empty and error states, the architecture that six products now
+            stand on. The design language I had already built for MHS and Marketplace gave me the foundation, and BigFix is where it grew into a much larger
+            system, one that is now becoming Mandala, a fully AI-readable and compatible design system with a case study of its own.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="team">
+        <h2 id="team">Leading the team</h2>
+        <div class="text">
+          <p>
+            I lead a high-performing team of ten designers, distributed between Italy and India. I took part in hiring some of them and mentor all of them, as well
+            as four external designers currently collaborating with us, and I run team meetings every week so that the team always has the context, the trust and
+            the room it needs to do its best work.
+          </p>
+          <p>
+            My own role has moved from hands-on design to review and final sign-off, and I share more of that review with the team every month, so that the
+            quality of BigFix never depends on a single person. I keep the final sign-off; the judgement behind it is increasingly theirs.
+          </p>
+          <p>
+            The best part of it is that it is a team people are glad to belong to. They work hard, they trust each other, and they have the freedom to follow the
+            work that interests them most. Some of what I am proudest of in this case study, like the Figma plugins they built to speed up handoff, came from them,
+            not from me.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="mandate">
+        <h2 id="mandate">The mandate</h2>
+        <div class="text">
+          <p>
+            BigFix is not one product. Long before it belonged to HCL it was a name IT professionals trusted, and the people who use it every day notice every
+            change, because they live inside it for hours at a time. That made the stakes high in both directions: every change had to feel familiar to the people
+            who already relied on it, and the new interface also had to become a real asset for the sales team, because in a competitive market the first thing a
+            prospective customer judges is what the product looks like. It was a brief with very little room for a wrong answer.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <section class="section" aria-labelledby="architecture">
+      <h2 id="architecture">The architecture</h2>
+      <div class="text">
+        <p>
+          Building one architecture for six products meant that everything a page is made of had to share the same logic, not only the same look: the layouts, the
+          components, the behaviours, the empty and error states and the charts. The foundation I had built for My HCLSoftware and Marketplace was a starting
+          point, not a template. BigFix needed a new primary colour, a vastly larger component library and an entirely new chart library, because it runs on data
+          in a way those earlier products never did.
+        </p>
+      </div>
+      <div class="figure-stack">
+        <div class="section">
+          <h3>Before: one product, many different looks</h3>
+          <CaseFigure
+            src={before}
+            alt="Four screens from BigFix products before the redesign, each with a different look."
+            width={1230}
+            minHeight={0}
+          />
+        </div>
+        <div class="section">
+          <h3>Now: a modern, consistent look and feel, accessible by design</h3>
+          <CaseFigure
+            src={now}
+            alt="Four screens from BigFix products after the redesign, sharing one look and feel."
+            width={1230}
+            minHeight={0}
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="charts">
+      <h2 id="charts">The chart problem</h2>
+      <div class="text">
+        <p>
+          A chart with thirty data elements cannot have thirty accessible colours. Human vision does not support that many distinguishable hues, and colour
+          blindness narrows the number further still. I built a six-colour palette within a single hue for the cases that need only that, and a separate
+          eight-colour palette engineered to hold up under every major type of colour blindness while still meeting contrast requirements, and that was the
+          ceiling.
+        </p>
+        <p>
+          Rather than fight the ceiling, I built the system around it. Every chart displays its top elements directly and groups the rest under “other”, and every
+          chart, without exception, ships with a paired data table in a drawer that is sortable, downloadable and exact. A chart can struggle when a value of one
+          sits next to a value of thirteen hundred, but the table never does, so accessibility is guaranteed at the system level rather than earned chart by chart.
+          The table also makes every chart easier to read for everyone, which is what I have argued in accessibility training for years: accessibility is rarely a
+          trade-off against a better experience, and usually it is the better experience.
+        </p>
+      </div>
+      <div class="figure-stack">
+        <div class="image-pair">
+          <CaseFigure
+            svg={stackedChart}
+            alt="A stacked bar chart in six shades of blue, with a legend."
+            width={459}
+            minHeight={420}
+            caption="The stacked chart using the fully accessible blue colour palette."
+          />
+          <CaseFigure
+            svg={chartDataTable}
+            alt="A chart reference drawer showing the chart data as a table."
+            width={560}
+            minHeight={420}
+            caption="All charts have a data table which can be opened in a drawer. This perfectly meets requirements for long alt text for charts, as well as being useful to a lot of other users. A great example of how everyone benefits from accessibility."
+          />
+        </div>
+        <div class="image-pair">
+          <CaseFigure svg={bluePalette} alt="Six shades of blue, from light to dark." width={80} minHeight={340} caption="The blue colour palette." />
+          <CaseFigure
+            svg={colourBlindnessTests}
+            alt="The six shades of blue as seen with eight types of colour blindness, from protanomaly to achromatopsia."
+            width={545}
+            minHeight={340}
+            caption="Tests performed to check for colour blindness compatibility. These tests were performed on all themes, and on all types of palettes."
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="density">
+      <h2 id="density">Density, resolved by choice</h2>
+      <div class="text">
+        <p>
+          BigFix's long-time users want maximum information on screen, while modern conventions favour breathing room and scrolling. I chose not to treat that as a
+          fight to win and built the choice into the system instead. The left navigation collapses to icons for people who want the space, with labels still
+          guaranteed on hover so nothing is lost to accessibility, and every data table offers three row heights, so each user sets their own density.
+        </p>
+        <p>Nobody has to lose this argument, because the system holds both answers at once.</p>
+      </div>
+      <div class="image-pair">
+        <CaseFigure
+          svg={navigation}
+          alt="The left navigation expanded with labels, and collapsed to icons only."
+          width={329}
+          minHeight={380}
+          caption="Navigation available both with labels and as icon only."
+        />
+        <CaseFigure
+          svg={tableDensities}
+          alt="Three data tables side by side, each with a different row height."
+          width={553}
+          minHeight={380}
+          caption="Data table available in three different densities."
+        />
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="filtering">
+      <h2 id="filtering">Filtering, built with the people who know it best</h2>
+      <div class="text">
+        <p>
+          Filtering is one of the hardest interactions in enterprise software to get right, and the credit for solving it belongs to Aaron and the UX lead. They
+          understood the product, its users and its technical limits well enough to define how filtering had to work. I joined at the end of that thinking,
+          shaping how the pattern looks and fits into the system, which is the smallest part of the problem.
+        </p>
+        <p>
+          It is also one of the parts of this project I learned the most from. Watching them work through it taught me more about how people use BigFix than any
+          brief could, and my job was to listen closely and make their solution look as good as it works.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="handoff">
+      <h2 id="handoff">The handoff framework</h2>
+      <div class="text">
+        <p>
+          Handoff is where good design most often gets lost in translation, so nothing leaves the BigFix design team without a framework that answers developers'
+          questions before they have to ask them. It sets out how every screen behaves from large desktop to mobile, and every accessibility decision a designer
+          controls: page regions, heading hierarchy, tab order and where it must be deliberately forced, labels on icon-only buttons, alt text, spacing tokens and
+          correct component usage. The result is code that is right the first time, a clear standard for QA to test against, and a clean line of responsibility:
+          design guarantees accessibility on its side, and development and QA own it from there.
+        </p>
+        <p>
+          The framework has since become the team's own. When security restrictions ruled out off-the-shelf Figma plugins, the designers built their own to make
+          handoff faster, and seeing them extend the system on their own initiative is one of the things I am proudest of as their lead.
+        </p>
+      </div>
+      <div class="image-pair">
+        <CaseFigure
+          svg={handoffLabel}
+          alt="A handoff label reading Documentation, pointing to a report icon."
+          width={207}
+          caption="Alternative labels for screen reader users are documented in each design handoff."
+        />
+        <CaseFigure
+          svg={handoffHeading}
+          alt="A handoff label reading h1, pointing to the text I am the main title."
+          width={270}
+          caption="The designers indicate heading hierarchy when handing off to development."
+        />
+      </div>
+    </section>
+
+    <section class="section section--padded" aria-labelledby="outcome">
+      <h2 id="outcome">6+ products speaking the same language, to everyone</h2>
+      <div class="text">
+        <p>
+          The measure of this work is not any single screen. It is that six products now speak the same language, and that the people who have trusted BigFix for
+          years can open any of them and still feel it is theirs, with accessibility built into every pattern and component so that everyone can enjoy it.
+        </p>
+        <p>
+          The designers who carry it forward understand it well enough to take it further than I could alone, and what began as the foundation for two portals is
+          becoming something more ambitious still: Mandala.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--padded" aria-labelledby="next">
+      <h2 id="next">Next case study</h2>
+      <div><Link href={url('/mandala/human-governed-ai-powered/')}>Mandala case study: Human-governed, AI-powered</Link></div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Shared layout is in src/styles/case-study.css; this is what only this page needs */
+
+  /* The intro and the three headed sections sit 24 apart, as in Figma "Section: summary" */
+  .summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_24);
+  }
+
+  /* Groups of figures 24 apart: "Before and after", "Chart figures" */
+  .figure-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_24);
+  }
+</style>
