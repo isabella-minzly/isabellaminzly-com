@@ -14,14 +14,16 @@ interface Props {
   boxWidth?: number;
   /** Minimum box height from 760 up, in px */
   minHeight?: number;
+  /** The image fills the box edge to edge, with no padding (Accessibility for Inclusion hero) */
+  bleed?: boolean;
   eager?: boolean;
   class?: string;
 }
 
-const { src, alt, width, boxWidth, minHeight = 340, eager = false, class: className } = Astro.props;
+const { src, alt, width, boxWidth, minHeight = 340, bleed = false, eager = false, class: className } = Astro.props;
 ---
 
-<figure class:list={['case-figure', className]} style={`--box-width: ${boxWidth ? `${boxWidth}px` : '100%'}; --box-min-height: ${minHeight}px; --image-width: ${width}px`}>
+<figure class:list={['case-figure', { 'case-figure--bleed': bleed }, className]} style={`--box-width: ${boxWidth ? `${boxWidth}px` : '100%'}; --box-min-height: ${minHeight}px; --image-width: ${width}px`}>
   <Picture
     class="case-figure__image"
     src={src}
@@ -52,8 +54,22 @@ const { src, alt, width, boxWidth, minHeight = 340, eager = false, class: classN
     max-inline-size: 100%;
   }
 
+  .case-figure--bleed {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* The picture element is the flex item, so it has to fill the box for the image to */
+  .case-figure--bleed :global(picture) {
+    flex: 1;
+  }
+
+  .case-figure--bleed :global(.case-figure__image) {
+    inline-size: 100%;
+  }
+
   @media (width >= 47.5em) {
-    .case-figure {
+    .case-figure:not(.case-figure--bleed) {
       min-block-size: var(--box-min-height);
     }
   }

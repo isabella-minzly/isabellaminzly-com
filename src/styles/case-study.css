@@ -1,0 +1,87 @@
+/* Layout shared by the case study pages (My HCLSoftware, Accessibility for Inclusion, ...).
+   Rows sit side by side only in the 1680 layout (main 77rem and wider) and stack below it,
+   figure first, as in the 1280, 1024 and Mobile 320 frames. */
+
+.case-study {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space_32);
+}
+
+.case-study .hero,
+.case-study .section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space_16);
+}
+
+/* The page title sits on the right from 760, as in the 1680, 1280 and 1024 frames */
+.case-study .hero__title {
+  padding-block-start: var(--space_24);
+}
+
+@media (width >= 47.5em) {
+  .case-study .hero__title {
+    padding-inline-end: var(--space_16);
+    text-align: end;
+  }
+}
+
+.case-study .section--padded {
+  padding-block: var(--space_16);
+}
+
+/* Paragraphs: 730 wide at most, 16 apart */
+.case-study .text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space_16);
+  max-inline-size: 45.625rem;
+}
+
+.case-study .narrow {
+  max-inline-size: 45rem; /* 720 */
+}
+
+.case-study .row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space_16);
+}
+
+/* Lists of links, such as "Accessibility applied" */
+.case-study .link-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space_16);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 1680 layout: text and figures side by side */
+@container main (width >= 77rem) {
+  .case-study .row {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space_24);
+  }
+
+  .case-study .row .case-figure {
+    flex: none;
+  }
+
+  .case-study .row--text-first .row__text {
+    order: -1;
+  }
+
+  .case-study .row__text {
+    flex: 0 1 45.625rem;
+  }
+
+  .case-study .row__text--wide {
+    flex: 1;
+    max-inline-size: 41.875rem; /* 670 */
+  }
+}
