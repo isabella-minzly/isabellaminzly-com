@@ -1,0 +1,29 @@
+---
+// Figma component set "Icon". Decorative: the control that holds it carries the name.
+export type IconType = 'chevron_forward' | 'chevron_back' | 'menu' | 'close';
+
+interface Props {
+  type: IconType;
+}
+
+const paths: Record<IconType, string> = {
+  chevron_forward: 'M21.7234 19.9723L13.668 11.9169L15.6401 9.94482L25.668 19.9723L15.6401 30.0002L13.668 28.0282L21.7234 19.9723Z',
+  chevron_back: 'M23.3599 30.0002L13.332 19.9723L23.3599 9.94482L25.332 11.9169L17.2766 19.9723L25.332 28.0282L23.3599 30.0002Z',
+  menu: 'M5 10H35V13.33H5V10ZM5 18.33H35V21.67H5V18.33ZM5 26.67H35V30H5V26.67Z',
+  close: 'M31.6581 10.6801L29.3081 8.33008L19.9981 17.6501L10.6781 8.33008L8.32812 10.6801L17.6481 20.0001L8.32812 29.3101L10.6781 31.6601L19.9981 22.3501L29.3081 31.6601L31.6581 29.3101L22.3481 20.0001L31.6581 10.6801Z',
+};
+
+const { type } = Astro.props;
+---
+
+<svg class="icon" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <path d={paths[type]} fill="currentColor" />
+</svg>
+
+<style>
+  .icon {
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    flex: none;
+  }
+</style>

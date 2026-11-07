@@ -1,0 +1,37 @@
+---
+// Figma component "Link": standalone text link (Default, Hover, Focus, Pressed).
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'>;
+
+const { class: className, ...attrs } = Astro.props;
+---
+
+<a class:list={['link', className]} {...attrs}><slot /></a>
+
+<style>
+  .link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--space_2);
+    color: var(--accent_default);
+    font-family: var(--body-font-family);
+    font-weight: var(--body-font-weight);
+    font-size: var(--body-font-size);
+    line-height: var(--body-line-height);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    border-radius: var(--radius_xs);
+  }
+
+  .link:hover,
+  .link:active {
+    background: var(--contrast_background);
+  }
+
+  .link:focus-visible {
+    outline: var(--border_s) solid var(--accent_default);
+    outline-offset: 0;
+  }
+</style>

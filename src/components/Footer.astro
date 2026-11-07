@@ -1,0 +1,61 @@
+---
+// Figma component "Footer": copyright, LinkedIn and accessibility statement links, frog.
+import Link from './Link.astro';
+import Frog from './Frog.astro';
+import { footerLinks } from '../data/navigation';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__bar">
+    <p class="footer__copyright text-footer">© {year} Isabella Minzly. All rights reserved.</p>
+    <ul class="footer__links" role="list">
+      <li><Link href={footerLinks.linkedIn}>LinkedIn</Link></li>
+      <li><Link href={footerLinks.accessibilityStatement}>Accessibility statement</Link></li>
+    </ul>
+  </div>
+  <Frog class="footer__frog" />
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding-block-start: var(--space_40);
+  }
+
+  .footer__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space_32);
+    row-gap: var(--space_8);
+    min-block-size: 5rem;
+    padding: var(--space_10) var(--space_24) var(--space_10) var(--space_16);
+    padding-inline-end: 6rem; /* keeps text clear of the frog */
+    background: var(--contrast_background);
+  }
+
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space_8) var(--space_24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer__frog {
+    position: absolute;
+    inset-block-start: calc(var(--space_24) * -1);
+    inset-inline-end: var(--space_16);
+  }
+
+  /* Desktop: copyright lines up with the main column (space_400), links follow 24 + 24 later */
+  @media (width >= 64em) {
+    .footer__bar {
+      padding-inline-start: var(--space_400);
+      column-gap: calc(var(--space_24) * 2);
+    }
+  }
+</style>

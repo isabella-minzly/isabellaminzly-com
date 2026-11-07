@@ -1,0 +1,134 @@
+/* Text styles from Figma, as classes. Element defaults map headings to their styles. */
+
+h1,
+.text-heading {
+  font-family: var(--heading-font-family);
+  font-weight: var(--heading-font-weight);
+  font-size: var(--heading-font-size);
+  line-height: var(--heading-line-height);
+  letter-spacing: var(--heading-letter-spacing);
+}
+
+h2,
+.text-subheading {
+  font-family: var(--subheading-font-family);
+  font-weight: var(--subheading-font-weight);
+  font-size: var(--subheading-font-size);
+  line-height: var(--subheading-line-height);
+  letter-spacing: var(--subheading-letter-spacing);
+}
+
+h3,
+.text-section-heading {
+  font-family: var(--section-heading-font-family);
+  font-weight: var(--section-heading-font-weight);
+  font-size: var(--section-heading-font-size);
+  line-height: var(--section-heading-line-height);
+  letter-spacing: var(--section-heading-letter-spacing);
+}
+
+.text-body {
+  font-family: var(--body-font-family);
+  font-weight: var(--body-font-weight);
+  font-size: var(--body-font-size);
+  line-height: var(--body-line-height);
+}
+
+strong,
+.text-body_bold {
+  font-family: var(--body_bold-font-family);
+  font-weight: var(--body_bold-font-weight);
+}
+
+.text-quote_l {
+  font-family: var(--quote_l-font-family);
+  font-style: italic;
+  font-size: var(--quote_l-font-size);
+  line-height: var(--quote_l-line-height);
+}
+
+.text-quote_s {
+  font-family: var(--quote_s-font-family);
+  font-style: italic;
+  font-size: var(--quote_s-font-size);
+  line-height: var(--quote_s-line-height);
+}
+
+.text-quote-attribution {
+  font-family: var(--quote-attribution-font-family);
+  font-weight: var(--quote-attribution-font-weight);
+  font-size: var(--quote-attribution-font-size);
+  line-height: var(--quote-attribution-line-height);
+}
+
+.text-quote-mark-l {
+  font-family: var(--quote-mark-l-font-family);
+  font-weight: 300;
+  font-size: var(--quote-mark-l-font-size);
+  line-height: var(--quote-mark-l-line-height);
+}
+
+.text-quote-mark-s {
+  font-family: var(--quote-mark-s-font-family);
+  font-weight: 300;
+  font-size: var(--quote-mark-s-font-size);
+  line-height: var(--quote-mark-s-line-height);
+}
+
+.text-signature {
+  font-family: var(--signature-font-family);
+  font-size: var(--signature-font-size);
+  line-height: var(--signature-line-height);
+}
+
+.text-label {
+  font-family: var(--label-font-family);
+  font-stretch: var(--label-font-stretch);
+  font-weight: var(--label-font-weight);
+  font-size: var(--label-font-size);
+  line-height: var(--label-line-height);
+  letter-spacing: var(--label-letter-spacing);
+}
+
+.text-navigation {
+  font-family: var(--navigation-font-family);
+  font-stretch: var(--navigation-font-stretch);
+  font-weight: var(--navigation-font-weight);
+  font-size: var(--navigation-font-size);
+  line-height: var(--navigation-line-height);
+}
+
+.text-logo {
+  font-family: var(--logo-font-family);
+  font-weight: var(--logo-font-weight);
+  font-size: var(--logo-font-size);
+  line-height: var(--logo-line-height);
+}
+
+.text-legends {
+  font-family: var(--legends-font-family);
+  font-weight: var(--legends-font-weight);
+  font-size: var(--legends-font-size);
+  line-height: var(--legends-line-height);
+}
+
+.text-legends_bold {
+  font-family: var(--legends_bold-font-family);
+  font-weight: var(--legends_bold-font-weight);
+  font-size: var(--legends_bold-font-size);
+  line-height: var(--legends_bold-line-height);
+}
+
+.text-footer {
+  font-family: var(--footer-font-family);
+  font-weight: var(--footer-font-weight);
+  font-size: var(--footer-font-size);
+  line-height: var(--footer-line-height);
+}
+
+.text-captions {
+  font-family: var(--captions-font-family);
+  font-weight: var(--captions-font-weight);
+  font-size: var(--captions-font-size);
+  line-height: var(--captions-line-height);
+}

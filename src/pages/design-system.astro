@@ -1,0 +1,162 @@
+---
+// Review page for tokens and components, compared against the Figma "Design system" frame.
+// Not linked from the site and not indexed.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import IconButton from '../components/IconButton.astro';
+import Icon from '../components/Icon.astro';
+import Link from '../components/Link.astro';
+import Frog from '../components/Frog.astro';
+
+const colours = [
+  'main_background',
+  'contrast_background',
+  'tiles_background',
+  'tiles_border',
+  'text_default',
+  'accent_default',
+  'accent_hover',
+  'accent_pressed',
+  'decorative_brand',
+  'disabled',
+  'text_label',
+];
+
+const textStyles = [
+  ['text-heading', 'heading'],
+  ['text-subheading', 'subheading'],
+  ['text-section-heading', 'section-heading'],
+  ['text-body', 'body'],
+  ['text-body_bold', 'body_bold'],
+  ['text-quote_l', 'quote_l'],
+  ['text-quote_s', 'quote_s'],
+  ['text-quote-attribution', 'quote-attribution'],
+  ['text-signature', 'signature'],
+  ['text-label', 'label'],
+  ['text-navigation', 'navigation'],
+  ['text-logo', 'logo'],
+  ['text-legends', 'legends'],
+  ['text-legends_bold', 'legends_bold'],
+  ['text-footer', 'footer'],
+  ['text-captions', 'captions'],
+];
+---
+
+<BaseLayout title="Design system" description="Tokens and components of isabellaminzly.com." noindex>
+  <h1>Design system</h1>
+
+  <section class="ds-section" aria-labelledby="ds-colour">
+    <h2 id="ds-colour">Colour</h2>
+    <p>Switch your computer to dark mode to see the dark values.</p>
+    <ul class="swatches" role="list">
+      {
+        colours.map((name) => (
+          <li class="swatch">
+            <span class="swatch__chip" style={`background: var(--${name})`} />
+            <code>{name}</code>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="ds-section" aria-labelledby="ds-type">
+    <h2 id="ds-type">Typography</h2>
+    <ul class="type-list" role="list">
+      {
+        textStyles.map(([cls, name]) => (
+          <li>
+            <span class:list={[cls]}>The quick brown fox, {name}</span>
+          </li>
+        ))
+      }
+      <li><span class="text-quote-mark-l" aria-hidden="true">“</span> <span class="text-legends">quote-mark-l</span></li>
+      <li><span class="text-quote-mark-s" aria-hidden="true">“</span> <span class="text-legends">quote-mark-s</span></li>
+    </ul>
+  </section>
+
+  <section class="ds-section" aria-labelledby="ds-buttons">
+    <h2 id="ds-buttons">Button and icon button</h2>
+    <p>Hover, press and use the Tab key to see the states.</p>
+    <div class="row">
+      <Button>Button label</Button>
+      <Button href="#ds-buttons">Button as a link</Button>
+    </div>
+    <div class="row">
+      <IconButton icon="chevron_back" label="Previous testimonials" />
+      <IconButton icon="chevron_forward" label="Next testimonials" />
+      <IconButton icon="chevron_forward" label="Next testimonials (disabled example)" disabled />
+    </div>
+  </section>
+
+  <section class="ds-section" aria-labelledby="ds-link">
+    <h2 id="ds-link">Link</h2>
+    <div class="row"><Link href="#ds-link">I am a link</Link></div>
+  </section>
+
+  <section class="ds-section" aria-labelledby="ds-icons">
+    <h2 id="ds-icons">Icons</h2>
+    <div class="row icons">
+      <Icon type="chevron_back" />
+      <Icon type="chevron_forward" />
+      <Icon type="menu" />
+      <Icon type="close" />
+    </div>
+  </section>
+
+  <section class="ds-section" aria-labelledby="ds-decoration">
+    <h2 id="ds-decoration">Decoration</h2>
+    <div class="row"><Frog /></div>
+    <p>The logo, navigation and footer are shown in the page frame around this content.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .ds-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: var(--space_16);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: var(--space_12);
+  }
+
+  .swatch__chip {
+    inline-size: var(--space_64);
+    block-size: var(--space_64);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  .type-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space_16);
+  }
+
+  .icons {
+    color: var(--accent_default);
+  }
+</style>

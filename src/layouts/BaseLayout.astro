@@ -1,0 +1,210 @@
+---
+// Page shell from the Figma pages: green brand bar, sidebar (Logo and NavigationMenu),
+// main content and Footer. Below 1024 the sidebar becomes a header with a menu button.
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import NavigationMenu from '../components/NavigationMenu.astro';
+import IconButton from '../components/IconButton.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const fullTitle = title === 'Isabella Minzly' ? title : `${title} | Isabella Minzly`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <div class="page">
+      <div class="page__content">
+        <header class="sidebar">
+          <div class="sidebar__top">
+            <Logo />
+            <IconButton class="menu-toggle" icon="menu" label="Menu" aria-expanded="false" aria-controls="site-nav" />
+          </div>
+          <nav class="sidebar__nav" id="site-nav" aria-label="Main">
+            <NavigationMenu currentPath={Astro.url.pathname} />
+          </nav>
+        </header>
+        <main class="main" id="main" tabindex="-1">
+          <slot />
+        </main>
+      </div>
+      <Footer />
+    </div>
+
+    <script>
+      // Mobile menu: opens inline below the header. The button name and icon follow its state.
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const nav = document.getElementById('site-nav');
+      if (toggle && nav) {
+        const menuPath = toggle.querySelector('path');
+        const icons = {
+          menu: 'M5 10H35V13.33H5V10ZM5 18.33H35V21.67H5V18.33ZM5 26.67H35V30H5V26.67Z',
+          close: 'M31.6581 10.6801L29.3081 8.33008L19.9981 17.6501L10.6781 8.33008L8.32812 10.6801L17.6481 20.0001L8.32812 29.3101L10.6781 31.6601L19.9981 22.3501L29.3081 31.6601L31.6581 29.3101L22.3481 20.0001L31.6581 10.6801Z',
+        };
+        const setOpen = (open: boolean) => {
+          toggle.setAttribute('aria-expanded', String(open));
+          toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+          menuPath?.setAttribute('d', open ? icons.close : icons.menu);
+          nav.classList.toggle('is-open', open);
+        };
+        toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+            setOpen(false);
+            toggle.focus();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    inset-block-start: var(--space_8);
+    inset-inline-start: var(--space_16);
+    z-index: 10;
+    padding: var(--space_12) var(--space_24);
+    border-radius: var(--radius_xl);
+    background: var(--accent_default);
+    color: var(--text_label);
+    font-family: var(--label-font-family);
+    font-stretch: var(--label-font-stretch);
+    font-weight: var(--label-font-weight);
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus-visible {
+    transform: none;
+    outline: var(--border_focus) solid var(--accent_default);
+    outline-offset: var(--space_2);
+  }
+
+  /* Green brand bar: full page height on the left edge */
+  .page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    max-inline-size: var(--page-max-width);
+    padding-inline-start: var(--brand-bar-width);
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--brand-bar-width);
+    background: var(--decorative_brand);
+  }
+
+  .main:focus {
+    outline: none;
+  }
+
+  /* Mobile and tablet: header with menu button, content below */
+  .page__content {
+    padding: 0 var(--space_16) var(--space_32);
+  }
+
+  .sidebar__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space_16);
+  }
+
+  :global(.js) .sidebar__nav {
+    display: none;
+  }
+
+  :global(.js) .sidebar__nav.is-open {
+    display: block;
+  }
+
+  .sidebar__nav :global(.nav-menu) {
+    max-inline-size: none;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_32);
+    padding-block-start: var(--space_16);
+  }
+
+  /* No JavaScript: the menu stays visible, so the button would do nothing */
+  html:not(.js) .menu-toggle {
+    display: none;
+  }
+
+  /* Desktop: fixed sidebar, fluid content, left-anchored up to 1680.
+     As in Figma, the brand bar overlaps the sidebar instead of pushing it. */
+  @media (width >= 64em) {
+    .page {
+      padding-inline-start: 0;
+    }
+
+    .page__content {
+      display: flex;
+      gap: var(--space_24);
+      padding: 0 0 var(--space_24);
+    }
+
+    .sidebar {
+      flex: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space_12);
+      inline-size: var(--sidebar-width);
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    :global(.js) .sidebar__nav,
+    .sidebar__nav {
+      display: block;
+      padding-inline-start: var(--space_4);
+    }
+
+    .sidebar__nav :global(.nav-menu) {
+      max-inline-size: 22.5rem;
+    }
+
+    .main {
+      flex: 1;
+      min-inline-size: 0;
+      padding-block-start: 0;
+      padding-inline-end: var(--space_16);
+    }
+  }
+</style>

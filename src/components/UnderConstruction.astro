@@ -1,0 +1,29 @@
+---
+// Content for pages that are not ready yet. Copy is a draft for Isabella's approval.
+import Link from './Link.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<section class="under-construction">
+  <h1>{title}</h1>
+  <p>
+    This page is still being written. I am choosing the images and checking every detail, and I would rather show it
+    to you finished than half done. Please come back soon to read it.
+  </p>
+  <p><Link href="/">Go to the home page</Link></p>
+</section>
+
+<style>
+  .under-construction {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    max-inline-size: 45.625rem; /* 730, body paragraph width */
+    padding-block-start: var(--space_24);
+  }
+</style>

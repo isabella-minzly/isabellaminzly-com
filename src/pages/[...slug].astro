@@ -1,0 +1,26 @@
+---
+// Generates an "Under construction" page for every navigation item that is not ready yet,
+// plus the accessibility statement linked from the footer.
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UnderConstruction from '../components/UnderConstruction.astro';
+import { allNavItems, footerLinks } from '../data/navigation';
+
+export const getStaticPaths = (() => {
+  const pending = allNavItems
+    .filter((item) => !item.ready && item.href !== '/')
+    .map((item) => ({ href: item.href, title: item.label }));
+  pending.push({ href: footerLinks.accessibilityStatement, title: 'Accessibility statement' });
+
+  return pending.map(({ href, title }) => ({
+    params: { slug: href.replace(/^\/|\/$/g, '') },
+    props: { title },
+  }));
+}) satisfies GetStaticPaths;
+
+const { title } = Astro.props;
+---
+
+<BaseLayout title={title} description={`${title}: this page of Isabella Minzly's portfolio is coming soon.`}>
+  <UnderConstruction title={title} />
+</BaseLayout>
