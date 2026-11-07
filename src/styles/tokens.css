@@ -129,8 +129,8 @@
   --navigation-font-family: var(--font-instrument-sans);
   --navigation-font-stretch: 75%;
   --navigation-font-weight: 500;
-  --navigation-font-size: 1.125rem;
-  --navigation-line-height: 1.75rem;
+  --navigation-font-size: 1rem;
+  --navigation-line-height: 1.5rem;
   --navigation-letter-spacing: 0;
 
   --logo-font-family: var(--font-instrument-serif);
