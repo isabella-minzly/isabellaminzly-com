@@ -51,7 +51,7 @@ const isCurrent = (item: NavItem) => pagePath(currentPath) === item.href;
   .nav-item {
     display: flex;
     align-items: center;
-    min-block-size: 3rem;
+    min-block-size: 2.75rem; /* 44, matches the 10 + 24 + 10 item in Figma */
     padding: var(--space_10) var(--space_8) var(--space_10) var(--space_16);
     color: var(--text_default);
     text-decoration: none;
