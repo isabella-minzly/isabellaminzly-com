@@ -26,7 +26,7 @@ import portrait from '../../assets/landing/isabella.png';
     src={portrait}
     formats={['avif', 'webp']}
     widths={[300, 380, 600, 760]}
-    sizes="(width >= 47.5em) 380px, calc(100vw - 72px)"
+    sizes="(width >= 64em) 380px, 250px"
     alt="Portrait of Isabella Minzly"
     loading="eager"
     fetchpriority="high"
@@ -117,9 +117,11 @@ import portrait from '../../assets/landing/isabella.png';
     padding-block-start: var(--space_8);
   }
 
+  /* Stacked: never larger than in the Mobile 320 frame (250 wide), whatever the screen width */
   .hero :global(.hero__photo) {
     grid-area: photo;
     inline-size: 100%;
+    max-inline-size: 250px;
     block-size: auto;
     aspect-ratio: 380 / 500;
     object-fit: cover;
@@ -205,6 +207,10 @@ import portrait from '../../assets/landing/isabella.png';
       grid-template-columns: minmax(0, 1fr) min(380px, 42%);
       grid-template-areas: 'text photo' 'stats stats';
       align-items: start;
+    }
+
+    .hero :global(.hero__photo) {
+      max-inline-size: none;
     }
 
     .hero__stats,

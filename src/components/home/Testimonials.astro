@@ -1,7 +1,8 @@
 ---
 // Figma "Section: Testimonials": a slider with arrow buttons and no auto-advance.
 // Three cards at 1680, two at 1280 and 1024, one on phones with the arrows below.
-// The arrows stop at the ends (Icon button disabled state). Without JavaScript the list scrolls.
+// The arrows wrap around: Next on the last card goes back to the first, Previous on the first
+// goes to the last. Without JavaScript the list scrolls.
 import IconButton from '../IconButton.astro';
 import { testimonials } from '../../data/testimonials';
 ---
@@ -38,13 +39,14 @@ import { testimonials } from '../../data/testimonials';
 </section>
 
 <script>
-  // Arrow buttons move by one page of cards; they are marked unavailable at the ends.
+  // Arrow buttons move by one page of cards and wrap around at both ends.
   for (const slider of document.querySelectorAll<HTMLElement>('.slider')) {
     const track = slider.querySelector<HTMLElement>('.slider__track')!;
     const prev = slider.querySelector<HTMLButtonElement>('.slider__prev')!;
     const next = slider.querySelector<HTMLButtonElement>('.slider__next')!;
     const status = slider.querySelector<HTMLElement>('.slider__status')!;
     const slides = Array.from(track.children) as HTMLElement[];
+    const last = slides.length - 1;
 
     const visible = () => {
       const t = track.getBoundingClientRect();
@@ -54,42 +56,38 @@ import { testimonials } from '../../data/testimonials';
         .map(({ index }) => index);
     };
 
-    const update = (announce: boolean) => {
+    const announce = () => {
       const shown = visible();
       if (!shown.length) return;
-      const first = shown[0];
-      const last = shown[shown.length - 1];
-      prev.setAttribute('aria-disabled', String(first === 0));
-      next.setAttribute('aria-disabled', String(last === slides.length - 1));
-      if (announce) {
-        status.textContent =
-          first === last
-            ? `Testimonial ${first + 1} of ${slides.length}`
-            : `Testimonials ${first + 1} to ${last + 1} of ${slides.length}`;
-      }
+      const a = shown[0] + 1;
+      const b = shown[shown.length - 1] + 1;
+      status.textContent = a === b ? `Testimonial ${a} of ${slides.length}` : `Testimonials ${a} to ${b} of ${slides.length}`;
     };
 
-    const move = (direction: 1 | -1, button: HTMLButtonElement) => {
-      if (button.getAttribute('aria-disabled') === 'true') return;
-      const shown = visible();
-      const target = direction === 1 ? Math.min(shown[shown.length - 1] + 1, slides.length - 1) : Math.max(shown[0] - shown.length, 0);
-      track.scrollTo({ left: slides[target].offsetLeft - slides[0].offsetLeft, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    const goTo = (index: number) => {
+      const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      track.scrollTo({ left: slides[index].offsetLeft - slides[0].offsetLeft, behavior: smooth ? 'smooth' : 'auto' });
       announceNext = true;
     };
+
+    next.addEventListener('click', () => {
+      const shown = visible();
+      goTo(shown[shown.length - 1] >= last ? 0 : shown[shown.length - 1] + 1);
+    });
+    prev.addEventListener('click', () => {
+      const shown = visible();
+      goTo(shown[0] <= 0 ? Math.max(last - shown.length + 1, 0) : Math.max(shown[0] - shown.length, 0));
+    });
 
     let announceNext = false;
     let timer: number | undefined;
     track.addEventListener('scroll', () => {
       clearTimeout(timer);
       timer = window.setTimeout(() => {
-        update(announceNext);
+        if (announceNext) announce();
         announceNext = false;
       }, 120);
     });
-    prev.addEventListener('click', () => move(-1, prev));
-    next.addEventListener('click', () => move(1, next));
-    new ResizeObserver(() => update(false)).observe(track);
-    update(false);
   }
 </script>
 

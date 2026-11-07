@@ -36,23 +36,28 @@ test('menu overlay opens as a dialog, keeps focus inside and closes with Escape'
   await expect(open).toBeFocused();
 });
 
-test('testimonial slider moves with the arrows and marks the ends', async ({ page }) => {
+test('testimonial slider wraps around at both ends', async ({ page }) => {
   // Reduced motion makes the scroll instant, and checks that preference is respected
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   const prev = page.getByRole('button', { name: 'Previous testimonials' });
   const next = page.getByRole('button', { name: 'Next testimonials' });
-  await expect(prev).toHaveAttribute('aria-disabled', 'true');
-  await expect(next).toHaveAttribute('aria-disabled', 'false');
+  // Whether a person's card is fully visible inside the slider
+  const shown = (name: string) =>
+    page.evaluate((n) => {
+      const track = document.querySelector('.slider__track')!.getBoundingClientRect();
+      const card = Array.from(document.querySelectorAll('.slide')).find((s) => s.textContent!.includes(n))!.getBoundingClientRect();
+      return card.left >= track.left - 2 && card.right <= track.right + 2;
+    }, name);
+  await page.locator('.slider').scrollIntoViewIfNeeded();
+  expect(await shown('Aaron Bauer')).toBe(true);
+  // Previous on the first card goes to the last
+  await prev.click();
+  await expect.poll(() => shown('Marte Berentine Fredriksen')).toBe(true);
+  await expect(page.locator('.slider__status')).toContainText('of 13');
+  // Next on the last card goes back to the first
   await next.click();
-  await expect(prev).toHaveAttribute('aria-disabled', 'false');
-  for (let i = 0; i < 15; i++) {
-    if ((await next.getAttribute('aria-disabled')) === 'true') break;
-    await next.click();
-    await page.waitForTimeout(250);
-  }
-  await expect(next).toHaveAttribute('aria-disabled', 'true');
-  await expect(page.getByText('Marte Berentine Fredriksen')).toBeInViewport();
+  await expect.poll(() => shown('Aaron Bauer')).toBe(true);
 });
 
 test('current page is marked in the navigation', async ({ page }) => {
