@@ -1,0 +1,90 @@
+---
+// Figma components "NavigationMenu" and "Navigation" (Top and Sub levels).
+// The current page is marked with aria-current and the Active style (left bar, not colour alone).
+import { navigation, type NavItem } from '../data/navigation';
+import { url, pagePath } from '../utils/url';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const isCurrent = (item: NavItem) => pagePath(currentPath) === item.href;
+---
+
+<ul class="nav-menu" role="list">
+  {
+    navigation.map((item) => (
+      <li>
+        <a class="nav-item text-navigation" href={url(item.href)} aria-current={isCurrent(item) ? 'page' : undefined}>
+          {item.label}
+        </a>
+        {item.children && (
+          <ul class="nav-menu__sub" role="list">
+            {item.children.map((child) => (
+              <li>
+                <a class="nav-item nav-item--sub text-navigation" href={url(child.href)} aria-current={isCurrent(child) ? 'page' : undefined}>
+                  {child.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .nav-menu,
+  .nav-menu__sub {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-menu {
+    inline-size: 100%;
+    max-inline-size: 22.5rem; /* 360 */
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    min-block-size: 3rem;
+    padding: var(--space_10) var(--space_8) var(--space_10) var(--space_16);
+    color: var(--text_default);
+    text-decoration: none;
+  }
+
+  .nav-item--sub {
+    margin-inline-start: var(--space_32);
+  }
+
+  .nav-item:hover {
+    background: var(--contrast_background);
+    color: var(--accent_hover);
+  }
+
+  .nav-item--sub:hover {
+    color: var(--accent_pressed);
+  }
+
+  .nav-item:focus-visible {
+    outline: var(--border_s) solid var(--accent_default);
+    outline-offset: calc(var(--border_s) * -1);
+    color: var(--accent_default);
+  }
+
+  .nav-item--sub:focus-visible {
+    color: var(--accent_pressed);
+  }
+
+  .nav-item:active,
+  .nav-item[aria-current='page'] {
+    padding-inline-start: var(--space_12);
+    border-inline-start: var(--border_m) solid var(--accent_pressed);
+    background: var(--contrast_background);
+    color: var(--accent_pressed);
+  }
+</style>

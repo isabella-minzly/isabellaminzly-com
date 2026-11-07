@@ -1,0 +1,218 @@
+---
+// Figma "Section: Testimonials": a slider with arrow buttons and no auto-advance.
+// Three cards at 1680, two at 1280 and 1024, one on phones with the arrows below.
+// The arrows wrap around: Next on the last card goes back to the first, Previous on the first
+// goes to the last. Without JavaScript the list scrolls.
+import IconButton from '../IconButton.astro';
+import { testimonials } from '../../data/testimonials';
+---
+
+<section class="testimonials" aria-labelledby="testimonials-title">
+  <h2 id="testimonials-title">What people say</h2>
+  <div class="slider">
+    <IconButton class="slider__prev" icon="chevron_back" label="Previous testimonials" aria-controls="testimonial-list" />
+    <ul class="slider__track" id="testimonial-list" role="list" tabindex="0" aria-label="Testimonials">
+      {
+        testimonials.map((item) => (
+          <li class="slide">
+            <figure class="slide__content">
+              <span class="slide__mark text-quote-mark-s" aria-hidden="true">
+                “
+              </span>
+              <div class="slide__text">
+                <blockquote class="text-quote_s">
+                  <p>{item.quote}</p>
+                </blockquote>
+                <figcaption>
+                  <span class="slide__name">{item.name}</span>
+                  <span class="slide__role text-quote-attribution">{item.role}</span>
+                </figcaption>
+              </div>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+    <IconButton class="slider__next" icon="chevron_forward" label="Next testimonials" aria-controls="testimonial-list" />
+    <p class="slider__status visually-hidden" aria-live="polite"></p>
+  </div>
+</section>
+
+<script>
+  // Arrow buttons move by one page of cards and wrap around at both ends.
+  for (const slider of document.querySelectorAll<HTMLElement>('.slider')) {
+    const track = slider.querySelector<HTMLElement>('.slider__track')!;
+    const prev = slider.querySelector<HTMLButtonElement>('.slider__prev')!;
+    const next = slider.querySelector<HTMLButtonElement>('.slider__next')!;
+    const status = slider.querySelector<HTMLElement>('.slider__status')!;
+    const slides = Array.from(track.children) as HTMLElement[];
+    const last = slides.length - 1;
+
+    const visible = () => {
+      const t = track.getBoundingClientRect();
+      return slides
+        .map((slide, index) => ({ index, r: slide.getBoundingClientRect() }))
+        .filter(({ r }) => r.left >= t.left - 2 && r.right <= t.right + 2)
+        .map(({ index }) => index);
+    };
+
+    const announce = () => {
+      const shown = visible();
+      if (!shown.length) return;
+      const a = shown[0] + 1;
+      const b = shown[shown.length - 1] + 1;
+      status.textContent = a === b ? `Testimonial ${a} of ${slides.length}` : `Testimonials ${a} to ${b} of ${slides.length}`;
+    };
+
+    const goTo = (index: number) => {
+      const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      track.scrollTo({ left: slides[index].offsetLeft - slides[0].offsetLeft, behavior: smooth ? 'smooth' : 'auto' });
+      announceNext = true;
+    };
+
+    next.addEventListener('click', () => {
+      const shown = visible();
+      goTo(shown[shown.length - 1] >= last ? 0 : shown[shown.length - 1] + 1);
+    });
+    prev.addEventListener('click', () => {
+      const shown = visible();
+      goTo(shown[0] <= 0 ? Math.max(last - shown.length + 1, 0) : Math.max(shown[0] - shown.length, 0));
+    });
+
+    let announceNext = false;
+    let timer: number | undefined;
+    track.addEventListener('scroll', () => {
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (announceNext) announce();
+        announceNext = false;
+      }, 120);
+    });
+  }
+</script>
+
+<style>
+  .testimonials {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    padding-block: var(--space_32);
+  }
+
+  /* Phones: one card, arrows centred below */
+  .slider {
+    --per-view: 1;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas: 'track track' 'prev next';
+    justify-content: center;
+    align-items: center;
+    gap: var(--space_16);
+  }
+
+  .slider__track {
+    grid-area: track;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - (var(--per-view) - 1) * var(--space_24)) / var(--per-view));
+    gap: var(--space_24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    border-radius: var(--radius_xl);
+  }
+
+  :global(html.js) .slider__track {
+    scrollbar-width: none;
+  }
+
+  .slider__track:focus-visible {
+    outline: var(--border_focus) solid var(--accent_default);
+    outline-offset: var(--space_2);
+  }
+
+  .slider :global(.slider__prev) {
+    grid-area: prev;
+  }
+
+  .slider :global(.slider__next) {
+    grid-area: next;
+  }
+
+  :global(html:not(.js)) .slider :global(.icon-button) {
+    display: none;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    display: flex;
+    min-inline-size: 0;
+    padding: var(--space_24);
+    background: var(--tiles_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  .slide__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+    margin: 0;
+  }
+
+  /* Trimmed to the visible mark so the gap to the quote is 8, as in the Mobile 320 frame */
+  .slide__mark {
+    display: block;
+    block-size: 1rem;
+    overflow: visible;
+    color: var(--accent_default);
+  }
+
+  .slide__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+
+  .slide figcaption {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Wider: arrows at the sides, quote mark beside the text */
+  @container main (width >= 40rem) {
+    .slider {
+      --per-view: 2;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-areas: 'prev track next';
+      justify-content: stretch;
+      gap: var(--space_24);
+    }
+
+    .slide {
+      padding: var(--space_24) var(--space_32) var(--space_32) var(--space_24);
+    }
+
+    .slide__content {
+      flex-direction: row;
+      gap: var(--space_16);
+    }
+
+    .slide__mark {
+      block-size: auto;
+    }
+
+    .slide__text {
+      padding-block-start: var(--space_24);
+    }
+  }
+
+  @container main (width >= 77rem) {
+    .slider {
+      --per-view: 3;
+    }
+  }
+</style>

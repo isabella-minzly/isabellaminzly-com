@@ -1,0 +1,55 @@
+/*
+ * Self-hosted fonts, subset to Latin and converted to WOFF2.
+ * Instrument Sans is one variable file: weight 400 to 700, width 75% (Condensed) to 100%.
+ * Licences: /fonts/licences/ (SIL Open Font License 1.1).
+ */
+
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans.woff2') format('woff2');
+  font-weight: 400 700;
+  font-stretch: 75% 100%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('/fonts/instrument-serif.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('/fonts/instrument-serif-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  src: url('/fonts/newsreader-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Newsreader Light at 72pt optical size, quote marks only */
+@font-face {
+  font-family: 'Newsreader Quote Marks';
+  src: url('/fonts/newsreader-quote-marks.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Birthstone';
+  src: url('/fonts/birthstone.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

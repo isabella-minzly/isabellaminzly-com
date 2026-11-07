@@ -1,0 +1,41 @@
+---
+// Figma component "Button Solid" (Default, Hover, Focus, Pressed).
+// Renders a link when given href, otherwise a button.
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = (HTMLAttributes<'a'> & { href: string }) | (HTMLAttributes<'button'> & { href?: undefined });
+
+const { class: className, href, ...attrs } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class:list={['button', 'text-label', className]} href={href} type={href ? undefined : 'button'} {...attrs}><slot /></Tag>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 3rem;
+    padding: var(--space_12) var(--space_24);
+    border: 0;
+    border-radius: var(--radius_xl);
+    background: var(--accent_default);
+    color: var(--text_label);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background: var(--accent_hover);
+  }
+
+  .button:active {
+    background: var(--accent_pressed);
+  }
+
+  .button:focus-visible {
+    outline: var(--border_focus) solid var(--accent_default);
+    outline-offset: var(--space_2);
+  }
+</style>

@@ -1,0 +1,218 @@
+/*
+ * Design tokens from the Figma file "Portfolio" (lgQBJAfmhHQ416o18kIZBL).
+ * Names match the Figma variables. Type sizes, line heights and text container widths
+ * are rem (16px = 1rem) so they follow the reader's text size; spacing, borders and radius
+ * stay px so they do not grow with text zoom.
+ * Dark mode is not a Figma mode (the free plan allows one); its values come
+ * from the frame "Colours (dark mode draft)" in the Design system.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Colour */
+  --main_background: #fdfcf9;
+  --contrast_background: #faf7f2;
+  --tiles_background: #ffffff;
+  --tiles_border: #eee9e0;
+  --text_default: #2a2520;
+  --accent_default: #5363ca;
+  --accent_hover: #3c4ec3;
+  --accent_pressed: #3443a8;
+  --disabled: #dedede;
+  --decorative_brand: #93b643;
+  --text_label: #ffffff;
+
+  /* Spacing */
+  --space_1: 1px;
+  --space_2: 2px;
+  --space_4: 4px;
+  --space_6: 6px;
+  --space_8: 8px;
+  --space_10: 10px;
+  --space_12: 12px;
+  --space_14: 14px;
+  --space_16: 16px;
+  --space_24: 24px;
+  --space_32: 32px;
+  --space_40: 40px;
+  --space_64: 64px;
+  --space_400: 400px;
+
+  /* Radius */
+  --radius_none: 0;
+  --radius_xs: 2px;
+  --radius_s: 4px;
+  --radius_l: 6px;
+  --radius_xl: 8px;
+  --radius_xxl: 10px;
+
+  /* Borders */
+  --border_s: 1px;
+  --border_m: 4px;
+  --border_l: 8px;
+  --border_focus: 2px;
+
+  /* Typography: families */
+  --font-instrument-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-instrument-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-newsreader: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-newsreader-marks: 'Newsreader Quote Marks', Georgia, serif;
+  --font-birthstone: 'Birthstone', 'Brush Script MT', cursive;
+
+  /* Typography: text styles (family, weight, size, line height, letter spacing) */
+  --heading-font-family: var(--font-instrument-serif);
+  --heading-font-weight: 400;
+  --heading-font-size: 2rem;
+  --heading-line-height: 3rem;
+  --heading-letter-spacing: 0;
+
+  --subheading-font-family: var(--font-instrument-serif);
+  --subheading-font-weight: 400;
+  --subheading-font-size: 1.75rem;
+  --subheading-line-height: 2.625rem;
+  --subheading-letter-spacing: 0;
+
+  --section-heading-font-family: var(--font-instrument-sans);
+  --section-heading-font-weight: 400;
+  --section-heading-font-size: 1.25rem;
+  --section-heading-line-height: 2.25rem;
+  --section-heading-letter-spacing: 0;
+
+  --body-font-family: var(--font-instrument-sans);
+  --body-font-weight: 400;
+  --body-font-size: 1rem;
+  --body-line-height: 1.5rem;
+  --body-letter-spacing: 0;
+
+  --body_bold-font-family: var(--font-instrument-sans);
+  --body_bold-font-weight: 500;
+  --body_bold-font-size: 1rem;
+  --body_bold-line-height: 1.5rem;
+  --body_bold-letter-spacing: 0;
+
+  --quote_l-font-family: var(--font-newsreader);
+  --quote_l-font-size: 1.125rem;
+  --quote_l-line-height: 1.75rem;
+  --quote_l-letter-spacing: 0;
+
+  --quote_s-font-family: var(--font-newsreader);
+  --quote_s-font-size: 1rem;
+  --quote_s-line-height: 1.5rem;
+  --quote_s-letter-spacing: 0;
+
+  --quote-attribution-font-family: var(--font-instrument-sans);
+  --quote-attribution-font-weight: 400;
+  --quote-attribution-font-size: 0.875rem;
+  --quote-attribution-line-height: 1.375rem;
+  --quote-attribution-letter-spacing: 0;
+
+  --quote-mark-l-font-family: var(--font-newsreader-marks);
+  --quote-mark-l-font-size: 8rem;
+  --quote-mark-l-line-height: 8rem;
+
+  --quote-mark-s-font-family: var(--font-newsreader-marks);
+  --quote-mark-s-font-size: 4rem;
+  --quote-mark-s-line-height: 4rem;
+
+  --signature-font-family: var(--font-birthstone);
+  --signature-font-size: 1.5rem;
+  --signature-line-height: 2.25rem;
+
+  --label-font-family: var(--font-instrument-sans);
+  --label-font-stretch: 75%;
+  --label-font-weight: 500;
+  --label-font-size: 1rem;
+  --label-line-height: 1.5rem;
+  --label-letter-spacing: 0.2px;
+
+  --navigation-font-family: var(--font-instrument-sans);
+  --navigation-font-stretch: 75%;
+  --navigation-font-weight: 500;
+  --navigation-font-size: 1.125rem;
+  --navigation-line-height: 1.75rem;
+  --navigation-letter-spacing: 0;
+
+  --logo-font-family: var(--font-instrument-serif);
+  --logo-font-weight: 400;
+  --logo-font-size: 1.125rem;
+  --logo-line-height: 1.5rem;
+
+  --legends-font-family: var(--font-instrument-sans);
+  --legends-font-weight: 400;
+  --legends-font-size: 0.75rem;
+  --legends-line-height: 1.25rem;
+
+  --legends_bold-font-family: var(--font-instrument-sans);
+  --legends_bold-font-weight: 500;
+  --legends_bold-font-size: 0.75rem;
+  --legends_bold-line-height: 1.25rem;
+
+  --footer-font-family: var(--font-instrument-sans);
+  --footer-font-weight: 400;
+  --footer-font-size: 1rem;
+  --footer-line-height: 2.25rem;
+
+  --captions-font-family: var(--font-instrument-sans);
+  --captions-font-weight: 400;
+  --captions-font-size: 0.875rem;
+  --captions-line-height: 1.375rem;
+
+  /* Layout (agreed in the design review, not Figma variables) */
+  --page-max-width: 105rem; /* 1680 */
+  --sidebar-width: 23.5rem; /* 376, holds the 360 navigation menu */
+  --brand-bar-width: 4px;
+}
+
+/*
+ * Breakpoints, from the Figma collection "Breakpoints". CSS cannot use custom properties in
+ * media queries, so they are written in em (16px = 1em) where used:
+ *   breakpoint_min       320   smallest supported width
+ *   breakpoint_footer_s  600   37.5em  footer links side by side
+ *   breakpoint_footer_m  760   47.5em  footer on one row, desktop text styles, wider page padding
+ *   breakpoint_sidebar  1280   80em    sidebar instead of the header and menu overlay
+ *   page_max_width      1680   page stops growing, stays left-anchored
+ */
+
+/* Typography mobile collection: used below 760, as in the Mobile 320 frames */
+@media (width < 47.5em) {
+  :root {
+    --heading-font-size: 1.75rem;
+    --heading-line-height: 2.5rem;
+    --subheading-font-size: 1.5rem;
+    --subheading-line-height: 2.25rem;
+    --section-heading-font-size: 1.125rem;
+    --section-heading-line-height: 1.75rem;
+  }
+}
+
+/* Dark mode: frame "Colours (dark mode draft)" */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --main_background: #171512;
+    --contrast_background: #1f1c18;
+    --tiles_background: #252220;
+    --tiles_border: #3d3731;
+    --text_default: #f3efe9;
+    --accent_default: #a3aef2;
+    --accent_hover: #bcc4f6;
+    --accent_pressed: #d0d6f9;
+    --disabled: #4a4540;
+    --decorative_brand: #93b643;
+    --text_label: #171512;
+  }
+}
+
+:root[data-theme='dark'] {
+  --main_background: #171512;
+  --contrast_background: #1f1c18;
+  --tiles_background: #252220;
+  --tiles_border: #3d3731;
+  --text_default: #f3efe9;
+  --accent_default: #a3aef2;
+  --accent_hover: #bcc4f6;
+  --accent_pressed: #d0d6f9;
+  --disabled: #4a4540;
+  --decorative_brand: #93b643;
+  --text_label: #171512;
+}

@@ -1,0 +1,53 @@
+---
+// Figma component "Icon button" (Default, Hover, Focus, Pressed, Disabled).
+// A label is required: it is the button's name for screen readers.
+import type { HTMLAttributes } from 'astro/types';
+import Icon, { type IconType } from './Icon.astro';
+
+type Props = HTMLAttributes<'button'> & {
+  icon: IconType;
+  label: string;
+};
+
+const { icon, label, class: className, ...attrs } = Astro.props;
+---
+
+<button class:list={['icon-button', className]} type="button" aria-label={label} {...attrs}>
+  <Icon type={icon} />
+</button>
+
+<style>
+  .icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius_xs);
+    background: transparent;
+    color: var(--accent_default);
+    cursor: pointer;
+  }
+
+  .icon-button:hover {
+    background: var(--contrast_background);
+    color: var(--accent_hover);
+  }
+
+  .icon-button:active {
+    background: var(--contrast_background);
+    color: var(--accent_pressed);
+  }
+
+  .icon-button:focus-visible {
+    outline: var(--border_s) solid var(--accent_default);
+    outline-offset: 0;
+  }
+
+  .icon-button:disabled,
+  .icon-button[aria-disabled='true'] {
+    background: transparent;
+    color: var(--disabled);
+    cursor: default;
+  }
+</style>
