@@ -1,0 +1,401 @@
+---
+// My HCLSoftware case study, built from the Figma frames "MHS" (1680), "MHS / 1280",
+// "MHS / 1024" and "MHS / Mobile 320". The blueprint for the other case studies.
+// Rows sit side by side only in the 1680 layout (main 77rem and wider) and stack below it.
+// Source order follows the stacked layout, except Project overview, where the paragraph
+// introduces the list and must be read first.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Link from '../components/Link.astro';
+import CaseFigure from '../components/case-study/CaseFigure.astro';
+import Kpis from '../components/case-study/Kpis.astro';
+import { url } from '../utils/url';
+import hero from '../assets/my-hclsoftware/hero.png';
+import journeyMap from '../assets/my-hclsoftware/customer-journey-map.png';
+import downloads from '../assets/my-hclsoftware/marketplace-software-downloads.png';
+import tablets from '../assets/my-hclsoftware/marketplace-tablets.png';
+import indications from '../assets/my-hclsoftware/accessibility-indications.png';
+import layouts from '../assets/my-hclsoftware/page-layouts.png';
+
+const results = [
+  { figure: '$2M+ saved', description: 'by building an internal platform instead of paying for an external one.' },
+  { figure: '3 to 6+ out of 7', description: 'customer satisfaction, before and after release.' },
+  { figure: 'Days to minutes', description: 'time to start a Marketplace trial.' },
+  { figure: 'Tens of millions of dollars', description: 'in pipeline across the two portals.' },
+  { figure: '40+ products', description: 'on My HCLSoftware.' },
+  { figure: '59 products', description: '22 business solutions, 25 partner offerings on Marketplace.' },
+];
+
+const goals = [
+  'An aligned experience across both portals',
+  'Easier navigation',
+  'International accessibility requirements met',
+  'Lower costs for external portals',
+  'Lower costs for design and development',
+  'Standards that other external portals, such as documentation, could replicate',
+];
+---
+
+<BaseLayout
+  title="My HCLSoftware case study"
+  description="How My HCLSoftware was built from a blank screen in 2022, and how its design language became the foundation of Marketplace, BigFix and Mandala."
+>
+  <article class="case-study">
+    <div class="hero">
+      <h1 class="hero__title">My HCLSoftware case study</h1>
+      <CaseFigure
+        src={hero}
+        alt="The My HCLSoftware Software downloads page on a desktop monitor, a laptop, a tablet and a phone."
+        width={770}
+        minHeight={465}
+        eager
+      />
+    </div>
+
+    <Kpis label="Results" items={results} />
+
+    <div class="section text">
+      <p>In 2022, before BigFix, before Mandala, Aaron Bauer and I opened a blank screen and began to build My HCLSoftware.</p>
+      <p>
+        This kind of project is every designer's dream and every designer's fear at the same time. The dream is simple: hardly anyone gets to build a product
+        from nothing, exactly as they believe it should be. The fear is the other side of the coin, because when nothing exists yet, every decision is yours,
+        and so is every mistake.
+      </p>
+      <p>
+        We chose to treat the fear as the brief, and we began with the people rather than the pixels. Research came first, then the customer journey, so that
+        every screen we drew answered something a real customer needed to do. On release, customer satisfaction roughly doubled.
+      </p>
+      <p>
+        What we built did not stay in one portal. The design language and components became the foundation of Marketplace, then of BigFix, and now of Mandala.
+        That is the kind of work I do: not standalone UIs, but foundations other teams can stand on.
+      </p>
+    </div>
+
+    <section class="section" aria-labelledby="overview">
+      <h2 id="overview">Project overview</h2>
+      <div class="overview">
+        <p class="overview__text text">
+          The aim was to align two key customer-facing portals and create a set of designs and standards that would give them one consistent experience and
+          serve as the basis for further portals. Marketplace is where customers discover, try and buy HCLSoftware products, and it is the strategic SaaS sales
+          platform. My HCLSoftware is where they manage what they have bought: a self-service portal for accounts, relationships, assets and services. Six
+          goals shaped the work:
+        </p>
+        <ul class="facts">
+          {goals.map((goal) => <li>{goal}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="people">
+      <h2 id="people">Starting with the people</h2>
+      <div class="row row--text-first">
+        <CaseFigure
+          src={journeyMap}
+          alt="The HCLSoftware customer journey map on a laptop, blurred, with its stages Marketing, Marketplace, My HCLSoftware, Support and Community."
+          width={478}
+          boxWidth={510}
+        />
+        <div class="row__text text">
+          <p>
+            The portals serve a wide range of users and flows, so the research had to be equally varied. It began with formative customer interviews to
+            identify the personas and the pain points that already existed, continued with structured internal reviews that shaped an information architecture
+            able to hold products with very different organisation and terminology, and included a beta, built both to evaluate the designs and to decide what
+            to prioritise next.
+          </p>
+          <p>
+            The customer journey map then gave the whole organisation one view of how a customer engages with HCLSoftware and which resources help them succeed
+            at each stage. It informed everything from leadership conversations about direction to the UI decisions of individual project teams.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="origin">
+      <h2 id="origin">The origin and the collaboration</h2>
+      <div class="text">
+        <p>
+          Aaron Bauer is a principal designer I have partnered with closely for more than five years, through some of the most demanding projects of my career,
+          and he now leads design across BigFix. I have learned more from him than from anyone else, about UX and about enterprise software, and our
+          collaboration is one I hugely value. Ours has rarely been a divided practice: from MHS onward, we have built things with four hands rather than each
+          retreating to a separate lane.
+        </p>
+        <p>
+          A blank screen leaves no one to blame. There was no inherited pattern to explain an awkward choice and no legacy to excuse a compromise, so usability
+          and accessibility were engineered in from day one rather than retrofitted later. Colour, breakpoints, the order in which focus moves through a page and
+          the regions a screen reader announces were all decided together with the overall experience, never afterwards. It was the chance to show what we both
+          believe: a design can be beautiful, usable and accessible all at once.
+        </p>
+      </div>
+    </section>
+
+    <section class="section marketplace" aria-labelledby="marketplace">
+      <h2 id="marketplace">Marketplace</h2>
+      <div class="pair">
+        <CaseFigure
+          class="pair__narrow"
+          src={downloads}
+          alt="The Software downloads page split down the middle, in light mode on the left and dark mode on the right."
+          width={358}
+        />
+        <CaseFigure
+          class="pair__bleed"
+          src={tablets}
+          alt="Three Marketplace pages on tablets: HCL Domino Marketplace, HCL AppScan Marketplace and Test Drive HCLSoftware."
+          width={602}
+        />
+      </div>
+      <div class="marketplace__intro text">
+        <p>
+          Aaron and I owned MHS. Marketplace was owned by Katie Rossi, a designer we worked with very closely and whom I still deeply admire and enjoy working
+          with. Aligning our two products was a directive, but a directive says what to achieve, not how. Katie adopted the design language I had built, then its
+          components and eventually its patterns, and every decision about how each one landed on her product was made with her, not for her. Some of those
+          patterns we built together, and they belong to both of us.
+        </p>
+      </div>
+      <div class="text">
+        <p>
+          Marketplace had a clear target: to increase online sales through SaaS and self-service. Starting a trial went from a wait of days or weeks to a matter
+          of minutes, a result the whole Marketplace team earned and one the shared design language helped make possible.
+        </p>
+        <p>
+          That collaboration held through a corporate rebrand a year later, when the system had to absorb new brand guidelines without losing what made it
+          accessible or coherent. We integrated as much of the new branding as we could without compromising accessibility or usability, worked with marketing
+          on the terms of adoption, and ended up sharpening the distinction between light and dark mode along the way.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="accessible">
+      <h2 id="accessible">Accessible by design, documented and from day one</h2>
+      <div class="wrap">
+        <div class="wrap__lead text">
+          <p>
+            I built the two libraries that hold all of this: the Accessible Design Language and the Accessible Components. Every component in them was built to
+            WCAG 2.2 AA as a floor, not a target. Accessibility is the right and ethical thing to do, and it is also a legal and commercial requirement, because
+            it allows the products to sell to every customer in the US and Europe, including government institutions.
+          </p>
+        </div>
+        <CaseFigure
+          class="wrap__figure"
+          src={indications}
+          alt="Three handoff sheets of accessibility indications, for page structure, heading structure and alt text."
+          width={325}
+          boxWidth={510}
+        />
+        <div class="wrap__rest text">
+          <p>
+            It is built into how designs are delivered as well. Every handoff carries full accessibility indications, from page regions and keyboard order to
+            alt text, labels on icon buttons, heading hierarchy and component behaviour, together with the responsive design and spacing, so developers never had
+            to make design decisions themselves or keep asking us for clarification, and QA always had something concrete to check against.
+          </p>
+          <p>
+            Much of what we designed had to be templates for requirements that nobody yet knew, which is a very different discipline from designing a screen for
+            a known need. It is part of why the foundation could later carry BigFix: the libraries proved stable enough to be used well beyond the product they
+            were made for. MHS and Marketplace still run on them, and BigFix, a completely different set of products at a much larger scale, adopted them as its
+            foundation too. They are now also the base of Mandala.
+          </p>
+          <div><Link href={url('/mandala/')}>See Mandala case study</Link></div>
+          <p>
+            I build things that scale, not single UIs, and this is the clearest example I have: one foundation that grew from a single portal to a whole product
+            family without ever being replaced. That is the test I care about most: a system earns its name when a team building something different can start
+            from it instead of starting again.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="responsive">
+      <h2 id="responsive">Responsive and navigation</h2>
+      <div class="row">
+        <CaseFigure
+          src={layouts}
+          alt="Handoff sheets of page layouts at five breakpoints, from mobile to large desktop, showing the responsive behaviour and the spacing tokens."
+          width={544}
+          boxWidth={570}
+        />
+        <div class="row__text row__text--wide text">
+          <p>
+            A single set of breakpoints, from large desktop screens down to mobile, applies consistently across both portals, so the experience behaves the same
+            on every device and meets accessibility requirements.
+          </p>
+          <p>
+            HCLSoftware's customer-facing sites are built by independent groups and are, at best, loosely connected. We built a header system that lets users
+            know at once that they are on an HCLSoftware page, makes it easy to move within and between portals, and is designed to support the portals that will
+            join over the coming years.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--padded" aria-labelledby="outcome">
+      <h2 id="outcome" class="narrow">MHS is where the standard started: beautiful, usable and accessible, together, never traded off against each other.</h2>
+      <p class="narrow">
+        I no longer design on it day to day, because BigFix and Mandala have my full attention, but I still give MHS UI feedback and advice regularly, and an MHS
+        developer now takes part in Mandala's code reviews. Once Mandala is ready, MHS and Marketplace will adopt it, as BigFix will, so what began on a blank
+        screen in 2022 is returning to the products it was first made for, now strong enough to carry BigFix alongside them.
+      </p>
+    </section>
+
+    <section class="section section--padded" aria-labelledby="next">
+      <h2 id="next">Next case study</h2>
+      <div><Link href={url('/bigfix/')}>BigFix</Link></div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .case-study {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_32);
+  }
+
+  .hero,
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+
+  /* The page title sits on the right from 760, as in the 1680, 1280 and 1024 frames */
+  .hero__title {
+    padding-block-start: var(--space_24);
+  }
+
+  @media (width >= 47.5em) {
+    .hero__title {
+      padding-inline-end: var(--space_16);
+      text-align: end;
+    }
+  }
+
+  .section--padded {
+    padding-block: var(--space_16);
+  }
+
+  /* Paragraphs: 730 wide at most, 16 apart */
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    max-inline-size: 45.625rem;
+  }
+
+  .narrow {
+    max-inline-size: 45rem; /* 720 */
+  }
+
+  .overview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+
+  /* Stacked, the goals box comes first, as in the 1280, 1024 and 320 frames */
+  .facts {
+    order: -1;
+    max-inline-size: 45.625rem;
+    margin: 0;
+    padding: var(--space_16) var(--space_16) var(--space_16) calc(var(--space_16) + 1.25rem);
+    background: var(--contrast_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space_16);
+  }
+
+  .pair :global(.pair__narrow) {
+    padding-inline: var(--space_8);
+  }
+
+  .pair :global(.pair__bleed) {
+    padding-inline-end: 0;
+  }
+
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+
+  @container main (width >= 37.5rem) {
+    .pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space_24);
+    }
+  }
+
+  /* 1680 layout: text and figures side by side, Marketplace images below the first paragraph */
+  @container main (width >= 77rem) {
+    .marketplace h2 {
+      order: -2;
+    }
+
+    .marketplace__intro {
+      order: -1;
+    }
+
+    .overview,
+    .row {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space_24);
+    }
+
+    .overview__text {
+      flex: 0 1 45.625rem;
+    }
+
+    .facts {
+      order: 0;
+      flex: 1;
+      max-inline-size: none;
+    }
+
+    .row :global(.case-figure) {
+      flex: none;
+    }
+
+    .row--text-first .row__text {
+      order: -1;
+    }
+
+    .row__text {
+      flex: 0 1 45.625rem;
+    }
+
+    .row__text--wide {
+      flex: 1;
+      max-inline-size: 41.875rem; /* 670 */
+    }
+
+    .wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 45.625rem) 510px;
+      grid-template-rows: auto 1fr;
+      column-gap: var(--space_24);
+      align-items: start;
+    }
+
+    .wrap__lead {
+      grid-area: 1 / 1;
+    }
+
+    .wrap__rest {
+      grid-area: 2 / 1;
+    }
+
+    .wrap :global(.wrap__figure) {
+      grid-area: 1 / 2 / 3 / 3;
+    }
+  }
+</style>

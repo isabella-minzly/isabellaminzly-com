@@ -10,7 +10,7 @@ export interface NavItem {
 
 export const navigation: NavItem[] = [
   { label: 'Home', href: '/', ready: true },
-  { label: 'My HCLSoftware: the case study', href: '/my-hclsoftware/', ready: false },
+  { label: 'My HCLSoftware: the case study', href: '/my-hclsoftware/', ready: true },
   { label: 'BigFix: the case study', href: '/bigfix/', ready: false },
   {
     label: 'Mandala Design System',
