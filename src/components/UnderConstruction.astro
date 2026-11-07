@@ -29,7 +29,7 @@ const highlights = [
   <section class="hero" aria-labelledby="uc-title">
     <div class="hero__text">
       <h1 class="hero__title" id="uc-title">Something good is taking <em>shape.</em></h1>
-      <p class="text-section-heading">
+      <p>
         This page of my portfolio is under construction. I am working on the finishing touches and it will be ready soon. In the meantime, please explore the
         rest of my work.
       </p>
@@ -132,6 +132,7 @@ const highlights = [
   }
 
   .hero__progress {
+    container: progress / inline-size;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -141,7 +142,7 @@ const highlights = [
   .hero__illustration {
     display: block;
     inline-size: 100%;
-    max-inline-size: 608px;
+    max-inline-size: 400px;
   }
 
   .hero__illustration :global(svg) {
@@ -151,7 +152,7 @@ const highlights = [
     overflow: visible;
   }
 
-  /* Progress steps: two by two on phones, four in a row when there is room */
+  /* Progress steps: two by two in a narrow column, four in a row when there is room */
   .steps {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -325,10 +326,6 @@ const highlights = [
       line-height: 5rem;
     }
 
-    .steps {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
     .quote {
       padding-inline: var(--space_32);
     }
@@ -358,19 +355,33 @@ const highlights = [
     }
   }
 
-  @container main (width >= 77rem) {
+  @container progress (width >= 32rem) {
+    .steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* Text and illustration side by side when main is at least 840 wide: 848 in the 1280 layout, 956 in 1024 */
+  @container main (width >= 52.5rem) {
     .hero {
       flex-direction: row;
     }
 
     .hero__text {
-      flex: none;
-      inline-size: 35rem;
+      flex: 0 1 35rem;
+      min-inline-size: 28rem; /* 448: the headline still wraps to two lines */
     }
 
     .hero__progress {
-      flex: 1;
+      flex: 1 1 0;
       min-inline-size: 0;
+    }
+  }
+
+  /* 1280 and 1024 layouts: the text column stays at its narrowest so the illustration has room */
+  @container main (52.5rem <= width < 77rem) {
+    .hero__text {
+      flex-basis: 28rem;
     }
   }
 </style>
