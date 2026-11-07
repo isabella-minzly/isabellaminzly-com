@@ -1,0 +1,45 @@
+---
+// Figma "Section: KPIs": result tiles, three per row when there is room.
+// Tiles in the same row share one height.
+interface Props {
+  label: string;
+  items: { figure: string; description: string }[];
+}
+
+const { label, items } = Astro.props;
+---
+
+<section class="kpis" aria-label={label}>
+  <ul class="kpis__list" role="list">
+    {
+      items.map((item) => (
+        <li class="kpi">
+          <span class="text-heading">{item.figure}</span>
+          <span>{item.description}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .kpis__list {
+    display: grid;
+    /* At most three per row, each at least 16rem wide, one per row on phones */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, max(16rem, (100% - 2 * var(--space_24)) / 3)), 1fr));
+    gap: var(--space_24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .kpi {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+    padding: var(--space_16);
+    background: var(--tiles_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+</style>

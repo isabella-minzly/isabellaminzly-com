@@ -1,0 +1,60 @@
+---
+// Figma "Image": an image centred in a box with the contrast background.
+// From 760 the box keeps the frame's minimum height and the image its Figma size.
+// Below that the box fills the width and its height follows the image.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  /** Display width of the image in the 1680 frame, in px */
+  width: number;
+  /** Width of the box in the 1680 frame, in px; omit to fill */
+  boxWidth?: number;
+  /** Minimum box height from 760 up, in px */
+  minHeight?: number;
+  eager?: boolean;
+  class?: string;
+}
+
+const { src, alt, width, boxWidth, minHeight = 340, eager = false, class: className } = Astro.props;
+---
+
+<figure class:list={['case-figure', className]} style={`--box-width: ${boxWidth ? `${boxWidth}px` : '100%'}; --box-min-height: ${minHeight}px; --image-width: ${width}px`}>
+  <Picture
+    class="case-figure__image"
+    src={src}
+    alt={alt}
+    formats={['avif', 'webp']}
+    widths={[width, width * 2]}
+    sizes={`min(${width}px, calc(100vw - 72px))`}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : undefined}
+  />
+</figure>
+
+<style>
+  .case-figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    max-inline-size: var(--box-width);
+    padding: var(--space_16);
+    background: var(--contrast_background);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+  }
+
+  .case-figure :global(.case-figure__image) {
+    inline-size: var(--image-width);
+    max-inline-size: 100%;
+  }
+
+  @media (width >= 47.5em) {
+    .case-figure {
+      min-block-size: var(--box-min-height);
+    }
+  }
+</style>
