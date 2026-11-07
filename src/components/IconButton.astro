@@ -1,20 +1,34 @@
 ---
 // Figma component "Icon button" (Default, Hover, Focus, Pressed, Disabled).
 // A label is required: it is the button's name for screen readers.
+// disabledReason makes it a disabled button with a tooltip that says why (see Tooltip.astro).
 import type { HTMLAttributes } from 'astro/types';
 import Icon, { type IconType } from './Icon.astro';
+import Tooltip from './Tooltip.astro';
 
 type Props = HTMLAttributes<'button'> & {
   icon: IconType;
   label: string;
+  disabledReason?: string;
 };
 
-const { icon, label, class: className, ...attrs } = Astro.props;
+const { icon, label, disabledReason, class: className, ...attrs } = Astro.props;
+const tooltipId = disabledReason ? `tooltip-${crypto.randomUUID().slice(0, 8)}` : undefined;
 ---
 
-<button class:list={['icon-button', className]} type="button" aria-label={label} {...attrs}>
-  <Icon type={icon} />
-</button>
+{
+  disabledReason ? (
+    <Tooltip id={tooltipId!} text={disabledReason}>
+      <button class:list={['icon-button', className]} type="button" aria-label={label} aria-disabled="true" aria-describedby={tooltipId} {...attrs}>
+        <Icon type={icon} />
+      </button>
+    </Tooltip>
+  ) : (
+    <button class:list={['icon-button', className]} type="button" aria-label={label} {...attrs}>
+      <Icon type={icon} />
+    </button>
+  )
+}
 
 <style>
   .icon-button {
@@ -44,10 +58,18 @@ const { icon, label, class: className, ...attrs } = Astro.props;
     outline-offset: 0;
   }
 
+  /* Disabled never changes on hover, press or focus, or it would look enabled.
+     On keyboard focus the tooltip appearing is the visible change. */
   .icon-button:disabled,
-  .icon-button[aria-disabled='true'] {
+  .icon-button[aria-disabled='true'],
+  .icon-button[aria-disabled='true']:hover,
+  .icon-button[aria-disabled='true']:active {
     background: transparent;
     color: var(--disabled);
     cursor: default;
+  }
+
+  .icon-button[aria-disabled='true']:focus-visible {
+    outline: none;
   }
 </style>

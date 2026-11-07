@@ -68,6 +68,56 @@ test('current page is marked in the navigation', async ({ page }) => {
   await expect(visibleNav.getByRole('link', { name: 'BigFix: the case study' })).toHaveAttribute('aria-current', 'page');
 });
 
+test('disabled button stays focusable, does nothing and explains itself in a tooltip', async ({ page }) => {
+  await page.goto('/design-system/');
+  const button = page.getByRole('button', { name: 'Disabled button' }).first();
+  const tooltip = page.getByRole('tooltip').first();
+  await expect(button).toHaveAttribute('aria-disabled', 'true');
+  await expect(button).toHaveAccessibleDescription('Tooltip text explains why an element is disabled.');
+  await expect(tooltip).toBeHidden();
+  const look = () => button.evaluate((b) => { const s = getComputedStyle(b); return [s.backgroundColor, s.color, s.outlineStyle].join(); });
+  const resting = await look();
+  // Keyboard focus: the tooltip is the only visible change
+  await button.focus();
+  await expect(tooltip).toBeVisible();
+  expect(await look()).toBe(resting);
+  // Escape closes it (WCAG 1.4.13)
+  await page.keyboard.press('Escape');
+  await expect(tooltip).toBeHidden();
+  // Enter, Space and clicks do nothing
+  await button.evaluate((b) => b.addEventListener('click', () => ((window as any).activated = true)));
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Space');
+  // Playwright refuses to click aria-disabled elements, so click with the mouse directly
+  const b = (await button.boundingBox())!;
+  await page.mouse.click(b.x + b.width / 2, b.y + b.height / 2);
+  expect(await page.evaluate(() => (window as any).activated)).toBeUndefined();
+  // Hover shows it again, and the pointer can move onto the tooltip without it closing
+  await page.mouse.move(0, 0);
+  await button.hover();
+  await expect(tooltip).toBeVisible();
+  expect(await look()).toBe(resting);
+  await tooltip.hover();
+  await expect(tooltip).toBeVisible();
+  // The tooltip stays inside the screen
+  const box = (await tooltip.boundingBox())!;
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+});
+
+test('tooltip lines up with the element near the right edge of the screen', async ({ page }) => {
+  await page.goto('/design-system/');
+  const button = page.locator('.row--end').getByRole('button', { name: 'Disabled button' });
+  await button.focus();
+  const tooltip = page.locator('.row--end').getByRole('tooltip');
+  await expect(tooltip).toBeVisible();
+  const [b, t] = [(await button.boundingBox())!, (await tooltip.boundingBox())!];
+  const viewport = page.viewportSize()!.width;
+  expect(t.x + t.width).toBeLessThanOrEqual(viewport);
+  // Centred if it fits, otherwise lined up with the button's right edge
+  if (b.x + b.width / 2 + t.width / 2 > viewport - 16) expect(Math.abs(t.x + t.width - (b.x + b.width))).toBeLessThan(1);
+});
+
 test('skip link moves focus to the main content', async ({ page }) => {
   await page.goto('/bigfix/');
   await page.keyboard.press('Tab');

@@ -1,0 +1,146 @@
+---
+// Figma component "Tooltip" (Arrow: Bottom, Bottom left, Bottom right).
+// Wraps a disabled element and explains why it is disabled. The element keeps
+// aria-disabled="true" instead of the disabled attribute, so it stays in the tab
+// order and its aria-describedby points at this tooltip.
+// Shows on hover and keyboard focus, stays while the pointer is over it and
+// closes with Escape (WCAG 1.4.13). The disabled element itself never changes.
+interface Props {
+  id: string;
+  text: string;
+}
+
+const { id, text } = Astro.props;
+---
+
+<span class="tooltip-anchor">
+  <slot />
+  <span class="tooltip" id={id} role="tooltip" data-placement="bottom">
+    <span class="tooltip__bubble text-legends">{text}</span>
+    <span class="tooltip__arrow" aria-hidden="true"></span>
+  </span>
+</span>
+
+<script>
+  // Activation is blocked here because aria-disabled, unlike disabled, does not stop clicks.
+  // Enter and Space on a button fire a click, so this covers the keyboard too.
+  document.addEventListener(
+    'click',
+    (event) => {
+      const target = (event.target as Element).closest('[aria-disabled="true"]');
+      if (target) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    },
+    true,
+  );
+
+  // The tooltip sits above the element, centred. Near the left or right edge of the
+  // screen it lines up with that edge of the element instead (Bottom left, Bottom right).
+  const place = (anchor: HTMLElement) => {
+    const tooltip = anchor.querySelector<HTMLElement>('.tooltip');
+    if (!tooltip) return;
+    tooltip.dataset.placement = 'bottom';
+    const r = tooltip.getBoundingClientRect();
+    const edge = 16;
+    if (r.left < edge) tooltip.dataset.placement = 'bottom-left';
+    else if (r.right > document.documentElement.clientWidth - edge) tooltip.dataset.placement = 'bottom-right';
+  };
+
+  for (const anchor of document.querySelectorAll<HTMLElement>('.tooltip-anchor')) {
+    const show = () => {
+      delete anchor.dataset.dismissed;
+      place(anchor);
+    };
+    anchor.addEventListener('pointerenter', show);
+    anchor.addEventListener('focusin', show);
+    // Escape hides it until the pointer leaves or focus moves away
+    anchor.addEventListener('pointerleave', () => delete anchor.dataset.dismissed);
+    anchor.addEventListener('focusout', () => delete anchor.dataset.dismissed);
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const anchor of document.querySelectorAll<HTMLElement>('.tooltip-anchor')) {
+      if (anchor.matches(':hover, :focus-within')) anchor.dataset.dismissed = '';
+    }
+  });
+</script>
+
+<style>
+  .tooltip-anchor {
+    position: relative;
+    display: inline-flex;
+  }
+
+  /* The padding below the bubble is part of the tooltip, so the pointer can move
+     from the element onto the bubble without it closing. */
+  .tooltip {
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-start: 50%;
+    z-index: 20;
+    display: none;
+    padding-block-end: calc(var(--space_6) + var(--space_4));
+    inline-size: max-content;
+    max-inline-size: min(20rem, calc(100vw - 2 * var(--space_16)));
+    transform: translateX(-50%);
+  }
+
+  .tooltip-anchor:is(:hover, :focus-within):not([data-dismissed]) .tooltip {
+    display: block;
+  }
+
+  .tooltip[data-placement='bottom-left'] {
+    inset-inline-start: 0;
+    transform: none;
+  }
+
+  .tooltip[data-placement='bottom-right'] {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    transform: none;
+  }
+
+  .tooltip__bubble {
+    display: block;
+    padding: var(--space_8) var(--space_12);
+    border-radius: var(--radius_s);
+    background: var(--text_default);
+    color: var(--text_label);
+    text-align: start;
+    white-space: normal;
+  }
+
+  /* Decorative arrow, 12 by 6, pointing down at the element */
+  .tooltip__arrow {
+    position: absolute;
+    inset-block-start: calc(100% - var(--space_6) - var(--space_4));
+    inset-inline-start: calc(50% - var(--space_6));
+    inline-size: var(--space_12);
+    block-size: var(--space_6);
+    background: var(--text_default);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  .tooltip[data-placement='bottom-left'] .tooltip__arrow {
+    inset-inline-start: var(--space_12);
+  }
+
+  .tooltip[data-placement='bottom-right'] .tooltip__arrow {
+    inset-inline-start: auto;
+    inset-inline-end: var(--space_12);
+  }
+
+  /* Windows high contrast removes backgrounds, so the bubble keeps an outline there */
+  @media (forced-colors: active) {
+    .tooltip__bubble {
+      border: var(--border_s) solid CanvasText;
+    }
+
+    .tooltip__arrow {
+      background: CanvasText;
+    }
+  }
+</style>

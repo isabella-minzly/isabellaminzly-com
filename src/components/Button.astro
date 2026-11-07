@@ -1,15 +1,33 @@
 ---
-// Figma component "Button Solid" (Default, Hover, Focus, Pressed).
+// Figma component "Button Solid" (Default, Hover, Focus, Pressed, Disabled).
 // Renders a link when given href, otherwise a button.
+// disabledReason makes it a disabled button with a tooltip that says why (see Tooltip.astro).
 import type { HTMLAttributes } from 'astro/types';
+import Tooltip from './Tooltip.astro';
 
-type Props = (HTMLAttributes<'a'> & { href: string }) | (HTMLAttributes<'button'> & { href?: undefined });
+type Props = ((HTMLAttributes<'a'> & { href: string }) | (HTMLAttributes<'button'> & { href?: undefined })) & {
+  disabledReason?: string;
+};
 
-const { class: className, href, ...attrs } = Astro.props;
-const Tag = href ? 'a' : 'button';
+const { class: className, href, disabledReason, ...attrs } = Astro.props;
+// A link without href cannot take focus, so a disabled button is always a button
+const Tag = href && !disabledReason ? 'a' : 'button';
+const tooltipId = disabledReason ? `tooltip-${crypto.randomUUID().slice(0, 8)}` : undefined;
 ---
 
-<Tag class:list={['button', 'text-label', className]} href={href} type={href ? undefined : 'button'} {...attrs}><slot /></Tag>
+{
+  disabledReason ? (
+    <Tooltip id={tooltipId!} text={disabledReason}>
+      <button class:list={['button', 'text-label', className]} type="button" aria-disabled="true" aria-describedby={tooltipId} {...attrs}>
+        <slot />
+      </button>
+    </Tooltip>
+  ) : (
+    <Tag class:list={['button', 'text-label', className]} href={href} type={href ? undefined : 'button'} {...attrs}>
+      <slot />
+    </Tag>
+  )
+}
 
 <style>
   .button {
@@ -37,5 +55,18 @@ const Tag = href ? 'a' : 'button';
   .button:focus-visible {
     outline: var(--border_focus) solid var(--accent_default);
     outline-offset: var(--space_2);
+  }
+
+  /* Disabled never changes on hover, press or focus, or it would look enabled.
+     On keyboard focus the tooltip appearing is the visible change. */
+  .button[aria-disabled='true'],
+  .button[aria-disabled='true']:hover,
+  .button[aria-disabled='true']:active {
+    background: var(--disabled);
+    cursor: default;
+  }
+
+  .button[aria-disabled='true']:focus-visible {
+    outline: none;
   }
 </style>
