@@ -5,7 +5,8 @@ export default defineConfig({
   reporter: 'list',
   use: { baseURL: 'http://localhost:4330' },
   webServer: {
-    command: 'npm run build && npx astro preview --port 4330',
+    // --ignore-lock: Astro refuses to start if an earlier preview left its lock file behind
+    command: 'npm run build && npx astro preview --port 4330 --ignore-lock',
     url: 'http://localhost:4330',
     reuseExistingServer: !process.env.CI,
   },
