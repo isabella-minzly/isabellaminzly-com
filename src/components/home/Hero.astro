@@ -219,6 +219,11 @@ import portrait from '../../assets/landing/isabella.png';
       gap: var(--space_24);
     }
 
+    /* Two highlights per row with more room between them, so the lines wrap earlier */
+    .highlights__list {
+      column-gap: var(--space_64);
+    }
+
     .highlight {
       grid-column: span 2;
     }
@@ -242,6 +247,10 @@ import portrait from '../../assets/landing/isabella.png';
 
     .stat {
       align-items: flex-end;
+    }
+
+    .highlights__list {
+      column-gap: var(--space_24);
     }
 
     .highlight {
