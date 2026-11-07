@@ -32,7 +32,7 @@ const year = new Date().getFullYear();
     row-gap: var(--space_8);
     min-block-size: 5rem;
     padding: var(--space_10) var(--space_24) var(--space_10) var(--space_16);
-    padding-inline-end: 6rem; /* keeps text clear of the frog */
+    padding-inline-end: 96px; /* keeps text clear of the frog */
     background: var(--contrast_background);
   }
 
@@ -51,10 +51,11 @@ const year = new Date().getFullYear();
     inset-inline-end: var(--space_16);
   }
 
-  /* Desktop: copyright lines up with the main column (space_400), links follow 24 + 24 later */
+  /* Desktop: copyright lines up with the main column (400 in Figma: sidebar plus its gap),
+     so it stays aligned when the reader enlarges text. Links follow 24 + 24 later. */
   @media (width >= 64em) {
     .footer__bar {
-      padding-inline-start: var(--space_400);
+      padding-inline-start: calc(var(--sidebar-width) + var(--space_24));
       column-gap: calc(var(--space_24) * 2);
     }
   }

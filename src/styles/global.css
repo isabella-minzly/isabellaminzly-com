@@ -15,7 +15,7 @@ html {
 
 body {
   margin: 0;
-  min-width: 20rem; /* 320 */
+  min-width: 320px; /* smallest supported width; px so enlarged text reflows instead of scrolling sideways */
   background: var(--main_background);
   color: var(--text_default);
   font-family: var(--body-font-family);
