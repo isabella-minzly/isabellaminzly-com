@@ -9,8 +9,12 @@
 
 :root {
   color-scheme: light dark;
+}
 
-  /* Colour */
+/* Colour. .theme-light keeps the light values inside an element in dark mode
+   (the BigFix chart boxes, whose darkest data colours need a light background). */
+:root,
+.theme-light {
   --main_background: #fdfcf9;
   --contrast_background: #faf7f2;
   --tiles_background: #ffffff;
@@ -22,7 +26,13 @@
   --disabled: #dedede;
   --decorative_brand: #93b643;
   --text_label: #ffffff;
+}
 
+.theme-light {
+  color-scheme: light;
+}
+
+:root {
   /* Spacing */
   --space_1: 1px;
   --space_2: 2px;

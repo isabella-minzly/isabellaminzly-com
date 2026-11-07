@@ -20,25 +20,27 @@ interface Props {
   minHeight?: number;
   /** The image fills the box edge to edge, with no padding (Accessibility for Inclusion hero) */
   bleed?: boolean;
+  /** The box keeps its light colours in dark mode */
+  lightBox?: boolean;
   eager?: boolean;
   caption?: string;
   class?: string;
 }
 
-const { src, svg, alt, width, boxWidth, minHeight = 340, bleed = false, eager = false, caption, class: className } = Astro.props;
+const { src, svg, alt, width, boxWidth, minHeight = 340, bleed = false, lightBox = false, eager = false, caption, class: className } = Astro.props;
 const style = `--box-width: ${boxWidth ? `${boxWidth}px` : '100%'}; --box-min-height: ${minHeight}px; --image-width: ${width}px`;
 ---
 
 {
   caption ? (
     <figure class:list={['case-figure-group', className]} style={style}>
-      <div class:list={['case-figure', { 'case-figure--bleed': bleed }]}>
+      <div class:list={['case-figure', { 'case-figure--bleed': bleed, 'theme-light': lightBox }]}>
         <CaseImage src={src} svg={svg} alt={alt} width={width} eager={eager} />
       </div>
       <figcaption class="text-captions">{caption}</figcaption>
     </figure>
   ) : (
-    <figure class:list={['case-figure', { 'case-figure--bleed': bleed }, className]} style={style}>
+    <figure class:list={['case-figure', { 'case-figure--bleed': bleed, 'theme-light': lightBox }, className]} style={style}>
       <CaseImage src={src} svg={svg} alt={alt} width={width} eager={eager} />
     </figure>
   )

@@ -159,7 +159,7 @@ const results = [
       <div class="figure-stack">
         <div class="image-pair">
           <CaseFigure
-            svg={stackedChart}
+            svg={stackedChart} lightBox
             alt="A stacked bar chart in six shades of blue, with a legend."
             width={459}
             minHeight={420}
@@ -174,9 +174,9 @@ const results = [
           />
         </div>
         <div class="image-pair">
-          <CaseFigure svg={bluePalette} alt="Six shades of blue, from light to dark." width={80} minHeight={340} caption="The blue colour palette." />
+          <CaseFigure svg={bluePalette} lightBox alt="Six shades of blue, from light to dark." width={80} minHeight={340} caption="The blue colour palette." />
           <CaseFigure
-            svg={colourBlindnessTests}
+            svg={colourBlindnessTests} lightBox
             alt="The six shades of blue as seen with eight types of colour blindness, from protanomaly to achromatopsia."
             width={545}
             minHeight={340}
