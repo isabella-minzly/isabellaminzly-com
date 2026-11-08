@@ -47,13 +47,19 @@
 </script>
 
 <style>
-  /* Under the navigation: a tiles_border divider 24 below the last item, then the button,
-     placed as in the sample sidebar of "Under construction v2" */
+  /* Figma "Theme switch" in NavigationMenu: a tiles_border divider 24 below the last item,
+     then the button 32 below it, 16 in from the navigation's edge */
   .theme-switch {
-    margin-block-start: var(--space_12);
-    padding-block-start: calc(var(--space_16) + var(--space_10) * 2);
-    padding-inline-start: calc(var(--space_14) + var(--space_10));
+    margin-block-start: var(--space_24);
+    padding-block-start: var(--space_32);
+    padding-inline-start: var(--space_16);
     border-block-start: var(--border_s) solid var(--tiles_border);
+  }
+
+  /* The sidebar already has a 12 gap, and its navigation sits 4 in */
+  :global(.sidebar) .theme-switch {
+    margin-block-start: var(--space_12);
+    padding-inline-start: calc(var(--space_4) + var(--space_16));
   }
 
   .theme-switch__button {
