@@ -15,9 +15,9 @@ export const navigation: NavItem[] = [
   {
     label: 'Mandala Design System',
     href: '/mandala/',
-    ready: false,
+    ready: true,
     children: [
-      { label: 'Case study: Human-governed, AI\u2011powered', href: '/mandala/', ready: false },
+      { label: 'Case study: Human-governed, AI\u2011powered', href: '/mandala/', ready: true },
       { label: 'Accessible by design', href: '/mandala/accessibility/', ready: false },
       { label: 'The colour story', href: '/mandala/colour/', ready: false },
       { label: 'Typography, a study on internationalisation', href: '/mandala/typography/', ready: false },

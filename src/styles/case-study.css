@@ -87,6 +87,11 @@
     flex: none;
   }
 
+  /* A figure with a caption keeps the box width beside the text */
+  .case-study .row .case-figure-group {
+    flex: 0 0 var(--box-width);
+  }
+
   .case-study .row--text-first .row__text {
     order: -1;
   }

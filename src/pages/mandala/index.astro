@@ -1,0 +1,499 @@
+---
+// Mandala case study: Human-governed, AI-powered, built from the Figma frames "Mandala intro" (1680),
+// "Mandala intro / 1280", "Mandala intro / 1024" and "Mandala intro / Mobile 320".
+// The colour figures are the BigFix ones. The diagram legend, the typography samples and the
+// focused button are HTML, so they reflow, follow the theme and can be read by screen readers.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Link from '../../components/Link.astro';
+import CaseFigure from '../../components/case-study/CaseFigure.astro';
+import Kpis from '../../components/case-study/Kpis.astro';
+import { url } from '../../utils/url';
+import '../../styles/case-study.css';
+import logo from '../../assets/mandala/logo.svg?raw';
+import systemDiagram from '../../assets/mandala/system-diagram.svg?raw';
+import stackedChart from '../../assets/bigfix/stacked-chart.svg?raw';
+import chartDataTable from '../../assets/bigfix/chart-data-table.svg?raw';
+import bluePalette from '../../assets/bigfix/blue-palette.svg?raw';
+import colourBlindnessTests from '../../assets/bigfix/colour-blindness-tests.svg?raw';
+
+const results = [
+  { figure: 'WCAG 2.2 AA', description: 'as the floor for every component and foundation.' },
+  { figure: '18', description: 'hand-built colour themes, every one AA accessible.' },
+  { figure: '3 gates', description: 'before anything is called finished, each one opened by a person.' },
+  { figure: '4 scripts', description: 'hand-tested: Latin, Japanese, Chinese and Korean. Arabic in the pipeline.' },
+  { figure: '40+', description: 'components, each signed off by two developers before it ships.' },
+  { figure: '3 live products', description: 'already on the foundation it is built from.' },
+];
+
+// Legend of the system diagram; the swatches are the ring colours
+const legend = [
+  {
+    term: 'Human signoff',
+    swatch: 'human',
+    description: 'The final control point. Nothing is committed, deployed or published without my explicit approval, every single time.',
+  },
+  {
+    term: 'Three gates',
+    swatch: 'gates',
+    description:
+      'Nothing is called finished until it clears the code, a full manual walkthrough with a keyboard and two screen readers, and a final sign-off against every decision on record.',
+  },
+  {
+    term: 'The rules Claude works inside',
+    swatch: 'rules',
+    description:
+      'A project rulebook, an accessibility rulebook, a numbered and dated decision log, and custom skills, all written before Claude touches a component.',
+  },
+  {
+    term: 'Claude',
+    swatch: 'claude',
+    description:
+      'Does the labour that does not need a human hand on every step, such as keeping Figma and Storybook in sync and executing decisions once they are made.',
+  },
+];
+
+const samples = [
+  { lang: 'en', font: 'inter', text: 'Will this text still fit in the UI?', caption: 'Text in English (Font: Inter - Regular - 16px)' },
+  { lang: 'ja', font: 'jp', text: 'このテキストはUIにまだ収まりますか？', caption: 'Text in Japanese (Font: Noto Sans JP - Regular - 16px)' },
+  { lang: 'zh-Hans', font: 'sc', text: '这段文字在用户界面中还能放得下吗？', caption: 'Text in Simplified Chinese (Font: Noto Sans SC - Regular - 16px)' },
+  { lang: 'ko', font: 'kr', text: '이 텍스트가 여전히 UI에 들어갈까요?', caption: 'Text in Korean (Font: Noto Sans KR - Regular - 16px)' },
+];
+---
+
+<BaseLayout
+  title="Mandala case study: Human-governed, AI-powered"
+  description="How I am building Mandala, an accessibility-first design system for HCLSoftware, with AI doing the labour and people keeping the judgement: three gates, eighteen accessible colour themes and four scripts."
+>
+  <article class="case-study">
+    <div class="hero">
+      <h1 class="hero__title">Mandala case study: Human-governed, AI-powered</h1>
+      <CaseFigure svg={logo} alt="The Mandala Design System logo: a blue mandala beside the words Mandala Design System." width={800} minHeight={497} spacious />
+    </div>
+
+    <Kpis label="Results" items={results} />
+
+    <div class="section">
+      <div class="text">
+        <p>
+          My HCLSoftware began on a blank screen. Mandala began on the opposite. By the time I gave it a name, three products, BigFix, My HCLSoftware and
+          Marketplace, were already running every day on Accessible Design Language, the system already in place before Mandala existed, and Mandala is not built
+          from scratch: it is that same design language made AI-readable, with design and code finally kept in sync. Nobody was going to pause a live product so I
+          could rebuild the ground under it, and nobody should have had to.
+        </p>
+        <p>
+          BigFix and My HCLSoftware and Marketplace each carry the fuller story of how Accessible Design Language came to run under them in the first place, each its
+          own piece.
+        </p>
+        <div><Link href={url('/bigfix/')}>Read the BigFix case study</Link></div>
+        <div><Link href={url('/my-hclsoftware/')}>Read the My HCLSoftware case study</Link></div>
+        <p>
+          That is the actual brief behind the tagline. Mandala is the accessibility-first, token-driven design system I am building at HCLSoftware: colour,
+          typography, spacing, icons and components, defined once and consumed everywhere, built to WCAG 2.2 Level AA as a structural floor rather than a documented
+          aspiration, and it has to satisfy two conditions at once, it has to be right, and it has to arrive without the teams shipping today ever noticing that the
+          floor moved.
+        </p>
+        <p>
+          I hold design authority on this system and make the final call on every decision inside it. Three designers work with me on the Figma side and two
+          developers sign the code off, and none of us, myself included, works on Mandala full time, everyone building this carries a demanding full-time job
+          alongside it, and always has. Claude does the labour that does not need a human hand on every step, keeping Figma and Storybook in sync and checking
+          contrast across eighteen themes at a scale no manual process could match, but nothing in Mandala ships on the strength of an automated check alone. A person
+          reviews the design. A person reviews the code. That rule has never once had an exception.
+        </p>
+        <p>The name itself is not decoration, and carries its own reasoning, laid out in its own piece.</p>
+        <div><Link href={url('/mandala/name/')}>Mandala: The story behind the name</Link></div>
+      </div>
+    </div>
+
+    <section class="section" aria-labelledby="blank-page">
+      <h2 id="blank-page">Not a blank page</h2>
+      <div class="text">
+        <p>
+          Mandala is a rebuild of a system that is already implemented, already shipped, and already relied on by multiple teams across two brands, every day, so
+          replacing it wholesale was never realistic. I am building the replacement inside a private working environment, a complete copy of the existing libraries,
+          visible only to me, my closest team and Claude, so that the libraries in daily use stay untouched until Mandala has genuinely earned the right to replace
+          them.
+        </p>
+        <p>
+          Working this way surfaced a great deal of history nobody had been tracking. Two colour libraries had ended up sharing the same name, so a single component
+          could be pulling its colour from either one depending on which happened to be open the day someone built it, one screen rendering teal on one binding and
+          blue on another, at the same time, for what was meant to be the same semantic colour. Thousands of stray bindings had built up over years with no record of
+          why, and a number of components had quietly gone orphaned inside the old structure. None of it ever reached a real product, because a private working copy
+          has no real consumers until it has earned them. The closest this project has come to a genuine scare was a deprecated library published by accident rather
+          than deleted, tens of thousands of bindings suddenly loose with no way to tell from inside Figma who might already be relying on it. The fear lasted about
+          as long as it took to remember the architecture: a private file, by construction, has no consumers to break.
+        </p>
+        <p>
+          That became one of the operating principles of the whole project: a design system is not only a set of components, it is an accumulated set of decisions
+          and dependencies, and those have to be understood before they can be safely redesigned.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="system">
+      <h2 id="system">The system behind the system</h2>
+      <CaseFigure
+        alt="A diagram of four rings. At the centre, Claude, for speed and labour. Around it the rules Claude works inside: project rulebook, accessibility rulebook, decision log and custom skills. Then three gates: code, manual walkthrough and sign-off. On the outside, human signoff."
+        width={909}
+        minHeight={602}
+        lightBox
+        spacious
+      >
+        <div class="system">
+          <div class="system__diagram" role="img" aria-label="A diagram of four rings. At the centre, Claude, for speed and labour. Around it the rules Claude works inside: project rulebook, accessibility rulebook, decision log and custom skills. Then three gates: code, manual walkthrough and sign-off. On the outside, human signoff." set:html={systemDiagram} />
+          <dl class="system__legend">
+            {
+              legend.map((item) => (
+                <div class="legend-item">
+                  <dt class="text-body_bold">
+                    <span class:list={['legend-item__swatch', `legend-item__swatch--${item.swatch}`]} aria-hidden="true" />
+                    {item.term}
+                  </dt>
+                  <dd>{item.description}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </CaseFigure>
+      <div class="text">
+        <p>The most important part of Mandala is the governance model that decides how the library gets built, not the component library itself.</p>
+        <p>
+          Left without a written instruction, an AI collaborator does not wait. It improvises, fills the gap with its own best guess, and does so with complete
+          confidence, often producing something that looks entirely plausible while quietly breaking an assumption elsewhere in the system that nobody has checked,
+          and the discipline in this project has never been trusting Claude to know when to stop, it has been never leaving a gap for it to fill in the first place,
+          and everything else here follows from that one decision.
+        </p>
+        <p>
+          Before Claude touched a single component, I wrote the rules it would work inside: a project rulebook that every session inherits, rewritten again and again
+          as new edge cases surfaced; a dedicated accessibility rulebook, built out of my own training and years of practice, that runs every check a machine can
+          genuinely be trusted to run and sets out the exact manual test for everything it cannot; a numbered, dated decision log, so that a question already settled
+          cannot be reopened or changed without a name and a reason attached to the change; and a set of custom skills, all built in house, that encode how every
+          component gets designed, built, exported and audited. Nothing is called finished until it clears three separate gates, the code itself, a full manual
+          walkthrough with a keyboard and two screen readers, and a final sign-off against every decision already on record, and nothing is committed, deployed or
+          published without my explicit approval, every single time.
+        </p>
+        <p>
+          That discipline gets tested in small ways, constantly. A gap in the icon library once turned out to be nothing of the sort, what looked like a missing
+          component was a stale, cached read of an old node sitting under a key that had long since been repointed to something else entirely, and neither a node ID
+          nor a variant name turned out to be safe to treat as identity on its own. The decision log exists for exactly this kind of moment, and it has also, at least
+          once, caught the two of us wrong together rather than Claude wrong alone, which is the clearest proof I have that it is not a formality.
+        </p>
+        <p>
+          The result is a collaborator that rarely gets things wrong, and when it does, the gates catch it before it reaches anything that matters, because the speed
+          is Claude's job and the judgement stays mine, and neither of us ever has to simply trust the other to get it right.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="accessibility">
+      <h2 id="accessibility">Accessibility is the floor</h2>
+      <div class="row row--text-first">
+        <CaseFigure
+          alt="A solid button labelled Button in focus state, with a clear outline around it."
+          width={165}
+          boxWidth={510}
+          minHeight={158}
+          caption="The button receives an outline on focus to make it clearly visible to keyboard users."
+        >
+          <span class="focus-demo text-label" role="img" aria-label="A solid button labelled Button in focus state, with a clear outline around it.">Button in focus state</span>
+        </CaseFigure>
+        <div class="row__text text">
+          <p>
+            WCAG 2.2 Level AA is not a target Mandala aims for and sometimes misses. It is the floor beneath which nothing ships, built into the architecture rather
+            than checked against it once a design is already finished.
+          </p>
+          <ul class="bullets">
+            <li>Colour is never the only way I communicate meaning.</li>
+            <li>Every interactive element has a name a screen reader can announce, whether or not it has a visible label.</li>
+            <li>Focus is always visible, and it never fires an action just by landing somewhere.</li>
+            <li>Disabled controls stay reachable and explain themselves, rather than vanishing from the tab order the way a native disabled attribute would.</li>
+          </ul>
+          <p>
+            None of that is an edge case, it is the ordinary, daily experience of people who use assistive technology, and Mandala is built around it rather than
+            retrofitted to it afterwards, and the fuller account of what that takes structurally is its own piece.
+          </p>
+          <div><Link href={url('/mandala/accessibility/')}>Read the accessibility story</Link></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="colour">
+      <h2 id="colour">Colour, built backwards</h2>
+      <div class="text">
+        <p>
+          Colour is the foundation that took the longest and taught the most, because it could not be built the way colour systems normally are. Most start with a
+          primitive scale and give it meaning afterwards. Mandala already had its semantic tokens in place, roles like primary, danger and warning, before it had a
+          primitive colour scale underneath them, so the primitives had to be built backwards to fit decisions that already existed. The result is eighteen colour
+          themes, every one WCAG AA accessible, letting a person personalise the interface to their own eyes rather than settle for whichever palette a product
+          happened to ship with, across illustrations, charts and every primary action alike. The private, occasionally hair-raising process of getting there has its
+          own full account in a companion piece.
+        </p>
+        <div><Link href={url('/mandala/colour/')}>Read the colour story</Link></div>
+      </div>
+      <div class="figure-stack">
+        <div class="image-pair">
+          <CaseFigure
+            svg={stackedChart}
+            lightBox
+            alt="A stacked bar chart in six shades of blue, with a legend."
+            width={459}
+            minHeight={420}
+            caption="The stacked chart using the fully accessible blue colour palette."
+          />
+          <CaseFigure
+            svg={chartDataTable}
+            alt="A chart reference drawer showing the chart data as a table."
+            width={560}
+            minHeight={420}
+            caption="All charts have a data table which can be opened in a drawer. This perfectly meets requirements for long alt text for charts, as well as being useful to a lot of other users. A great example of how everyone benefits from accessibility."
+          />
+        </div>
+        <div class="image-pair">
+          <CaseFigure svg={bluePalette} lightBox alt="Six shades of blue, from light to dark." width={80} minHeight={340} caption="The blue colour palette." />
+          <CaseFigure
+            svg={colourBlindnessTests}
+            lightBox
+            alt="The six shades of blue as seen with eight types of colour blindness, from protanomaly to achromatopsia."
+            width={545}
+            minHeight={340}
+            caption="Tests performed to check for colour blindness compatibility. These tests were performed on all themes, and on all types of palettes."
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="typography">
+      <h2 id="typography">Typography that travels</h2>
+      <CaseFigure alt="" width={1165} minHeight={466} spacious>
+        <ul class="samples">
+          {
+            samples.map((sample) => (
+              <li class="sample">
+                <p class:list={['sample__text', `sample__text--${sample.font}`]} lang={sample.lang}>
+                  {sample.text}
+                </p>
+                <p class="text-captions">{sample.caption}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </CaseFigure>
+      <div class="text">
+        <p>
+          The same discipline applied when the type scale had to travel into Japanese, Chinese and Korean. Latin-script languages occupy space on a screen in a
+          completely different way from these three scripts, which is exactly why an automated approach did not work, internationalisation here needed a human hand
+          and a human eye, tested screen by screen against real, dense BigFix layouts rather than guessed at from a specimen sheet, and it landed in a different place
+          for each language on purpose, because a rule applied uniformly to three scripts that happen to share a region on a map is not the same thing as a rule that
+          was actually tested. The full story, including where the three languages agreed and where they did not, is its own piece.
+        </p>
+        <div><Link href={url('/mandala/typography/')}>Read the typography story</Link></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="stands">
+      <h2 id="stands">Where it stands</h2>
+      <div class="text">
+        <p>
+          The foundations are completely tokenised. Colour, typography, spacing and the rest are defined once as tokens, which keeps the system consistent and makes
+          it readable by AI as well as by people. Every foundation is shipped and exported through the same pipeline, downloadable as CSS and JSON, and sits behind a
+          gate that stands permanently between any future change and the published site.
+        </p>
+        <p>
+          Icons and illustrations are built on the same idea. I have shipped 180 icons, each one a component that points at a path, so no icon has to be exported in
+          several colours: the path simply picks up the colour of its container, which keeps the code lighter and easier to maintain. The (current) 60+ illustrations
+          work the same way. They are paths too, and each one adapts to the colour theme, picking up the primary colour of the team using it and personalising part
+          of the illustration in that colour.
+        </p>
+        <p>
+          Components draw on all of this. They move through the same governance one at a time, each held to the full standard rather than shortcut through it, and
+          every one ships in React, the framework the teams use, so a team reaching for Mandala does not need to reverse-engineer it.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="proves">
+      <h2 id="proves">What this proves</h2>
+      <div class="text">
+        <p>
+          What this proves is not that an AI can be handed a design system and left to get on with it, but the opposite: held inside rules a design team actually
+          wrote, checked by gates a human signs off by hand, and never left to guess at a decision it was not given, an AI collaborator can carry an enormous amount of
+          the labour without ever carrying the judgement.
+        </p>
+        <p>
+          Nearly two decades of design and accessibility practice sit behind every rule, gate and decision that governs Mandala, and AI gives that experience more
+          reach rather than replacing it, so the judgement stays human and the busy-work goes to AI, human-governed and AI-powered by design, and the quality is never
+          the thing that gets traded away to get there.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--padded" aria-labelledby="next">
+      <h2 id="next">Next in the Mandala case study</h2>
+      <div><Link href={url('/mandala/accessibility/')}>Mandala: Accessible by design</Link></div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Shared layout is in src/styles/case-study.css; this is what only this page needs */
+
+  /* Colour figures: two image pairs 24 apart, as in BigFix */
+  .figure-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_24);
+  }
+
+  /* System diagram: the rings above the legend, side by side in the 1680 layout */
+  .system {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_32);
+    inline-size: 100%;
+    max-inline-size: 28rem; /* 448, the diagram */
+  }
+
+  .system__diagram :global(svg) {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .system__legend {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    max-inline-size: 24.8125rem; /* 397 */
+    margin: 0;
+  }
+
+  /* Swatch, then the term and its description 8 apart, 16 from the swatch */
+  .legend-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+  }
+
+  .legend-item dt {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space_16);
+  }
+
+  .legend-item dd {
+    margin: 0;
+    margin-inline-start: calc(20px + var(--space_16));
+  }
+
+  .legend-item__swatch {
+    flex: none;
+    inline-size: 20px;
+    block-size: 20px;
+    margin-block-start: 2px;
+  }
+
+  /* The ring colours; the box keeps its light theme in dark mode */
+  .legend-item__swatch--human {
+    background: var(--text_default);
+  }
+
+  .legend-item__swatch--gates {
+    background: #b9c1ec;
+  }
+
+  .legend-item__swatch--rules {
+    background: #e3e6f7;
+    border: var(--border_s) solid #b9c1ec;
+  }
+
+  .legend-item__swatch--claude {
+    background: #5363ca;
+  }
+
+  @container main (width >= 77rem) {
+    .system {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space_64);
+      max-inline-size: none;
+      inline-size: auto;
+    }
+
+    .system__diagram {
+      flex: 0 0 28rem;
+    }
+
+    .system__legend {
+      flex: 0 1 24.8125rem; /* 397 */
+    }
+  }
+
+  /* A picture of the Button Solid focus state, not a real control */
+  .focus-demo {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 3rem;
+    padding: var(--space_12) var(--space_24);
+    border-radius: var(--radius_xl);
+    background: var(--accent_default);
+    color: var(--text_label);
+    outline: var(--border_focus) solid var(--accent_default);
+    outline-offset: var(--space_2);
+  }
+
+  .bullets {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+    margin: 0;
+    padding-inline-start: var(--space_24);
+  }
+
+  /* Typography samples: one box per language, caption 8 below, 16 apart */
+  .samples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    inline-size: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sample {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+  }
+
+  .sample__text {
+    padding: var(--space_16);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+    background: var(--contrast_background);
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  @media (width >= 47.5em) {
+    .sample__text {
+      padding-inline: var(--space_32);
+    }
+  }
+
+  .sample__text--inter {
+    font-family: 'Inter Sample', system-ui, sans-serif;
+  }
+
+  .sample__text--jp {
+    font-family: 'Noto Sans JP Sample', system-ui, sans-serif;
+  }
+
+  .sample__text--sc {
+    font-family: 'Noto Sans SC Sample', system-ui, sans-serif;
+  }
+
+  .sample__text--kr {
+    font-family: 'Noto Sans KR Sample', system-ui, sans-serif;
+  }
+</style>
