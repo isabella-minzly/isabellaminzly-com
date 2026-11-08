@@ -111,6 +111,11 @@
   --quote_s-line-height: 1.5rem;
   --quote_s-letter-spacing: 0;
 
+  --quote_xl-font-family: var(--font-newsreader);
+  --quote_xl-font-size: 1.5rem;
+  --quote_xl-line-height: 2rem;
+  --quote_xl-letter-spacing: 0;
+
   --quote-attribution-font-family: var(--font-instrument-sans);
   --quote-attribution-font-weight: 400;
   --quote-attribution-font-size: 0.875rem;
@@ -193,6 +198,9 @@
     --subheading-line-height: 2.25rem;
     --section-heading-font-size: 1.125rem;
     --section-heading-line-height: 1.75rem;
+    /* Pull quotes take quote_l on phones */
+    --quote_xl-font-size: var(--quote_l-font-size);
+    --quote_xl-line-height: var(--quote_l-line-height);
   }
 }
 

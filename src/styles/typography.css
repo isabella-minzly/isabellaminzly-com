@@ -54,6 +54,13 @@ strong,
   line-height: var(--quote_s-line-height);
 }
 
+.text-quote_xl {
+  font-family: var(--quote_xl-font-family);
+  font-style: italic;
+  font-size: var(--quote_xl-font-size);
+  line-height: var(--quote_xl-line-height);
+}
+
 .text-quote-attribution {
   font-family: var(--quote-attribution-font-family);
   font-weight: var(--quote-attribution-font-weight);

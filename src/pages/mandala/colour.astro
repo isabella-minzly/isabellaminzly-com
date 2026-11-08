@@ -1,0 +1,259 @@
+---
+// Mandala: The colour story, built from the Figma frames "Mandala colour" (1680),
+// "Mandala colour / 1280", "Mandala colour / 1024" and "Mandala colour / Mobile 320".
+// The pictures are exported from Figma at 2x with transparent gaps, so the box colour shows through in both themes.
+// The icon samples are SVG with their own light and dark panels: they show both modes side by side, whatever the theme.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Link from '../../components/Link.astro';
+import CaseFigure from '../../components/case-study/CaseFigure.astro';
+import { url } from '../../utils/url';
+import '../../styles/case-study.css';
+import hero from '../../assets/mandala-colour/hero.png';
+import paletteMapping from '../../assets/mandala-colour/palette-mapping.png';
+import primitives from '../../assets/mandala-colour/primitives.png';
+import tealScreen from '../../assets/mandala-colour/teal-screen.png';
+import blueScreen from '../../assets/mandala-colour/blue-screen.png';
+import contrastTables from '../../assets/mandala-colour/contrast-tables.png';
+import iconsLight from '../../assets/mandala-colour/icons-light.svg?raw';
+import iconsDark from '../../assets/mandala-colour/icons-dark.svg?raw';
+---
+
+<BaseLayout
+  title="Mandala: The colour story"
+  description="How I chose every colour in Mandala by hand, fitted eighteen themes to tokens that already existed, and let Claude run the thousands of contrast checks that prove they hold."
+>
+  <article class="case-study">
+    <div class="hero">
+      <h1 class="hero__title">Mandala: The colour story</h1>
+      <CaseFigure
+        src={hero}
+        alt="The same dashboard repeated eighteen times: nine colour themes, from blue and teal to red and fuchsia, each shown in light and dark mode."
+        width={1198}
+        caption="A sample screen with all 18 colour themes applied."
+        spacious
+        eager
+      />
+    </div>
+
+    <section class="section" aria-labelledby="by-hand">
+      <h2 id="by-hand">Every hue chosen by hand</h2>
+      <div class="text">
+        <p>Every colour in Mandala was chosen by me, by hand, using my designer-trained human eyes.</p>
+        <p>
+          AI did not decide a single hue, and that is one of the things that makes this system special, because anyone can ask an AI for a mathematically perfect
+          colour system with twelve steps for every hue. What an algorithm cannot do is look at a screen.
+        </p>
+        <p>
+          I tested every palette on multiple screens, and I tested how people with colour blindness experience each one, because I consider that judgement far
+          better made by a person than by a formula.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="backwards">
+      <h2 id="backwards">Built backwards, on purpose</h2>
+      <CaseFigure
+        src={paletteMapping}
+        alt="Two overlapping boards of colour swatches in columns by hue, from greys and blues to greens, reds, yellows, oranges, purples and pinks, each swatch labelled with its token."
+        width={901}
+        minHeight={499}
+        spacious
+      />
+      <div class="text">
+        <p>
+          Most colour systems are built in one direction: a primitive scale first, numbered steps of a hue, with semantic roles like primary or danger attached to
+          whichever step suits. Mandala had to go the other way. The semantic tokens already existed and already carried real decisions and real usage across a live
+          product, long before any primitive scale sat underneath them, so the palette had to be fitted to choices that were already made. That is a harder problem,
+          and every one of the eighteen themes had to resolve cleanly against tokens that were never designed with a scale in mind.
+        </p>
+        <p>
+          I did not start from a blank page either. The primitives sit on top of a colour system that already existed and that I had also built by hand. I mapped
+          every existing colour to a palette myself, added whatever was missing to reach the full twelve steps, and kept the number of colours that had to change as
+          small as I could, so that I stayed on good terms with engineering. Then I landed on a palette, tested it, went back and refined it, tested again, and
+          repeated that cycle until it held.
+        </p>
+      </div>
+      <CaseFigure
+        src={primitives}
+        alt="The primitive palettes: twelve steps for every hue, with close-ups of the Blue, Teal, Indigo, Magenta, Green and Grey scales showing each step's name and hex value."
+        width={1237}
+        minHeight={0}
+        spacious
+      />
+      <div class="text">
+        <p>The result is eighteen full themes built from shared primitives, with room held in reserve for a high-contrast theme still to come.</p>
+        <p>
+          The final palettes meet the contrast requirements and are usable for most people with colour blindness, and all of it is documented rather than assumed.
+          So far, with multiple components built, literally thousands of tests have been performed on colour contrast without a single error, so the palettes hold.
+        </p>
+        <p>
+          AI's part was the volume. Claude ran the contrast checks across the eighteen themes and built the hundreds of documentation cards in Figma and Storybook,
+          and it did that busy work better than I could have.
+        </p>
+      </div>
+    </section>
+
+    <figure class="pull-quote">
+      <span class="pull-quote__mark text-quote-mark-s" aria-hidden="true">“</span>
+      <blockquote class="pull-quote__text text-quote_xl">
+        <p>That split is the clearest example in Mandala of what human-governed, AI-powered means.</p>
+      </blockquote>
+    </figure>
+
+    <section class="section" aria-labelledby="private-copy">
+      <h2 id="private-copy">A private copy, not a live rebuild</h2>
+      <div class="text">
+        <p>
+          Mandala is not being built on top of the system other teams use every day. It is being built inside an isolated working environment in Figma: a complete
+          copy of the existing colour libraries, components and structure, visible only to me, my closest team and Claude, while the libraries in daily use stay
+          untouched until Mandala is ready to take their place. That separation is deliberate: every experiment, wrong turn and structural change described below
+          happened somewhere nobody was relying on, which is exactly what made it safe to take them.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="audit">
+      <h2 id="audit">The audit that cried wolf, four times</h2>
+      <div class="text">
+        <p>
+          A full audit of the working copy flagged four apparent defects, and all four were the same mistake. A spreadsheet disagreed with the design, and the audit
+          believed the spreadsheet. A colour that seemed invisible sat on a layer nobody could see. A “misnamed” border was a hand-drawn outline behaving as intended.
+        </p>
+        <p>Four times running the audit cried wolf, and four times the wolf turned out to be the family dog.</p>
+        <p>
+          The fix was not a cleverer scan but a rule: before calling anything broken, go and look at the actual picture, with human, designer-trained eyes.
+        </p>
+      </div>
+    </section>
+
+    <figure class="pull-quote">
+      <span class="pull-quote__mark text-quote-mark-s" aria-hidden="true">“</span>
+      <blockquote class="pull-quote__text text-quote_xl">
+        <p>The design file is the truth. The variable that claims to represent it is not.</p>
+      </blockquote>
+    </figure>
+
+    <section class="section" aria-labelledby="fix">
+      <h2 id="fix">The day the fix broke what it was fixing</h2>
+      <div class="text">
+        <p>
+          Looking at the actual picture also caught the one real failure. A batch correction of focus outlines deleted them on thirty buttons at once, an
+          accessibility regression caused by the process meant to improve accessibility. A verification check reported zero outlines left, and the instinct was to
+          assume the check was broken. It was not.
+        </p>
+        <p>
+          Believing an alarming result rather than explaining it away is now a standing rule. The outlines were restored the same day, in a file nobody outside the
+          project could see.
+        </p>
+      </div>
+    </section>
+
+    <figure class="pull-quote">
+      <span class="pull-quote__mark text-quote-mark-s" aria-hidden="true">“</span>
+      <blockquote class="pull-quote__text text-quote_xl">
+        <p>A check that has never failed has never been tested.</p>
+      </blockquote>
+    </figure>
+
+    <section class="section" aria-labelledby="libraries">
+      <h2 id="libraries">Two libraries, the same name and years of history</h2>
+      <div class="image-pair">
+        <CaseFigure
+          src={tealScreen}
+          alt="A laptop showing an account management screen with teal buttons, toggles and links."
+          width={402}
+          minHeight={340}
+          caption="Sample screen using teal as primary colour."
+        />
+        <CaseFigure
+          src={blueScreen}
+          alt="A laptop showing a device details screen with blue buttons, tabs and tags."
+          width={402}
+          minHeight={340}
+          caption="Sample screen using blue as primary colour."
+        />
+      </div>
+      <div class="text">
+        <p>
+          The working copy came from a system with years of history, and that history came with it. While I was tracking down a few stray colour bindings, I found
+          something nobody had documented: two colour libraries in the same file, with the same name and the same four theme modes. A component took its colour from
+          whichever library happened to be open in the variable picker on the day someone built it, so teal and blue, which belong to two different products and
+          should never be mixed, were ending up on the same screens. Putting that right meant moving tens of thousands of colour decisions across, one screen at a
+          time, each one checked rather than assumed. None of this ever reached a real user.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faces">
+      <h2 id="faces">One palette, many faces</h2>
+      <div class="image-pair">
+        <CaseFigure
+          svg={iconsLight}
+          alt="A download icon repeated eleven times on a white panel, each in a different theme colour."
+          width={570}
+          minHeight={340}
+          caption="Icon with different colour themes applied - light mode."
+        />
+        <CaseFigure
+          svg={iconsDark}
+          alt="The same download icon repeated eleven times on a black panel, each in a different theme colour."
+          width={570}
+          minHeight={340}
+          caption="Icon with different colour themes applied - dark mode."
+        />
+      </div>
+      <div class="text">
+        <p>The same colour system now runs underneath the icons and the illustrations.</p>
+        <p>
+          There are 180 icons, each one a component that points at a path and takes the colour of its container, so no icon has to be exported in several colours,
+          and the code stays lighter and easier to maintain. The illustrations work the same way. They are paths too, and each one adapts to the colour theme,
+          picking up the primary colour of the team using it and personalising part of the artwork in that colour.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="eighteen">
+      <h2 id="eighteen">Eighteen themes, zero contrast defects</h2>
+      <CaseFigure
+        src={contrastTables}
+        alt="Contrast test tables for the blue and teal themes in light and dark mode, with a ratio in every cell, beside the teal scale mapped to its tokens."
+        width={960}
+        minHeight={0}
+        spacious
+      />
+      <div class="text">
+        <p>
+          All eighteen themes are fully accessible and meet WCAG 2.2 AA. Having AI run the tests saved a huge amount of time, but the time saved is not the real
+          story. The system was set up well from the beginning, so contrast problems are prevented before testing starts, and the tests are there to prove that it
+          holds.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="worth">
+      <h2 id="worth">Why this is worth telling</h2>
+      <div class="text">
+        <p>
+          Colour shows the whole method at once: a private space to be wrong in safely, an audit disciplined enough to doubt its own findings, a mistake caught
+          because an alarming result was believed rather than explained away, and a system stable enough that hundreds of automated checks find nothing to fix.
+        </p>
+        <p>
+          None of it required the old system to be broken. It required patience with a system that was never built to be read by a machine, and a great deal of
+          looking at the actual picture instead of the report about the picture.
+        </p>
+      </div>
+    </section>
+
+    <figure class="pull-quote">
+      <span class="pull-quote__mark text-quote-mark-s" aria-hidden="true">“</span>
+      <blockquote class="pull-quote__text text-quote_xl">
+        <p>The colours are what people see.<br />The patience behind them is what lets everyone see them.</p>
+      </blockquote>
+    </figure>
+
+    <section class="section section--padded" aria-labelledby="next">
+      <h2 id="next">Next in the Mandala case study</h2>
+      <div><Link href={url('/mandala/typography/')}>Mandala: Typography, a study on internationalisation</Link></div>
+    </section>
+  </article>
+</BaseLayout>
