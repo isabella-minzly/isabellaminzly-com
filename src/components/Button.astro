@@ -59,9 +59,9 @@ const tooltipId = disabledReason ? `tooltip-${crypto.randomUUID().slice(0, 8)}` 
     outline-offset: var(--space_2);
   }
 
-  /* Outlined: 1px border and label in the accent colour, contrast background on hover and press */
+  /* Outlined: 2px border and label in the accent colour, contrast background on hover and press */
   .button--outlined {
-    border: var(--border_s) solid var(--accent_default);
+    border: var(--border_focus) solid var(--accent_default);
     background: transparent;
     color: var(--accent_default);
   }

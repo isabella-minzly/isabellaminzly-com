@@ -8,7 +8,7 @@ import { allNavItems, footerLinks } from '../data/navigation';
 
 export const getStaticPaths = (() => {
   const pending = allNavItems
-    .filter((item) => !item.ready && item.href !== '/')
+    .filter((item, index, items) => !item.ready && item.href !== '/' && items.findIndex((other) => other.href === item.href) === index)
     .map((item) => ({ href: item.href, title: item.label }));
   pending.push({ href: footerLinks.accessibilityStatement, title: 'Accessibility statement' });
 

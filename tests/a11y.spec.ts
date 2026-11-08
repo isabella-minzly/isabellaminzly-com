@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { allNavItems, footerLinks } from '../src/data/navigation';
 
-const pages = ['/design-system/', footerLinks.accessibilityStatement, ...allNavItems.map((item) => item.href)];
+// A Set, because the Mandala parent and its first child share /mandala/
+const pages = [...new Set(['/design-system/', footerLinks.accessibilityStatement, ...allNavItems.map((item) => item.href)])];
 
 for (const path of pages) {
   test(`axe: ${path}`, async ({ page }) => {

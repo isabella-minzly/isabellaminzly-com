@@ -10,13 +10,15 @@ interface Props {
 
 const { currentPath } = Astro.props;
 const isCurrent = (item: NavItem) => pagePath(currentPath) === item.href;
+// A parent that shares its address with a child (Mandala) leaves the current mark to the child
+const isCurrentParent = (item: NavItem) => isCurrent(item) && !item.children?.some(isCurrent);
 ---
 
 <ul class="nav-menu" role="list">
   {
     navigation.map((item) => (
       <li>
-        <a class="nav-item text-navigation" href={url(item.href)} aria-current={isCurrent(item) ? 'page' : undefined}>
+        <a class="nav-item text-navigation" href={url(item.href)} aria-current={isCurrentParent(item) ? 'page' : undefined}>
           {item.label}
         </a>
         {item.children && (
