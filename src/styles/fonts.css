@@ -53,3 +53,33 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* Typography samples on the Mandala case study: each file holds only the characters of its sample,
+   at weight 400, so together they weigh about 16 KB. */
+@font-face {
+  font-family: 'Inter Sample';
+  src: url('/fonts/inter-sample.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP Sample';
+  src: url('/fonts/noto-sans-jp-sample.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans SC Sample';
+  src: url('/fonts/noto-sans-sc-sample.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans KR Sample';
+  src: url('/fonts/noto-sans-kr-sample.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}

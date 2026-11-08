@@ -3,6 +3,7 @@
 // From 760 the box keeps the frame's minimum height and the image its Figma size.
 // Below that the box fills the width and its height follows the image.
 // With a caption it is Figma "Figure": the box with the caption 8px below it.
+// Content passed as children replaces the image (HTML figures such as the Mandala diagram legend).
 import type { ImageMetadata } from 'astro';
 import CaseImage from './CaseImage.astro';
 
@@ -22,26 +23,30 @@ interface Props {
   bleed?: boolean;
   /** The box keeps its light colours in dark mode */
   lightBox?: boolean;
+  /** 32 padding from 760, as the Mandala hero, diagram and typography boxes */
+  spacious?: boolean;
   eager?: boolean;
   caption?: string;
   class?: string;
 }
 
-const { src, svg, alt, width, boxWidth, minHeight = 340, bleed = false, lightBox = false, eager = false, caption, class: className } = Astro.props;
+const { src, svg, alt, width, boxWidth, minHeight = 340, bleed = false, lightBox = false, spacious = false, eager = false, caption, class: className } = Astro.props;
+const custom = Astro.slots.has('default');
+const boxClass = ['case-figure', { 'case-figure--bleed': bleed, 'case-figure--spacious': spacious, 'case-figure--custom': custom, 'theme-light': lightBox }];
 const style = `--box-width: ${boxWidth ? `${boxWidth}px` : '100%'}; --box-min-height: ${minHeight}px; --image-width: ${width}px`;
 ---
 
 {
   caption ? (
     <figure class:list={['case-figure-group', className]} style={style}>
-      <div class:list={['case-figure', { 'case-figure--bleed': bleed, 'theme-light': lightBox }]}>
-        <CaseImage src={src} svg={svg} alt={alt} width={width} eager={eager} />
+      <div class:list={boxClass}>
+        {custom ? <slot /> : <CaseImage src={src} svg={svg} alt={alt} width={width} eager={eager} />}
       </div>
       <figcaption class="text-captions">{caption}</figcaption>
     </figure>
   ) : (
-    <figure class:list={['case-figure', { 'case-figure--bleed': bleed, 'theme-light': lightBox }, className]} style={style}>
-      <CaseImage src={src} svg={svg} alt={alt} width={width} eager={eager} />
+    <figure class:list={[...boxClass, className]} style={style}>
+      {custom ? <slot /> : <CaseImage src={src} svg={svg} alt={alt} width={width} eager={eager} />}
     </figure>
   )
 }
@@ -92,9 +97,18 @@ const style = `--box-width: ${boxWidth ? `${boxWidth}px` : '100%'}; --box-min-he
     inline-size: 100%;
   }
 
+  /* Custom content sets its own width inside the box */
+  .case-figure--custom {
+    color: var(--text_default);
+  }
+
   @media (width >= 47.5em) {
     .case-figure:not(.case-figure--bleed) {
       min-block-size: var(--box-min-height);
+    }
+
+    .case-figure--spacious {
+      padding: var(--space_32);
     }
   }
 </style>
