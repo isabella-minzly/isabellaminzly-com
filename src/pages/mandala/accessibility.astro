@@ -1,0 +1,310 @@
+---
+// Mandala: Accessible by design, built from the Figma frames "Mandala accessibility" (1680),
+// "Mandala accessibility / 1280", "Mandala accessibility / 1024" and "Mandala accessibility / Mobile 320".
+// The text zoom samples, the focused and disabled buttons and the criteria list are HTML,
+// so they follow the theme and can be read by screen readers.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Link from '../../components/Link.astro';
+import CaseFigure from '../../components/case-study/CaseFigure.astro';
+import { url } from '../../utils/url';
+import '../../styles/case-study.css';
+import hero from '../../assets/mandala-accessibility/hero.jpg';
+import paletteTests from '../../assets/mandala-accessibility/palette-tests.png';
+
+const zoomSamples = [
+  { size: 'm', text: 'Sample text 100% zoom.' },
+  { size: 'l', text: 'Sample text 200% zoom.' },
+  { size: 'xl', text: 'Sample text 400% zoom.' },
+];
+
+const criteria = [
+  '1.3.1 Info and Relationships',
+  '1.4.3 Contrast (minimum)',
+  '1.4.4 Resize text',
+  '1.4.10 Reflow',
+  '1.4.11 Non-text contrast',
+  '1.4.12 Text spacing',
+  '1.4.13 Content on hover or focus',
+  '2.1.1 Keyboard',
+  '2.3.3 Animation from interactions',
+  '2.4.7 Focus visible',
+  '2.5.8 Target size (minimum)',
+  '4.1.2 Name, role, value',
+  '4.1.3 Status messages',
+];
+---
+
+<BaseLayout
+  title="Mandala: Accessible by design"
+  description="How accessibility is built into Mandala Design System: WCAG 2.2 Level AA as the floor, automated and manual tests for every component, and evidence for every claim."
+>
+  <article class="case-study">
+    <div class="hero">
+      <h1 class="hero__title">Mandala: Accessible by design</h1>
+      <CaseFigure
+        src={hero}
+        alt="Four people stand side by side: a woman in a wheelchair, a blind man with a white cane and a guide dog, a woman, and a person with a prosthetic arm. Coloured pencils lie in the corner."
+        width={1262}
+        caption="Created with AI, so that no real person’s image is used without their consent."
+        bleed
+        eager
+      />
+    </div>
+
+    <div class="section">
+      <div class="text">
+        <p>
+          Somewhere, right now, someone is trying to submit a support ticket with a screen reader, or fill in a form after a stroke has changed how they process visual
+          information, or navigate a dashboard with a keyboard because a mouse is not an option today. They did not choose to need more from the software they are
+          using. The software either meets them there, or it does not.
+        </p>
+        <p>
+          That is the premise Mandala Design System is built on. Not as a compliance exercise bolted onto finished components, but as the starting condition for every
+          decision that follows.
+        </p>
+      </div>
+    </div>
+
+    <section class="section" aria-labelledby="floor">
+      <h2 id="floor">A floor, not a ceiling</h2>
+      <div class="text">
+        <p>
+          Every component in this system is built to WCAG 2.2 Level AA as a mandatory baseline. That is not a target I aim for and sometimes miss; it is the floor
+          beneath which nothing ships.
+        </p>
+        <p>
+          I did not build this on a single accessibility .md file. The whole of my accessibility course is built into the system, together with links to multiple
+          resources that the AI reads before it builds anything.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="legal">
+      <h2 id="legal">Meeting legal requirements</h2>
+      <div class="text">
+        <p>Building properly to that standard also means I am already meeting obligations that are no longer optional.</p>
+        <p>
+          Section 508 in the United States sets WCAG 2.0 Level AA as its bar. The European Accessibility Act relies on the European standard EN 301 549, which until
+          now has pointed to WCAG 2.1 and was updated in 2026 to align with WCAG 2.2, with its formal EU recognition still to come.
+        </p>
+        <p>
+          Because every WCAG 2.2 Level AA requirement builds on the earlier versions, a component that meets 2.2 also meets 2.0 and 2.1, which means the groundwork
+          for compliance is already in place today under both, and Mandala already meets the version the European standard now uses. This is not the reason
+          accessibility matters here, but it is a welcome consequence of doing the work properly in the first place, rather than treating compliance as a separate
+          scramble once a product is already built.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="structural">
+      <h2 id="structural">Structural, not aspirational</h2>
+      <div class="image-pair">
+        <CaseFigure
+          src={paletteTests}
+          lightBox
+          alt="Two contrast tables for the blue palette, one for light mode and one for dark mode, blurred."
+          width={549}
+          caption="All colour palettes are tested for WCAG 2.2 accessibility compliance."
+        />
+        <CaseFigure alt="" width={560} caption="Text scales to meet WCAG requirements on full page zoom and on text only zoom.">
+          <div class="zoom" role="img" aria-label="The same sample text at 100%, 200% and 400% zoom.">
+            {zoomSamples.map((sample) => <span class:list={['zoom__sample', `zoom__sample--${sample.size}`]}>{sample.text}</span>)}
+          </div>
+        </CaseFigure>
+      </div>
+      <div class="text">
+        <p>
+          The difference between a design system that talks about accessibility and one that enforces it comes down to a simple test: what happens when someone
+          forgets?
+        </p>
+        <p>In Mandala, the answer is that the system catches it before it ships.</p>
+        <p>
+          Every component carries its accessibility specification alongside its code, not as an afterthought written up later, and that specification records the full
+          lists of both automated and manual tests performed on it.
+        </p>
+        <p>Both lists matter, and neither is a formality.</p>
+        <p>
+          Automated checks run on every story in Storybook, and static analysis flags unsafe patterns before a pull request is even reviewed, but automated testing
+          covers only part of what accessibility asks of a component, and nowhere near all of it. For that reason every component also has a list of manual tests, as
+          long as its automated one, that a human must perform before it can pass.
+        </p>
+        <p>
+          This is a large part of what human-governed and AI-powered means in practice: a person performs as many tests as the AI does, because that is how
+          accessibility works. Nothing is called finished until both lists are complete and everything passes, and every component clears three separate gates: the
+          code itself, the manual testing, and a final sign-off that checks the work against every decision the team has already locked in.
+        </p>
+        <p>
+          Wrong output should be structurally impossible, not just discouraged. That principle shapes the tooling as much as it shapes the components.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="people">
+      <h2 id="people">Built for the people who rely on it most</h2>
+      <div class="image-pair">
+        <CaseFigure alt="" width={165} caption="The button receives an outline on focus to make it clearly visible to keyboard users.">
+          <span class="focus-demo text-label" role="img" aria-label="A solid button labelled Button in focus state, with a clear outline around it.">Button in focus state</span>
+        </CaseFigure>
+        <CaseFigure
+          alt=""
+          width={271}
+          caption="A disabled element stays in the keyboard navigation and gets a tooltip on hover and focus, explaining the reason for it being disabled, and what the user should do to enable it."
+        >
+          <span class="disabled-demo" role="img" aria-label="A grey disabled button with a dark tooltip above it that reads: Tooltip explaining why the button is disabled.">
+            <span class="disabled-demo__tooltip text-legends">Tooltip explaining why the button is disabled.</span>
+            <span class="disabled-demo__button text-label">Disabled button</span>
+          </span>
+        </CaseFigure>
+      </div>
+      <div class="text">
+        <ul class="bullets">
+          <li>Colour is never the only way I communicate meaning.</li>
+          <li>Every interactive element has a name a screen reader can announce, whether or not it has a visible label.</li>
+          <li>Focus is always visible, and it never fires an action just by landing somewhere.</li>
+          <li>Disabled controls stay reachable and explain themselves, rather than vanishing from the tab order the way a native disabled attribute would.</li>
+        </ul>
+        <p>
+          None of these are edge cases. They are the ordinary, daily experience of people who use assistive technology, and they are treated as such.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="verified">
+      <h2 id="verified">Verified, not assumed</h2>
+      <div class="row row--text-first">
+        <CaseFigure alt="" width={614} boxWidth={648} caption="WCAG 2.2 guidelines tested for the button component.">
+          <ul class="criteria text-quote-attribution">
+            {criteria.map((criterion) => <li>{criterion}</li>)}
+          </ul>
+        </CaseFigure>
+        <div class="row__text text">
+          <p>
+            Every accessibility claim in this system is backed by evidence, tagged against the specific WCAG criterion it satisfies. That evidence exists so it can be
+            checked, questioned, and eventually compiled into a formal conformance report; accessibility that cannot be demonstrated is not much better than
+            accessibility that was never considered.
+          </p>
+          <p>
+            The Button shows what that looks like in practice. It was tested against 13 WCAG criteria: 10 through both automated and manual testing, 2 through
+            automated testing only, and 1 through manual testing only. In total that meant 27 automated tests and 30 manual ones. On colour contrast alone, axe ran 468
+            tests covering every contrast requirement across the 18 colour themes, and found 0 violations. Other components need even more tests.
+          </p>
+          <p>
+            Having AI run these tests across all the colour themes, and carry out the other automated tests too, saved a huge amount of time. The time saving only
+            works because of how the system was set up from the beginning: accessibility is built into the foundations, so issues are prevented and not caught during
+            testing. The tests are there to prove that it holds.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="documented">
+      <h2 id="documented">Documented alongside the code</h2>
+      <div class="text">
+        <p>
+          Every component I ship carries its own accessibility specification, written alongside the code rather than after it. For every component it documents the
+          keyboard behaviour, the focus behaviour and anything else someone needs to use it accessibly, so anyone reaching for it can see exactly how it behaves and
+          why.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="living">
+      <h2 id="living">Mandala: a living design system</h2>
+      <div class="text">
+        <p>
+          This is a living system, and it will keep growing. What will not change is the standard it is held to, or the belief underneath it: that good design has
+          never had to choose between looking right and working for everyone.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--padded" aria-labelledby="next">
+      <h2 id="next">Next in the Mandala case study</h2>
+      <div><Link href={url('/mandala/colour/')}>Mandala: The colour story</Link></div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Shared layout is in src/styles/case-study.css; this is what only this page needs */
+
+  /* Text zoom samples: Inter at 16, 32 and 64 in the 560 wide Figma frame, scaled with the box */
+  .zoom {
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+    inline-size: 100%;
+    max-inline-size: 35rem; /* 560 */
+  }
+
+  .zoom__sample {
+    --sample-size: min(1rem, 100cqi / 35);
+    padding: var(--space_8) var(--space_32);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+    background: var(--contrast_background);
+    font-family: 'Inter Sample', system-ui, sans-serif;
+  }
+
+  .zoom__sample--m {
+    font-size: var(--sample-size);
+    line-height: 1.5;
+  }
+
+  .zoom__sample--l {
+    font-size: calc(var(--sample-size) * 2);
+    line-height: 1.4375;
+  }
+
+  .zoom__sample--xl {
+    font-size: calc(var(--sample-size) * 4);
+    line-height: 1.25;
+  }
+
+  /* The Tooltip component above a disabled Button, drawn as a picture */
+  .disabled-demo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--space_6) + var(--space_4));
+  }
+
+  .disabled-demo__tooltip {
+    position: relative;
+    padding: var(--space_8) var(--space_12);
+    border-radius: var(--radius_s);
+    background: var(--text_default);
+    color: var(--text_label);
+  }
+
+  /* Decorative arrow, 12 by 6, pointing down at the button */
+  .disabled-demo__tooltip::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-start: var(--space_12);
+    inline-size: var(--space_12);
+    block-size: var(--space_6);
+    background: var(--text_default);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  .disabled-demo__button {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 3rem;
+    padding: var(--space_12) var(--space_24);
+    border-radius: var(--radius_xl);
+    background: var(--disabled);
+    color: var(--text_label);
+  }
+
+  .criteria {
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    margin: 0;
+    padding-inline-start: var(--space_24);
+  }
+</style>
