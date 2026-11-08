@@ -115,6 +115,30 @@
   padding-inline-start: var(--space_24);
 }
 
+/* Figma "Section: Quote": pull quote in quote_xl, 32 in from each side from 760, full width on phones */
+.case-study .pull-quote {
+  display: flex;
+  gap: var(--space_16);
+  margin: 0;
+  padding-block-start: var(--space_16);
+}
+
+.case-study .pull-quote__mark {
+  flex: none;
+  color: var(--accent_default);
+}
+
+.case-study .pull-quote__text {
+  max-inline-size: 41.9375rem; /* 671 */
+  margin: 0;
+}
+
+@media (width >= 47.5em) {
+  .case-study .pull-quote {
+    padding-inline: var(--space_32);
+  }
+}
+
 /* A picture of the Button Solid focus state inside a figure, not a real control */
 .case-study .focus-demo {
   display: inline-flex;
