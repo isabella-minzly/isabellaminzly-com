@@ -1,0 +1,86 @@
+---
+// Figma "Language samples": one box per sample with its caption 8px below, samples 16 apart.
+// Each sample is real text marked with its language, set in a tiny subset of the font it names
+// (fonts.css), so screen readers pronounce it and the reader sees the actual font.
+export interface Sample {
+  lang: string;
+  font: 'inter' | 'jp' | 'sc' | 'kr';
+  text: string;
+  caption: string;
+  /** 400 unless the sample tests a lighter weight */
+  weight?: 200 | 300 | 400;
+  /** Font size in px, 16 unless the sample tests a smaller size */
+  size?: number;
+}
+
+interface Props {
+  samples: Sample[];
+}
+
+const { samples } = Astro.props;
+---
+
+<ul class="samples" role="list">
+  {
+    samples.map((sample) => (
+      <li class="sample">
+        <p
+          class:list={['sample__text', `sample__text--${sample.font}`]}
+          lang={sample.lang}
+          style={`font-weight: ${sample.weight ?? 400}; font-size: ${(sample.size ?? 16) / 16}rem`}
+        >
+          {sample.text}
+        </p>
+        <p class="text-captions">{sample.caption}</p>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .samples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+    inline-size: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sample {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+  }
+
+  .sample__text {
+    padding: var(--space_16);
+    border: var(--border_s) solid var(--tiles_border);
+    border-radius: var(--radius_xl);
+    background: var(--contrast_background);
+    line-height: 1.5rem;
+  }
+
+  @media (width >= 47.5em) {
+    .sample__text {
+      padding-inline: var(--space_32);
+    }
+  }
+
+  .sample__text--inter {
+    font-family: 'Inter Sample', system-ui, sans-serif;
+  }
+
+  .sample__text--jp {
+    font-family: 'Noto Sans JP Sample', system-ui, sans-serif;
+  }
+
+  .sample__text--sc {
+    font-family: 'Noto Sans SC Sample', system-ui, sans-serif;
+  }
+
+  .sample__text--kr {
+    font-family: 'Noto Sans KR Sample', system-ui, sans-serif;
+  }
+</style>

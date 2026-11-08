@@ -70,6 +70,21 @@
   font-display: swap;
 }
 
+/* Light and ExtraLight for the weight tests on Mandala: Typography */
+@font-face {
+  font-family: 'Noto Sans JP Sample';
+  src: url('/fonts/noto-sans-jp-sample-300.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP Sample';
+  src: url('/fonts/noto-sans-jp-sample-200.woff2') format('woff2');
+  font-weight: 200;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Noto Sans SC Sample';
   src: url('/fonts/noto-sans-sc-sample.woff2') format('woff2');
