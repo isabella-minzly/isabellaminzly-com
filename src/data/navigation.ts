@@ -30,7 +30,7 @@ export const navigation: NavItem[] = [
   {
     label: 'About me',
     href: '/about/',
-    ready: false,
+    ready: true,
     children: [{ label: 'Inspiration', href: '/about/inspiration/', ready: false }],
   },
 ];
