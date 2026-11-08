@@ -25,7 +25,7 @@ export const navigation: NavItem[] = [
     ],
   },
   { label: 'Training and speaking: Accessibility for Inclusion', href: '/accessibility-for-inclusion/', ready: true },
-  { label: 'Individual contribution and leadership', href: '/leadership/', ready: false },
+  { label: 'Individual contribution and leadership', href: '/leadership/', ready: true },
   { label: 'Design for fitness and training', href: '/fitness-and-training/', ready: false },
   {
     label: 'About me',
