@@ -152,3 +152,33 @@ test('skip link moves focus to the main content', async ({ page }) => {
   await skip.press('Enter');
   await expect(page.locator('#main')).toBeFocused();
 });
+
+test('theme switch changes the theme with the keyboard, says what it does and remembers the choice', async ({ page }) => {
+  await page.goto('/');
+  const width = page.viewportSize()?.width ?? 0;
+  // Below 1280 the switch is in the menu overlay
+  if (width < 1280) await page.getByRole('button', { name: 'Menu' }).click();
+  const scope = width < 1280 ? page.getByRole('dialog', { name: 'Menu' }) : page.locator('.sidebar');
+  const systemDark = await page.evaluate(() => matchMedia('(prefers-color-scheme: dark)').matches);
+  const toDark = scope.getByRole('button', { name: 'Dark mode' });
+  const toLight = scope.getByRole('button', { name: 'Light mode' });
+
+  const first = systemDark ? toLight : toDark;
+  await first.focus();
+  await page.keyboard.press('Enter');
+  const chosen = systemDark ? 'light' : 'dark';
+  await expect(page.locator('html')).toHaveAttribute('data-theme', chosen);
+  await expect(systemDark ? toDark : toLight).toBeVisible();
+
+  // The choice survives a reload and applies on other pages
+  await page.goto('/bigfix/');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', chosen);
+});
+
+test('axe passes with the light theme chosen while the system is dark', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.addInitScript(() => localStorage.setItem('theme', 'light'));
+  await page.goto('/');
+  const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
+  expect(results.violations.map((v) => v.id)).toEqual([]);
+});
