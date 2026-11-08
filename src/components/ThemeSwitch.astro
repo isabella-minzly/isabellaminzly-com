@@ -1,0 +1,122 @@
+---
+// Figma "Button Ghost" (Dark mode / Light mode), under the navigation in the sidebar and the menu overlay.
+// The label says what the button does: "Dark mode" in light mode, "Light mode" in dark mode.
+// Both versions are in the markup and CSS shows the one for the current theme, so the right label
+// shows before any script runs. The first visit follows the system setting; a click is remembered
+// in localStorage (see the inline script in BaseLayout, which applies it before the page paints).
+---
+
+<div class="theme-switch">
+  <button class="theme-switch__button text-label" type="button">
+    <span class="theme-switch__to-dark">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12 21C9.5 21 7.37 20.12 5.62 18.37C3.87 16.62 2.99 14.49 3 12C3.01 9.51 3.88 7.38 5.63 5.63C7.38 3.88 9.5 3 12 3C12.23 3 12.46 3.01 12.69 3.02C12.92 3.03 13.14 3.06 13.35 3.09C12.66 3.58 12.12 4.21 11.71 4.98C11.3 5.75 11.1 6.59 11.1 7.5C11.1 9 11.62 10.27 12.67 11.32C13.72 12.37 14.99 12.89 16.5 12.9C17.42 12.9 18.26 12.7 19.03 12.29C19.8 11.88 20.42 11.34 20.91 10.65C20.94 10.87 20.97 11.09 20.98 11.31C20.99 11.53 21 11.76 21 12C21 14.5 20.12 16.63 18.37 18.38C16.62 20.13 14.49 21.01 12 21ZM12 19C13.47 19 14.78 18.6 15.95 17.79C17.12 16.98 17.97 15.93 18.5 14.63C18.17 14.72 17.83 14.78 17.5 14.83C17.17 14.88 16.83 14.9 16.5 14.91C14.45 14.91 12.71 14.19 11.26 12.75C9.82 11.3 9.1 9.55 9.1 7.5C9.1 7.17 9.13 6.83 9.18 6.5C9.23 6.17 9.3 5.83 9.38 5.5C8.08 6.03 7.02 6.88 6.21 8.05C5.4 9.22 4.99 10.53 5 12C5 13.93 5.68 15.58 7.05 16.95C8.42 18.32 10.07 19 12 19Z"
+          fill="currentColor"></path>
+      </svg>
+      Dark mode
+    </span>
+    <span class="theme-switch__to-light">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M14.13 14.13C14.71 13.54 15 12.83 15 12C15 11.17 14.71 10.46 14.13 9.88C13.55 9.3 12.84 9.01 12 9C11.16 8.99 10.45 9.29 9.88 9.88C9.31 10.47 9.01 11.18 9 12C8.99 12.82 9.28 13.53 9.88 14.13C10.48 14.73 11.19 15.02 12 15C12.81 14.98 13.52 14.69 14.13 14.13ZM8.46 15.54C7.49 14.57 7 13.39 7 12C7 10.61 7.49 9.43 8.46 8.46C9.43 7.49 10.61 7 12 7C13.39 7 14.57 7.49 15.54 8.46C16.51 9.43 17 10.61 17 12C17 13.39 16.51 14.57 15.54 15.54C14.57 16.51 13.39 17 12 17C10.62 17 9.44 16.51 8.46 15.54ZM5 13H1V11H5V13ZM23 13H19V11H23V13ZM11 5V1H13V5H11ZM11 23V19H13V23H11ZM6.4 7.75L3.88 5.32L5.3 3.85L7.7 6.35L6.4 7.75ZM18.7 20.15L16.28 17.63L17.6 16.25L20.12 18.68L18.7 20.15ZM16.25 6.4L18.68 3.88L20.15 5.3L17.65 7.7L16.25 6.4ZM3.85 18.7L6.38 16.27L7.75 17.6L5.33 20.13L3.85 18.7Z"
+          fill="currentColor"></path>
+      </svg>
+      Light mode
+    </span>
+  </button>
+</div>
+
+<script>
+  // Switch to the other theme and remember the choice. One handler serves the sidebar and the overlay.
+  const root = document.documentElement;
+  const systemDark = matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => root.dataset.theme === 'dark' || (root.dataset.theme !== 'light' && systemDark.matches);
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>('.theme-switch__button')) {
+    button.addEventListener('click', () => {
+      const theme = isDark() ? 'light' : 'dark';
+      root.dataset.theme = theme;
+      try {
+        localStorage.setItem('theme', theme);
+      } catch {
+        // Storage can be blocked (private browsing): the switch still works for this page
+      }
+    });
+  }
+</script>
+
+<style>
+  /* Under the navigation: a tiles_border divider 24 below the last item, then the button,
+     placed as in the sample sidebar of "Under construction v2" */
+  .theme-switch {
+    margin-block-start: var(--space_12);
+    padding-block-start: calc(var(--space_16) + var(--space_10) * 2);
+    padding-inline-start: calc(var(--space_14) + var(--space_10));
+    border-block-start: var(--border_s) solid var(--tiles_border);
+  }
+
+  .theme-switch__button {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem; /* 44 */
+    padding: var(--space_10) var(--space_24);
+    border: 0;
+    border-radius: var(--radius_xs);
+    background: transparent;
+    color: var(--text_default);
+    cursor: pointer;
+  }
+
+  .theme-switch__to-dark,
+  .theme-switch__to-light {
+    align-items: center;
+    gap: var(--space_8);
+  }
+
+  .theme-switch__button svg {
+    flex: none;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+  }
+
+  /* Hover, pressed and focus as the icon button */
+  .theme-switch__button:hover,
+  .theme-switch__button:active {
+    background: var(--contrast_background);
+  }
+
+  .theme-switch__button:focus-visible {
+    outline: var(--border_focus) solid var(--accent_default);
+    outline-offset: 0;
+  }
+
+  /* Show the label for the theme the page is in now */
+  .theme-switch__to-dark {
+    display: inline-flex;
+  }
+
+  .theme-switch__to-light,
+  :global(:root[data-theme='dark']) .theme-switch__to-dark {
+    display: none;
+  }
+
+  :global(:root[data-theme='dark']) .theme-switch__to-light {
+    display: inline-flex;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .theme-switch__to-dark {
+      display: none;
+    }
+
+    :global(:root:not([data-theme='light'])) .theme-switch__to-light {
+      display: inline-flex;
+    }
+  }
+
+  /* Without JavaScript the button cannot switch, and the system setting still applies */
+  :global(html:not(.js)) .theme-switch {
+    display: none;
+  }
+</style>

@@ -7,6 +7,7 @@ import Logo from '../components/Logo.astro';
 import NavigationMenu from '../components/NavigationMenu.astro';
 import IconButton from '../components/IconButton.astro';
 import Footer from '../components/Footer.astro';
+import ThemeSwitch from '../components/ThemeSwitch.astro';
 import { url } from '../utils/url';
 
 interface Props {
@@ -38,7 +39,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <link rel="preload" href={url('/fonts/instrument-sans.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={url('/fonts/instrument-serif.woff2')} as="font" type="font/woff2" crossorigin />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      // A theme the visitor chose with the switch wins over the system setting. Runs before the page paints.
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark' || theme === 'light') document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -53,6 +61,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           <nav class="sidebar__nav" aria-label="Main">
             <NavigationMenu currentPath={Astro.url.pathname} />
           </nav>
+          <ThemeSwitch />
         </header>
         <main class="main" id="main" tabindex="-1">
           <slot />
@@ -69,6 +78,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <nav aria-label="Main">
         <NavigationMenu currentPath={Astro.url.pathname} />
       </nav>
+      <ThemeSwitch />
     </dialog>
 
     <script>
