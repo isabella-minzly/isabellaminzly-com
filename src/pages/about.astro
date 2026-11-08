@@ -2,7 +2,7 @@
 // About me, built from the Figma frames "About me" (1680), "About me / 1280", "About me / 1024" and "About me / Mobile 320".
 // The hero is real text on a CSS gradient with fixed colours in both themes, as on the leadership page.
 // From 760 the portrait sits on the bottom right and the text runs beside it; on phones the portrait
-// stacks under the text and the light spot moves behind it, so the 18px paragraphs stay on accent_default.
+// stacks under the text. Wherever the text is smaller than large text, the light spot sits behind the portrait.
 import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
@@ -26,8 +26,8 @@ import portrait from '../assets/about/portrait.png';
           ecosystems.
         </p>
         <p>
-          My focus is to improve interfaces and, beyond that, to change how organisations design and deliver digital products. I build patterns, frameworks and
-          processes that work across products, teams and platforms, reduce friction for engineering, and place accessibility directly inside the delivery workflow.
+          I build patterns, frameworks and processes that work across products, teams and platforms, reduce friction for engineering, and place accessibility
+          directly inside the delivery workflow.
         </p>
       </div>
       <Picture
@@ -35,8 +35,8 @@ import portrait from '../assets/about/portrait.png';
         src={portrait}
         alt="Portrait of Isabella Minzly, smiling, in a dark blazer and white shirt."
         formats={['avif', 'webp']}
-        widths={[385, 770]}
-        sizes="(width < 47.5em) 220px, 385px"
+        widths={[277, 554, 770]}
+        sizes="(width < 47.5em) 160px, 277px"
         loading="eager"
         fetchpriority="high"
       />
@@ -150,16 +150,18 @@ import portrait from '../assets/about/portrait.png';
 
 <style>
   /* Figma "Hero quote" on About me: white text on a light spot of accent, accent_default (light mode) at the edges.
-     The colours stay the same in dark mode, because white on the dark-mode accent would fail. */
+     The colours stay the same in dark mode, because white on the dark-mode accent would fail.
+     The paragraphs are smaller than large text, so the light spot sits behind the portrait and the text
+     stays on 4.5:1 or more. */
   .about-hero {
     --hero-light: #7c88d7;
     --hero-edge: #5363ca;
-    --portrait-width: 220px;
+    --portrait-width: 160px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space_24);
+    gap: var(--space_16);
     padding: var(--space_32) var(--space_16) 0;
     background: radial-gradient(ellipse 75% 30% at 50% 100%, var(--hero-light), var(--hero-edge));
     color: #ffffff;
@@ -169,14 +171,14 @@ import portrait from '../assets/about/portrait.png';
     display: flex;
     flex-direction: column;
     gap: var(--space_10);
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 
   .about-hero__title {
     font-family: var(--font-instrument-serif);
-    font-size: 2rem;
-    line-height: 2.5rem;
+    font-size: 1.75rem;
+    line-height: 2.25rem;
   }
 
   .about-hero__portrait {
@@ -185,23 +187,26 @@ import portrait from '../assets/about/portrait.png';
     block-size: auto;
   }
 
-  /* From 760: portrait on the bottom right, text beside it, light spot at the top */
+  /* From 760: portrait on the bottom right, text beside it */
   @media (width >= 47.5em) {
     .about-hero {
-      --portrait-width: min(385px, 34%);
+      /* cqi is the width of main, which the hero fills */
+      --portrait-width: min(277px, 34cqi);
 
       position: relative;
       align-items: flex-start;
-      padding: var(--space_64) var(--space_64) var(--space_64) var(--space_32);
-      background: radial-gradient(ellipse 75% 125% at 46% 0%, var(--hero-light), var(--hero-edge));
+      /* Tall enough for the portrait with 59 above it, as in the 1680 frame */
+      min-block-size: calc(var(--portrait-width) * 475 / 385 + 59px);
+      padding: var(--space_32) var(--space_64) var(--space_32) var(--space_32);
+      background: radial-gradient(ellipse 25% 60% at 85% 100%, var(--hero-light), var(--hero-edge));
     }
 
     .about-hero__text {
       /* The text may run into the right padding, which the portrait covers */
       inline-size: calc(100% + var(--space_64) - var(--portrait-width) - var(--space_24));
       max-inline-size: 49.5rem; /* 792 */
-      font-size: 1.5rem;
-      line-height: 2.5rem;
+      font-size: 1.25rem;
+      line-height: 2rem;
     }
 
     .about-hero__title {
@@ -218,8 +223,12 @@ import portrait from '../assets/about/portrait.png';
 
   /* 1680 layout */
   @container main (width >= 77rem) {
+    .about-hero__text {
+      line-height: 2.5rem;
+    }
+
     .about-hero__title {
-      font-size: 3.1875rem; /* 51 */
+      font-size: 3.125rem; /* 50 */
       line-height: 4.5rem;
     }
   }
