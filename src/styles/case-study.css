@@ -105,3 +105,25 @@
     max-inline-size: 41.875rem; /* 670 */
   }
 }
+
+/* Bullet lists in the text, items 8 apart (Mandala pages) */
+.case-study .bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space_8);
+  margin: 0;
+  padding-inline-start: var(--space_24);
+}
+
+/* A picture of the Button Solid focus state inside a figure, not a real control */
+.case-study .focus-demo {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 3rem;
+  padding: var(--space_12) var(--space_24);
+  border-radius: var(--radius_xl);
+  background: var(--accent_default);
+  color: var(--text_label);
+  outline: var(--border_focus) solid var(--accent_default);
+  outline-offset: var(--space_2);
+}

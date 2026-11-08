@@ -1,25 +1,36 @@
 ---
 // The image inside a CaseFigure box: a responsive picture, or inline SVG for vector mock-ups.
 // SVG colours use the site tokens, so the mock-ups follow dark mode.
+// With srcDark, both pictures are in the page and the theme shows one (.only-light / .only-dark in global.css).
+// They load lazily, because a hidden lazy image is never downloaded.
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
   src?: ImageMetadata;
+  /** The same picture made for dark mode */
+  srcDark?: ImageMetadata;
   svg?: string;
   alt: string;
   width: number;
   eager?: boolean;
 }
 
-const { src, svg, alt, width, eager = false } = Astro.props;
+const { src, srcDark, svg, alt, width, eager = false } = Astro.props;
+const pictureProps = { class: 'case-figure__image', alt, formats: ['avif', 'webp'] as const, widths: [width, width * 2], sizes: `min(${width}px, calc(100vw - 72px))` };
 ---
 
 {
   svg ? (
     <div class="case-figure__image case-figure__svg" role="img" aria-label={alt} set:html={svg} />
   ) : (
-    src && (
+    src && srcDark ? (
+      <>
+        <Picture src={src} {...pictureProps} pictureAttributes={{ class: 'only-light' }} loading="lazy" />
+        <Picture src={srcDark} {...pictureProps} pictureAttributes={{ class: 'only-dark' }} loading="lazy" />
+      </>
+    ) : (
+      src && (
       <Picture
         class="case-figure__image"
         src={src}
@@ -30,6 +41,7 @@ const { src, svg, alt, width, eager = false } = Astro.props;
         loading={eager ? 'eager' : 'lazy'}
         fetchpriority={eager ? 'high' : undefined}
       />
+      )
     )
   )
 }

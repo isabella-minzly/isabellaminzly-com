@@ -10,6 +10,8 @@ import CaseImage from './CaseImage.astro';
 interface Props {
   /** A raster image; pass either src or svg */
   src?: ImageMetadata;
+  /** The same raster image made for dark mode */
+  srcDark?: ImageMetadata;
   /** Raw SVG markup for vector mock-ups (import with ?raw) */
   svg?: string;
   alt: string;
@@ -30,7 +32,7 @@ interface Props {
   class?: string;
 }
 
-const { src, svg, alt, width, boxWidth, minHeight = 340, bleed = false, lightBox = false, spacious = false, eager = false, caption, class: className } = Astro.props;
+const { src, srcDark, svg, alt, width, boxWidth, minHeight = 340, bleed = false, lightBox = false, spacious = false, eager = false, caption, class: className } = Astro.props;
 const custom = Astro.slots.has('default');
 const boxClass = ['case-figure', { 'case-figure--bleed': bleed, 'case-figure--spacious': spacious, 'case-figure--custom': custom, 'theme-light': lightBox }];
 const style = `--box-width: ${boxWidth ? `${boxWidth}px` : '100%'}; --box-min-height: ${minHeight}px; --image-width: ${width}px`;
@@ -40,13 +42,13 @@ const style = `--box-width: ${boxWidth ? `${boxWidth}px` : '100%'}; --box-min-he
   caption ? (
     <figure class:list={['case-figure-group', className]} style={style}>
       <div class:list={boxClass}>
-        {custom ? <slot /> : <CaseImage src={src} svg={svg} alt={alt} width={width} eager={eager} />}
+        {custom ? <slot /> : <CaseImage src={src} srcDark={srcDark} svg={svg} alt={alt} width={width} eager={eager} />}
       </div>
       <figcaption class="text-captions">{caption}</figcaption>
     </figure>
   ) : (
     <figure class:list={[...boxClass, className]} style={style}>
-      {custom ? <slot /> : <CaseImage src={src} svg={svg} alt={alt} width={width} eager={eager} />}
+      {custom ? <slot /> : <CaseImage src={src} srcDark={srcDark} svg={svg} alt={alt} width={width} eager={eager} />}
     </figure>
   )
 }
