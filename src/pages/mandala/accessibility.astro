@@ -9,6 +9,7 @@ import CaseFigure from '../../components/case-study/CaseFigure.astro';
 import { url } from '../../utils/url';
 import '../../styles/case-study.css';
 import hero from '../../assets/mandala-accessibility/hero.jpg';
+import heroDark from '../../assets/mandala-accessibility/hero-dark.jpg';
 import paletteTests from '../../assets/mandala-accessibility/palette-tests.png';
 
 const zoomSamples = [
@@ -43,6 +44,7 @@ const criteria = [
       <h1 class="hero__title">Mandala: Accessible by design</h1>
       <CaseFigure
         src={hero}
+        srcDark={heroDark}
         alt="Four people stand side by side: a woman in a wheelchair, a blind man with a white cane and a guide dog, a woman, and a person with a prosthetic arm. Coloured pencils lie in the corner."
         width={1262}
         caption="Created with AI, so that no real person’s image is used without their consent."
