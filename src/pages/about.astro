@@ -21,14 +21,16 @@ import portrait from '../assets/about/portrait.png';
     <div class="about-hero">
       <div class="about-hero__text">
         <h1 class="about-hero__title">I build systems rather than isolated solutions.</h1>
-        <p>
-          I am a design leader specialising in scalable UI architecture, operational accessibility and enterprise design capability across complex product
-          ecosystems.
-        </p>
-        <p>
-          I build patterns, frameworks and processes that work across products, teams and platforms, reduce friction for engineering, and place accessibility
-          directly inside the delivery workflow.
-        </p>
+        <div class="about-hero__body">
+          <p>
+            I am a design leader specialising in scalable UI architecture, operational accessibility and enterprise design capability across complex product
+            ecosystems.
+          </p>
+          <p>
+            I build patterns, frameworks and processes that work across products, teams and platforms, reduce friction for engineering, and place accessibility
+            directly inside the delivery workflow.
+          </p>
+        </div>
       </div>
       <Picture
         class="about-hero__portrait"
@@ -167,10 +169,14 @@ import portrait from '../assets/about/portrait.png';
     color: #ffffff;
   }
 
-  .about-hero__text {
+  .about-hero__text,
+  .about-hero__body {
     display: flex;
     flex-direction: column;
     gap: var(--space_10);
+  }
+
+  .about-hero__body {
     font-size: 1rem;
     line-height: 1.5rem;
   }
@@ -190,21 +196,26 @@ import portrait from '../assets/about/portrait.png';
   /* From 760: portrait on the bottom right, text beside it */
   @media (width >= 47.5em) {
     .about-hero {
-      /* cqi is the width of main, which the hero fills */
-      --portrait-width: min(277px, 34cqi);
+      /* The portrait scales with the hero (cqi is the width of main, which the hero fills); the text sets the height */
+      --portrait-width: min(277px, 22cqi);
 
       position: relative;
       align-items: flex-start;
-      /* Tall enough for the portrait with 59 above it, as in the 1680 frame */
-      min-block-size: calc(var(--portrait-width) * 475 / 385 + 59px);
+      /* The portrait is positioned on its own, so no gap is left for it */
+      gap: 0;
+      /* Never shorter than the portrait with 32 above it */
+      min-block-size: calc(var(--portrait-width) * 475 / 385 + var(--space_32));
       padding: var(--space_32) var(--space_64) var(--space_32) var(--space_32);
-      background: radial-gradient(ellipse 25% 60% at 85% 100%, var(--hero-light), var(--hero-edge));
+      background: radial-gradient(ellipse 18% 60% at 90% 100%, var(--hero-light), var(--hero-edge));
     }
 
     .about-hero__text {
       /* The text may run into the right padding, which the portrait covers */
       inline-size: calc(100% + var(--space_64) - var(--portrait-width) - var(--space_24));
       max-inline-size: 49.5rem; /* 792 */
+    }
+
+    .about-hero__body {
       font-size: 1.25rem;
       line-height: 2rem;
     }
@@ -221,15 +232,24 @@ import portrait from '../assets/about/portrait.png';
     }
   }
 
-  /* 1680 layout */
+  /* 1680 layout: 400 high, as in the frame */
   @container main (width >= 77rem) {
+    .about-hero {
+      min-block-size: 25rem;
+    }
+
     .about-hero__text {
+      gap: var(--space_2);
+    }
+
+    .about-hero__body {
+      gap: var(--space_16);
       line-height: 2.5rem;
     }
 
     .about-hero__title {
       font-size: 3.125rem; /* 50 */
-      line-height: 4.5rem;
+      line-height: 6.875rem; /* 110 */
     }
   }
 
