@@ -1,0 +1,245 @@
+---
+// About me, built from the Figma frames "About me" (1680), "About me / 1280", "About me / 1024" and "About me / Mobile 320".
+// The hero is real text on a CSS gradient with fixed colours in both themes, as on the leadership page.
+// From 760 the portrait sits on the bottom right and the text runs beside it; on phones the portrait
+// stacks under the text and the light spot moves behind it, so the 18px paragraphs stay on accent_default.
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Link from '../components/Link.astro';
+import { footerLinks } from '../data/navigation';
+import { url } from '../utils/url';
+import '../styles/case-study.css';
+import portrait from '../assets/about/portrait.png';
+---
+
+<BaseLayout
+  title="About me"
+  description="Isabella Minzly, design leader in UI architecture, operational accessibility and design systems: how I got here, how I work and what I bring to global teams."
+>
+  <article class="case-study">
+    <div class="about-hero">
+      <div class="about-hero__text">
+        <h1 class="about-hero__title">I build systems rather than isolated solutions.</h1>
+        <p>
+          I am a design leader specialising in scalable UI architecture, operational accessibility and enterprise design capability across complex product
+          ecosystems.
+        </p>
+        <p>
+          My focus is to improve interfaces and, beyond that, to change how organisations design and deliver digital products. I build patterns, frameworks and
+          processes that work across products, teams and platforms, reduce friction for engineering, and place accessibility directly inside the delivery workflow.
+        </p>
+      </div>
+      <Picture
+        class="about-hero__portrait"
+        src={portrait}
+        alt="Portrait of Isabella Minzly, smiling, in a dark blazer and white shirt."
+        formats={['avif', 'webp']}
+        widths={[385, 770]}
+        sizes="(width < 47.5em) 220px, 385px"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
+    <section class="section" aria-labelledby="what">
+      <h2 id="what">What I do</h2>
+      <h3>UI architecture</h3>
+      <div class="text">
+        <p>
+          At HCLSoftware I lead UI design for BigFix, where I own how the products in the BigFix family are structured, governed and implemented, from the first grid
+          to the last chart. I lead a distributed team of designers there, and the Leadership page tells that story in full.
+        </p>
+        <div><Link href={url('/leadership/')}>Read more on the Leadership page</Link></div>
+      </div>
+      <h3>Accessibility as a capability</h3>
+      <div class="text">
+        <p>
+          I treat accessibility as an operational capability and not as a compliance exercise. I designed and delivered a structured programme that combines
+          education, applied implementation and continuous improvement, built to WCAG 2.2 Level AA as a baseline and aligned with the European Accessibility Act and
+          Section 508. More than 700 professionals across design, engineering, QA and product have completed it.
+        </p>
+      </div>
+      <h3>Design systems, AI and governance</h3>
+      <div class="text">
+        <p>
+          I established design system and UI governance frameworks that standardise interaction patterns and speed up delivery. That work has taken shape as Mandala,
+          an accessibility-first, token-driven design system that I am building at HCLSoftware, with AI and agentic approaches used thoughtfully and with intention.
+          Knowledge and experience lead, and AI augments that work without replacing it.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="here">
+      <h2 id="here">How I got here</h2>
+      <div class="text">
+        <p>
+          I began my career in the travel industry, where I worked as a product manager for many years, before going back to school to study design. I completed a
+          Master's degree in design and spent the next years at a design bureau, where I designed and coded the front end of two websites for the Bank of Italy, built
+          to the strictest level of accessibility. That project taught me early that a design is only as good as the way it is built, and it started a career-long
+          interest in accessibility.
+        </p>
+        <p>
+          I then freelanced for several years, working directly with clients, mostly in the fitness industry. There I designed an app for personalised training and
+          live classes, built a video library, and created brand identities for training studios. Two of those projects are now case studies on this site.
+        </p>
+        <p>
+          In 2021 I joined HCLSoftware as a Senior Designer in the UX Center of Excellence. In 2022 I started My HCLSoftware and Marketplace from a blank screen, and
+          the design language built there became the foundation of the BigFix interface from 2024, and then of Mandala.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="learner">
+      <h2 id="learner">A curious, lifelong learner</h2>
+      <div class="text">
+        <p>
+          I have never stopped learning. I completed the d.MBA in 2024, one of the most important courses I have taken, and I am constantly studying: taking courses,
+          reading articles, attending conferences and webinars, and joining discussions with other people in the field.
+        </p>
+      </div>
+    </section>
+
+    <div class="feedback">
+      <span class="feedback__mark text-quote-mark-s" aria-hidden="true">“</span>
+      <figure class="feedback__text">
+        <blockquote class="text-quote_s">
+          <p>
+            Isabella really impressed me during her time at d.MBA. She stands out for her work ethic and her ability to think through problems from every angle.
+            She’s detailed, strategic, and always focused on the 'why' behind the work.
+          </p>
+        </blockquote>
+        <figcaption class="text-quote-attribution">Alen Faljic, Founder d.MBA & AI Makers Club</figcaption>
+      </figure>
+    </div>
+
+    <section class="section" aria-labelledby="work">
+      <h2 id="work">How I work</h2>
+      <div class="text">
+        <p>
+          I combine strategic systems thinking with hands-on design leadership. I define standards, set the design direction, and work closely with engineering and
+          product leadership, so that what reaches development is something people can build well.
+        </p>
+        <p>
+          I work natively in Italian, English and Danish, and I have led design work across countries and time zones, which is a real advantage for global teams.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="beyond">
+      <h2 id="beyond">Beyond the screen</h2>
+      <div class="text">
+        <p>
+          My ideas rarely begin at a screen. They come from the rainforests, volcanoes and lakes I have travelled to, from Kandinsky and Leonardo da Vinci, from Bruce
+          Lee's habit of inventing new rules instead of playing by his opponents', and from Vivaldi's Four Seasons in the background while I work. I tell more of that
+          story on the Inspiration page.
+        </p>
+        <div><Link href={url('/about/inspiration/')}>Read more on the Inspiration page</Link></div>
+        <p>
+          I also speak about accessibility at conferences and events, and I teach it the way I learned to care about it, by starting with the person.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="hello">
+      <h2 id="hello">Talk to me about ideas, collaboration or a coffee.</h2>
+      <div><Button href={footerLinks.linkedIn}>Get in touch<span class="visually-hidden"> on LinkedIn</span></Button></div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Figma "Hero quote" on About me: white text on a light spot of accent, accent_default (light mode) at the edges.
+     The colours stay the same in dark mode, because white on the dark-mode accent would fail. */
+  .about-hero {
+    --hero-light: #7c88d7;
+    --hero-edge: #5363ca;
+    --portrait-width: 220px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space_24);
+    padding: var(--space_32) var(--space_16) 0;
+    background: radial-gradient(ellipse 75% 30% at 50% 100%, var(--hero-light), var(--hero-edge));
+    color: #ffffff;
+  }
+
+  .about-hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_10);
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .about-hero__title {
+    font-family: var(--font-instrument-serif);
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  .about-hero__portrait {
+    display: block;
+    inline-size: var(--portrait-width);
+    block-size: auto;
+  }
+
+  /* From 760: portrait on the bottom right, text beside it, light spot at the top */
+  @media (width >= 47.5em) {
+    .about-hero {
+      --portrait-width: min(385px, 34%);
+
+      position: relative;
+      align-items: flex-start;
+      padding: var(--space_64) var(--space_64) var(--space_64) var(--space_32);
+      background: radial-gradient(ellipse 75% 125% at 46% 0%, var(--hero-light), var(--hero-edge));
+    }
+
+    .about-hero__text {
+      /* The text may run into the right padding, which the portrait covers */
+      inline-size: calc(100% + var(--space_64) - var(--portrait-width) - var(--space_24));
+      max-inline-size: 49.5rem; /* 792 */
+      font-size: 1.5rem;
+      line-height: 2.5rem;
+    }
+
+    .about-hero__title {
+      font-size: 2.5rem;
+      line-height: 3.5rem;
+    }
+
+    .about-hero__portrait {
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline-end: 0;
+    }
+  }
+
+  /* 1680 layout */
+  @container main (width >= 77rem) {
+    .about-hero__title {
+      font-size: 3.1875rem; /* 51 */
+      line-height: 4.5rem;
+    }
+  }
+
+  /* Figma "Section: Quote": the same feedback quote as on Accessibility for Inclusion */
+  .feedback {
+    display: flex;
+    gap: var(--space_16);
+  }
+
+  .feedback__mark {
+    flex: none;
+    color: var(--accent_default);
+  }
+
+  .feedback__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_8);
+    max-inline-size: 45.625rem;
+    margin: 0;
+  }
+</style>
