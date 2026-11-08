@@ -1,0 +1,271 @@
+---
+// Individual contribution and leadership, built from the Figma frames "Leadership" (1680),
+// "Leadership / 1280", "Leadership / 1024" and "Leadership / Mobile 320".
+// The hero quote is real text on a CSS gradient. Its colours stay the same in dark mode,
+// because white on accent_default only works with the light-mode accent.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Link from '../components/Link.astro';
+import Kpis from '../components/case-study/Kpis.astro';
+import { url } from '../utils/url';
+import '../styles/case-study.css';
+
+const results = [
+  { figure: '10 designers', description: 'led across Italy and India.' },
+  { figure: 'Multiple products', description: 'in the BigFix family held to one architecture.' },
+  { figure: '3 designers / 2 developers', description: 'working under my design authority on Mandala.' },
+  { figure: '700+ people', description: 'trained through the accessibility programme I built.' },
+  { figure: '18 colour themes', description: 'all WCAG 2.2 AA, with 0 contrast defects.' },
+  { figure: '3 languages', description: 'worked in natively: Italian, English and Danish.' },
+];
+---
+
+<BaseLayout
+  title="Individual contribution and leadership"
+  description="How I lead ten designers across Italy and India: owning the BigFix UI, a handoff framework that makes accessibility part of every screen, and a team built on happiness and trust."
+>
+  <article class="case-study">
+    <div class="hero">
+      <h1 class="hero__title">Individual contribution and leadership</h1>
+      <figure class="hero-quote">
+        <span class="hero-quote__mark" aria-hidden="true">“</span>
+        <blockquote class="hero-quote__text">
+          <p>The courage of leadership is giving others the chance to succeed even though you bear the responsibility for getting things done.</p>
+        </blockquote>
+        <figcaption class="hero-quote__author">Simon Sinek</figcaption>
+      </figure>
+    </div>
+
+    <Kpis label="In numbers" items={results} />
+
+    <div class="section text">
+      <p>I lead by staying close to the work.</p>
+      <p>
+        My team is ten designers across Italy and India, all working on the UI of BigFix. I set the direction, define the standards and hold the final sign-off on how
+        every screen looks and behaves. I mentor every designer on the team, and I stay hands-on in the strategy, the systems and the delivery that sit underneath the
+        screens.
+      </p>
+      <p>My influence comes from craft. I can explain why a decision is right, show how to make it, and be trusted to get it right when it matters.</p>
+    </div>
+
+    <section class="section" aria-labelledby="own">
+      <h2 id="own">What I own</h2>
+      <div class="text">
+        <p>
+          I own the UI of BigFix, in a role that did not exist until it was created for me. That means the UI architecture, the accessibility standards and the
+          governance of the design system, across multiple products in the BigFix family. It also means full responsibility for design readiness: nothing goes into
+          development from my team until it is clear, complete and accessible, so developers get their answers before they have to ask.
+        </p>
+        <p>I steer the effort alongside stakeholders and leadership across the United States, India and Italy, in several meetings every week.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="team">
+      <h2 id="team">How the team works</h2>
+      <div class="text">
+        <p>
+          One of the things I am proudest of is having built a team people are happy to be part of, where everyone collaborates. We all work hard, but if someone
+          needs help, they can barely finish the sentence before someone offers.
+        </p>
+        <p>
+          I have interviewed candidates and reviewed portfolios and I run team meetings every week so that everyone has the context, the trust and the room they need
+          to do their best work.
+        </p>
+        <p>
+          The designers are also strong on accessibility, and thoughtful about it. It is embedded not only in what they deliver but in how they think: they ask the
+          accessibility question at the start of a design, not at the end. When security restrictions ruled out off-the-shelf Figma plugins, they built their own to
+          speed up handoff. Nobody asked them to. It is a good example, and the clearest sign that the system works because people understand it, not because I
+          enforce it.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="quality">
+      <h2 id="quality">Quality that scales with the team</h2>
+      <div class="text">
+        <p>
+          My role has shifted from hands-on design to direction, review and final sign-off, and the team takes on more of the review every month. That way the quality
+          of BigFix is carried by many people instead of resting on one. I keep the final sign-off and the standard it is held to. The judgement behind it is
+          increasingly shared, which is what lets the work move quickly across multiple products.
+        </p>
+        <p>
+          The handoff framework is how that works in practice. It sets out how every screen behaves from large desktop to mobile, and every accessibility decision a
+          designer controls: page regions, heading hierarchy, tab order, labels on icon-only buttons, alt text, spacing tokens and correct component usage. It gives
+          developers a clear answer, gives QA a standard to test against, and draws a clean line of responsibility. Design guarantees accessibility on its side, and
+          development and QA own it from there.
+        </p>
+        <p>The team has made the framework their own, and they extend it on their own initiative.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="beyond">
+      <h2 id="beyond">Leading beyond my team</h2>
+      <h3>Mandala</h3>
+      <div class="text">
+        <p>
+          I hold design authority on the system and make the final call on every decision in it. Three designers work with me on the Figma side and two developers
+          sign the code off. None of us works on Mandala full time, because everyone has a demanding job alongside it, so the structure has to work without anyone
+          being available all the time. Gates, written rules and a decision log carry that load. A person reviews the design and a person reviews the code, and that
+          rule has never had an exception.
+        </p>
+      </div>
+      <h3>Accessibility</h3>
+      <div class="text">
+        <p>
+          I designed and delivered a structured accessibility programme for HCLSoftware: 12 sessions, 18 hours, 25 teams and more than 700 people from design,
+          engineering, QA and product. Sessions are timed against each team's own roadmap, so people apply what they learn within weeks. Several senior leaders asked
+          for the recordings to be kept as a library for future hires. Nobody had to attend, and people kept coming back.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="countries">
+      <h2 id="countries">Working across countries</h2>
+      <div class="text">
+        <p>
+          I lead distributed design teams across multiple countries and time zones, and I work natively in Italian, English and Danish. In practice that means writing
+          things down clearly, making decisions visible to people in every time zone, and building shared standards so that no one needs to be in the room to do good
+          work.
+        </p>
+        <p>
+          It also means writing in one language while speaking in another, and occasionally speaking to someone in the wrong language, because I often no longer know
+          which one I am in.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="ai">
+      <h2 id="ai">Leading with AI</h2>
+      <div class="text">
+        <p>
+          Knowledge and experience lead, and AI augments that work. In Mandala I use Claude for work that does not need a human hand at every step, such as keeping
+          Figma and Storybook in sync and checking contrast at a scale no manual process could match. Every gate, every decision and every judgement call stays human.
+        </p>
+        <p>
+          I also mentor the three designers working with me on Mandala as they take their first steps in the AI panorama. The same principle applies to leading
+          people: I use tools to remove friction and keep the judgement with the people who have earned it.
+        </p>
+      </div>
+    </section>
+
+    <div class="section text text-body_bold">
+      <p>
+        The measure of this work is not any single screen. It is that the team understands the system well enough to take it further, and that the standard holds
+        wherever the work goes.
+      </p>
+      <p>And it is the team itself.</p>
+      <p>
+        Happiness and trust are the foundation of everything described here, and I do not think they are a soft extra. People who feel safe asking for help, who trust
+        each other's judgement and who enjoy the work together produce better designs, catch more problems and keep learning. That is what I am most proud to have
+        built.
+      </p>
+    </div>
+
+    <div class="section section--padded read-next">
+      <section class="read-next__item" aria-labelledby="next-mandala">
+        <h2 id="next-mandala">Mandala case study</h2>
+        <div><Link href={url('/mandala/')}>Read the case study</Link></div>
+      </section>
+      <section class="read-next__item" aria-labelledby="next-about">
+        <h2 id="next-about">About me</h2>
+        <div><Link href={url('/about/')}>Learn more about me</Link></div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Figma "Hero quote": white on a light spot of accent at the top, accent_default (light mode) at the edges.
+     The lightest point gives white 3.3:1, which the large text needs; phones get a smaller spot so the
+     18px attribution stays above 4.5:1. */
+  .hero-quote {
+    --hero-quote-light: #7c88d7;
+    --hero-quote-edge: #5363ca;
+
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--space_8);
+    row-gap: var(--space_8);
+    margin: 0;
+    padding: var(--space_32) var(--space_24) var(--space_32) var(--space_16);
+    background: radial-gradient(ellipse 70% 90% at 46% 0%, var(--hero-quote-light), var(--hero-quote-edge));
+    color: #ffffff;
+  }
+
+  .hero-quote__mark {
+    grid-row: span 2;
+    font-family: var(--font-instrument-serif);
+    font-style: italic;
+    font-size: 7rem;
+    line-height: 5rem;
+  }
+
+  .hero-quote__text {
+    margin: 0;
+    padding-block-start: var(--space_16);
+    font-family: var(--font-instrument-serif);
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .hero-quote__author {
+    grid-column: 2;
+    justify-self: end;
+    font-family: var(--font-instrument-sans);
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  @media (width >= 47.5em) {
+    .hero-quote {
+      column-gap: var(--space_16);
+      padding: var(--space_64) var(--space_64) var(--space_64) var(--space_32);
+      background: radial-gradient(ellipse 75% 125% at 46% 0%, var(--hero-quote-light), var(--hero-quote-edge));
+    }
+
+    .hero-quote__mark {
+      font-size: 11.625rem;
+      line-height: 8.3125rem;
+    }
+
+    .hero-quote__text {
+      padding-block-start: var(--space_24);
+      font-size: 2.5rem;
+      line-height: 3.75rem;
+    }
+
+    .hero-quote__author {
+      font-size: 1.75rem;
+      line-height: 2.625rem;
+    }
+  }
+
+  /* 1680 layout */
+  @container main (width >= 77rem) {
+    .hero-quote__mark {
+      font-size: 14rem;
+      line-height: 10rem;
+    }
+
+    .hero-quote__text {
+      font-size: 3rem;
+      line-height: 4.5rem;
+    }
+
+    .hero-quote__author {
+      font-size: 2rem;
+      line-height: 3rem;
+    }
+  }
+
+  /* Figma "Section: Read next": two headed links 32 apart */
+  .read-next {
+    gap: var(--space_32);
+  }
+
+  .read-next__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space_16);
+  }
+</style>
