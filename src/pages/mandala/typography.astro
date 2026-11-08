@@ -1,10 +1,12 @@
 ---
 // Mandala: Typography, a study on internationalisation, built from the Figma frames "Mandala typography" (1680),
 // "Mandala typography / 1280", "Mandala typography / 1024" and "Mandala typography / Mobile 320".
-// The language samples stand in for a hero image; they are real text in the fonts they name.
+// The language samples are real text in the fonts they name, as wide as the paragraphs.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Link from '../../components/Link.astro';
+import CaseFigure from '../../components/case-study/CaseFigure.astro';
 import LanguageSamples, { type Sample } from '../../components/case-study/LanguageSamples.astro';
+import hero from '../../assets/mandala-typography/hero.jpg';
 import { url } from '../../utils/url';
 import '../../styles/case-study.css';
 
@@ -32,7 +34,16 @@ const weights: Sample[] = [
   <article class="case-study">
     <div class="hero">
       <h1 class="hero__title">Mandala: Typography, a study on internationalisation</h1>
-      <LanguageSamples samples={languages} />
+      <CaseFigure
+        src={hero}
+        alt="An old Japanese book lies open on a dark table under a single light, its pages handwritten in vertical columns, with calligraphy brushes on either side."
+        width={1262}
+        bleed
+        eager
+      />
+      <div class="text">
+        <LanguageSamples samples={languages} />
+      </div>
     </div>
 
     <section class="section" aria-labelledby="screens">
@@ -70,7 +81,9 @@ const weights: Sample[] = [
 
     <section class="section" aria-labelledby="weights">
       <h2 id="weights">One weight lighter, then two, then back</h2>
-      <LanguageSamples samples={weights} />
+      <div class="text">
+        <LanguageSamples samples={weights} />
+      </div>
       <div class="text">
         <p>
           With translated screens to look at, the first real question was weight. At the same numeric weight as its Latin equivalent, Noto Sans JP read heavier on
