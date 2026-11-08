@@ -7,6 +7,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Link from '../../components/Link.astro';
 import CaseFigure from '../../components/case-study/CaseFigure.astro';
 import Kpis from '../../components/case-study/Kpis.astro';
+import LanguageSamples, { type Sample } from '../../components/case-study/LanguageSamples.astro';
 import { url } from '../../utils/url';
 import '../../styles/case-study.css';
 import logo from '../../assets/mandala/logo.svg?raw';
@@ -52,7 +53,7 @@ const legend = [
   },
 ];
 
-const samples = [
+const samples: Sample[] = [
   { lang: 'en', font: 'inter', text: 'Will this text still fit in the UI?', caption: 'Text in English (Font: Inter - Regular - 16px)' },
   { lang: 'ja', font: 'jp', text: 'このテキストはUIにまだ収まりますか？', caption: 'Text in Japanese (Font: Noto Sans JP - Regular - 16px)' },
   { lang: 'zh-Hans', font: 'sc', text: '这段文字在用户界面中还能放得下吗？', caption: 'Text in Simplified Chinese (Font: Noto Sans SC - Regular - 16px)' },
@@ -265,18 +266,7 @@ const samples = [
     <section class="section" aria-labelledby="typography">
       <h2 id="typography">Typography that travels</h2>
       <CaseFigure alt="" width={1165} minHeight={466} spacious>
-        <ul class="samples">
-          {
-            samples.map((sample) => (
-              <li class="sample">
-                <p class:list={['sample__text', `sample__text--${sample.font}`]} lang={sample.lang}>
-                  {sample.text}
-                </p>
-                <p class="text-captions">{sample.caption}</p>
-              </li>
-            ))
-          }
-        </ul>
+        <LanguageSamples samples={samples} />
       </CaseFigure>
       <div class="text">
         <p>
@@ -426,53 +416,5 @@ const samples = [
     .system__legend {
       flex: 0 1 24.8125rem; /* 397 */
     }
-  }
-
-  /* Typography samples: one box per language, caption 8 below, 16 apart */
-  .samples {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space_16);
-    inline-size: 100%;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .sample {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space_8);
-  }
-
-  .sample__text {
-    padding: var(--space_16);
-    border: var(--border_s) solid var(--tiles_border);
-    border-radius: var(--radius_xl);
-    background: var(--contrast_background);
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-
-  @media (width >= 47.5em) {
-    .sample__text {
-      padding-inline: var(--space_32);
-    }
-  }
-
-  .sample__text--inter {
-    font-family: 'Inter Sample', system-ui, sans-serif;
-  }
-
-  .sample__text--jp {
-    font-family: 'Noto Sans JP Sample', system-ui, sans-serif;
-  }
-
-  .sample__text--sc {
-    font-family: 'Noto Sans SC Sample', system-ui, sans-serif;
-  }
-
-  .sample__text--kr {
-    font-family: 'Noto Sans KR Sample', system-ui, sans-serif;
   }
 </style>
