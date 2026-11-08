@@ -35,7 +35,7 @@ const tooltipId = disabledReason ? `tooltip-${crypto.randomUUID().slice(0, 8)}` 
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: var(--space_2); /* 40 icon + 2 on each side = 44 target */
     border: 0;
     border-radius: var(--radius_xs);
     background: transparent;
@@ -54,7 +54,7 @@ const tooltipId = disabledReason ? `tooltip-${crypto.randomUUID().slice(0, 8)}` 
   }
 
   .icon-button:focus-visible {
-    outline: var(--border_s) solid var(--accent_default);
+    outline: var(--border_focus) solid var(--accent_default);
     outline-offset: 0;
   }
 

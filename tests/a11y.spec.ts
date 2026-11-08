@@ -19,6 +19,31 @@ for (const path of pages) {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(0);
   });
+
+  // WCAG 1.4.12: with the text spacing a reader may set, no text is cut off and the page does not scroll sideways
+  test(`text spacing: ${path}`, async ({ page }) => {
+    await page.goto(path);
+    await page.addStyleTag({
+      content: `* { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
+        p { margin-block-end: 2em !important; }`,
+    });
+    const problems = await page.evaluate(() => {
+      const found: string[] = [];
+      const overflow = document.documentElement.scrollWidth - window.innerWidth;
+      if (overflow > 0) found.push(`page scrolls sideways by ${overflow}px`);
+      for (const el of document.querySelectorAll<HTMLElement>('body *')) {
+        if (el.closest('.visually-hidden, dialog:not([open]), [hidden]') || !el.offsetParent) continue;
+        const style = getComputedStyle(el);
+        const clips = (value: string) => value === 'hidden' || value === 'clip';
+        // Scroll containers (the slider) may scroll, they do not cut text off
+        const cutX = clips(style.overflowX) && el.scrollWidth > el.clientWidth + 1;
+        const cutY = clips(style.overflowY) && el.scrollHeight > el.clientHeight + 1;
+        if ((cutX || cutY) && el.textContent?.trim()) found.push(`${el.tagName.toLowerCase()}.${el.className} is cut off`);
+      }
+      return found;
+    });
+    expect(problems).toEqual([]);
+  });
 }
 
 test('menu overlay opens as a dialog, keeps focus inside and closes with Escape', async ({ page }, testInfo) => {
