@@ -7,7 +7,7 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Link from '../components/Link.astro';
-import { footerLinks } from '../data/navigation';
+import { footerLinks, newTab, newTabText } from '../data/navigation';
 import { url } from '../utils/url';
 import '../styles/case-study.css';
 import portrait from '../assets/about/portrait.png';
@@ -145,7 +145,7 @@ import portrait from '../assets/about/portrait.png';
 
     <section class="section" aria-labelledby="hello">
       <h2 id="hello">Talk to me about ideas, collaboration or a coffee.</h2>
-      <div><Button href={footerLinks.linkedIn}>Get in touch<span class="visually-hidden"> on LinkedIn</span></Button></div>
+      <div><Button href={footerLinks.linkedIn} {...newTab}>Get in touch<span class="visually-hidden"> on LinkedIn{newTabText}</span></Button></div>
     </section>
   </article>
 </BaseLayout>

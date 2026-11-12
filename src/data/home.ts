@@ -2,13 +2,14 @@
 import myHclSoftware from '../assets/landing/my-hclsoftware.png';
 import bigFix from '../assets/landing/bigfix.png';
 import accessibilityForInclusion from '../assets/landing/accessibility-for-inclusion.png';
+import { footerLinks, newTabText } from './navigation';
 
 export const hero = {
   greeting: 'Hej, I am Isabella',
   headline: ['Human-governed', 'AI-powered', 'Designing for everyone'],
   intro:
     'Design leader specialising in scalable UI architecture, operational accessibility and enterprise design capability across complex product ecosystems.',
-  cta: { label: 'Say hello', hiddenSuffix: ' on LinkedIn', href: 'https://www.linkedin.com/in/isabella-minzly/' },
+  cta: { label: 'Say hello', hiddenSuffix: ` on LinkedIn${newTabText}`, href: footerLinks.linkedIn, external: true },
 };
 
 export const stats = [
