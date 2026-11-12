@@ -3,7 +3,7 @@
 // The same placeholder for every page that is not built yet; the page name is in the <title>.
 import Button from './Button.astro';
 import { url } from '../utils/url';
-import { footerLinks } from '../data/navigation';
+import { footerLinks, newTab, newTabText } from '../data/navigation';
 import jump from '../assets/under-construction/jump.svg?raw';
 import read from '../assets/under-construction/read.svg?raw';
 import about from '../assets/under-construction/about.svg?raw';
@@ -20,7 +20,7 @@ const steps = [
 const highlights = [
   { image: read, title: 'Read the case studies', text: 'Explore the projects that are ready.', href: url('/#case-studies-title') },
   { image: about, title: 'Learn about me', text: 'Discover my story, values and skills.' },
-  { image: contact, title: 'Get in touch', text: 'Talk to me about ideas, collaboration or a coffee.', href: footerLinks.linkedIn, hiddenSuffix: ' on LinkedIn' },
+  { image: contact, title: 'Get in touch', text: 'Talk to me about ideas, collaboration or a coffee.', href: footerLinks.linkedIn, hiddenSuffix: ` on LinkedIn${newTabText}`, external: true },
   { image: hop, title: 'Hop back', text: 'Check back soon for updates.' },
 ];
 ---
@@ -35,7 +35,7 @@ const highlights = [
       </p>
       <div class="hero__actions">
         <Button href={url('/')}>Back to home</Button>
-        <Button href={footerLinks.linkedIn} variant="outlined">Say hello<span class="visually-hidden"> on LinkedIn</span></Button>
+        <Button href={footerLinks.linkedIn} variant="outlined" {...newTab}>Say hello<span class="visually-hidden"> on LinkedIn{newTabText}</span></Button>
       </div>
     </div>
     <div class="hero__progress">
@@ -73,7 +73,7 @@ const highlights = [
           <li class="highlight">
             <span class="highlight__image" aria-hidden="true" set:html={item.image} />
             {item.href ? (
-              <a class="highlight__title highlight__link text-label" href={item.href}>
+              <a class="highlight__title highlight__link text-label" href={item.href} {...(item.external && newTab)}>
                 {item.title}
                 {item.hiddenSuffix && <span class="visually-hidden">{item.hiddenSuffix}</span>}
               </a>

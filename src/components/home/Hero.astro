@@ -5,6 +5,7 @@
 import { Picture } from 'astro:assets';
 import Button from '../Button.astro';
 import { hero, stats, highlights } from '../../data/home';
+import { newTab } from '../../data/navigation';
 import portrait from '../../assets/landing/isabella.png';
 ---
 
@@ -18,7 +19,7 @@ import portrait from '../../assets/landing/isabella.png';
     </h1>
     <p class="hero__intro text-section-heading">{hero.intro}</p>
     <div class="hero__cta">
-      <Button href={hero.cta.href}>{hero.cta.label}<span class="visually-hidden">{hero.cta.hiddenSuffix}</span></Button>
+      <Button href={hero.cta.href} {...(hero.cta.external && newTab)}>{hero.cta.label}<span class="visually-hidden">{hero.cta.hiddenSuffix}</span></Button>
     </div>
   </div>
   <Picture

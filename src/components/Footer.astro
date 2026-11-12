@@ -1,10 +1,11 @@
 ---
 // Figma component set "Footer", one variant per breakpoint:
-// 320 to 599 (stacked, links stacked), 600 to 759 (stacked, links in a row),
-// 760 to 1279 (one row), 1280 and up (copyright lined up with the main content).
+// 320 to 599 (everything stacked and centred), 600 to 759 (stacked, links in a row),
+// 760 to 1279 (copyright above the credit, links beside the credit),
+// 1280 and up (one row, copyright lined up with the main content).
 import Link from './Link.astro';
 import Frog from './Frog.astro';
-import { footerLinks } from '../data/navigation';
+import { footerLinks, newTab, newTabText } from '../data/navigation';
 import { url } from '../utils/url';
 
 const year = new Date().getFullYear();
@@ -12,9 +13,15 @@ const year = new Date().getFullYear();
 
 <footer class="footer">
   <div class="footer__bar">
-    <p class="footer__copyright text-footer">© {year} Isabella Minzly. All rights reserved.</p>
+    <div class="footer__about">
+      <p class="footer__copyright text-footer">© {year} Isabella Minzly. All rights reserved.</p>
+      <p class="footer__credit text-footer">
+        <span>Happily built with Claude, Figma and the</span>
+        <Link href={footerLinks.figmaConsoleMcp} {...newTab}>Figma Console MCP<span class="visually-hidden">{newTabText}</span></Link>
+      </p>
+    </div>
     <ul class="footer__links" role="list">
-      <li><Link href={footerLinks.linkedIn}>LinkedIn</Link></li>
+      <li><Link href={footerLinks.linkedIn} {...newTab}>LinkedIn<span class="visually-hidden">{newTabText}</span></Link></li>
       <li><Link href={url(footerLinks.accessibilityStatement)}>Accessibility statement</Link></li>
     </ul>
   </div>
@@ -31,28 +38,39 @@ const year = new Date().getFullYear();
     display: flex;
     flex-direction: column;
     background: var(--contrast_background);
+    border-block-start: var(--border_s) solid var(--tiles_border);
   }
 
+  .footer__about {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 320 to 599: three 80 rows, the credit and the links stacked inside theirs */
   .footer__copyright,
+  .footer__credit,
   .footer__links {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: var(--space_8);
     min-block-size: 5rem;
-    padding: var(--space_10) var(--space_24);
+    margin: 0;
     text-align: center;
   }
 
   /* Room for the small frog on both sides, so the centred line stays centred */
   .footer__copyright {
     padding-inline: var(--space_64);
-    border-block-end: var(--border_s) solid var(--tiles_border);
+  }
+
+  .footer__credit {
+    padding-inline: var(--space_8);
   }
 
   .footer__links {
-    flex-direction: column;
-    gap: var(--space_8);
-    margin: 0;
+    padding-inline: var(--space_24);
     list-style: none;
   }
 
@@ -65,34 +83,34 @@ const year = new Date().getFullYear();
     block-size: 68px;
   }
 
-  /* 600 to 759: links side by side */
+  /* 600 to 759: the credit and the links each on one 40 row */
   @media (width >= 37.5em) {
+    .footer__credit,
     .footer__links {
       flex-direction: row;
+      flex-wrap: wrap;
+      min-block-size: 2.5rem;
     }
   }
 
-  /* 760 and up: one row, full-size frog sitting on the bar */
+  /* 760 and up: links beside the credit, full-size frog sitting on the bar */
   @media (width >= 47.5em) {
     .footer__bar {
       flex-direction: row;
-      align-items: center;
+      align-items: flex-end;
     }
 
-    .footer__copyright,
+    .footer__about {
+      flex: 1;
+    }
+
+    .footer__credit,
     .footer__links {
-      justify-content: flex-start;
-      text-align: start;
-      border: 0;
+      column-gap: var(--space_10);
     }
 
-    .footer__copyright {
-      padding-inline: var(--space_24);
-    }
-
-    .footer__links {
-      gap: var(--space_24);
-      padding-inline: var(--space_24) 96px; /* keeps the links clear of the frog */
+    .footer__credit {
+      padding-inline: 0;
     }
 
     .footer__frog {
@@ -102,11 +120,36 @@ const year = new Date().getFullYear();
     }
   }
 
-  /* 1280 and up: copyright lines up with the main content (400 in Figma: sidebar plus its gap),
-     and stays aligned when the reader enlarges text */
+  /* 1280 and up: one row, copyright lines up with the main content (400 in Figma: sidebar plus its gap),
+     and stays aligned when the reader enlarges text. Below about 1600 the links move to a second row. */
   @media (width >= 80em) {
-    .footer__copyright {
-      padding-inline-start: calc(var(--sidebar-width) + var(--space_24));
+    .footer__bar {
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: calc(var(--space_24) * 3); /* 72 between the credit and the links, as in Figma */
+      padding-inline: calc(var(--sidebar-width) + var(--space_24)) 96px; /* keeps the links clear of the frog */
+    }
+
+    .footer__about {
+      flex: 0 1 auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: var(--space_4);
+      min-block-size: 5rem;
+    }
+
+    .footer__copyright,
+    .footer__credit,
+    .footer__links {
+      justify-content: flex-start;
+      padding-inline: 0;
+      text-align: start;
+    }
+
+    .footer__copyright,
+    .footer__credit {
+      min-block-size: 0;
     }
   }
 </style>

@@ -37,7 +37,12 @@ export const navigation: NavItem[] = [
 
 export const allNavItems: NavItem[] = navigation.flatMap((item) => [item, ...(item.children ?? [])]);
 
+// External links open in a new tab. The hidden text tells screen reader users before they follow the link.
+export const newTab = { target: '_blank', rel: 'noopener noreferrer' } as const;
+export const newTabText = ' (opens in a new tab)';
+
 export const footerLinks = {
   linkedIn: 'https://www.linkedin.com/in/isabella-minzly/',
   accessibilityStatement: '/accessibility-statement/',
+  figmaConsoleMcp: 'https://figma-console-mcp.southleft.com/',
 };
